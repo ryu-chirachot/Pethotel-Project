@@ -9,19 +9,16 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2 class="my-4">แก้ไขรายละเอียดห้องพัก #{{$RoomID->Rooms_id}}</h2>
-            <form action="{{ route('rooms.update') }}" method="POST" enctype="multipart/form-data">
+            <h2 class="my-4">เพิ่มห้องพักใหม่</h2>
+            <form action="{{ route('Admin.rooms.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Room Images -->
                 <div class="form-group mb-3">
-                    <label>รูปภาพ ห้องพัก</label>
+                    <label>รูปภาพ ห้องพัก *</label>
                     <div class="d-flex gap-3">
-                    
-                    <div class="room-image">
-                        <img id="previewImage" src="{{ asset('images/'.$RoomID->petTypeRoomType->image->ImagesPath) }}" class="img-fluid rounded" alt="Room Image" width="200px" height="300px">
-                    </div>
                         <div class="room-image-upload">
-                            <input type="file" name="imgchange" id="imageInput" accept="image/*" class="form-control">
+                            <input type="file" name="room_image" id="imageInput" accept="image/*" class="form-control" required>
+                            <img id="previewImage" class="img-fluid rounded mt-3" alt="Room Image" style="display:none;" width="200px" height="300px">
                         </div>
                     </div>
                 </div>
@@ -29,22 +26,22 @@
                 <!-- Room Details -->
                 <div class="form-group mb-3">
                     <label>หมายเลขห้อง *</label>
-                    <input type="text" name="room_number" class="form-control" value="{{ $RoomID->Rooms_id }}" required>
+                    <input type="text" name="room_number" class="form-control" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>สถานะห้อง *</label>
                     <select name="room_status" class="form-control" required>
-                        <option value="1" >ว่าง</option>
-                        <option value="0" >ไม่ว่าง</option>
+                        <option value="1">ว่าง</option>
+                        <option value="0">ไม่ว่าง</option>
                     </select>
                 </div>
 
-                <div class="form-group mb-3">
+                    <div class="form-group mb-3">
                     <label>ประเภทสัตว์เลี้ยง *</label>
                     <select name="pet_type" class="form-control" required>
-                        @foreach ($Rooms as $rm)
-                        <option value="{{ $rm->petTypeRoomType->Pet_type->Pet_nameType }}">{{ $rm->petTypeRoomType->Pet_type->Pet_nameType }}</option>
+                        @foreach ($Pet_types as $pt)
+                        <option value="{{$pt->Pet_nametype}}">{{$pt->Pet_nametype}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -52,26 +49,25 @@
                 <div class="form-group mb-3">
                     <label>ประเภทห้อง *</label>
                     <select name="room_type" class="form-control" required>
-                        @foreach ($Rooms as $rm)
-                        <option value="{{$rm->petTypeRoomType->roomType->Rooms_type_name}}"> {{$rm->petTypeRoomType->roomType->Rooms_type_name}}</option>
+                        @foreach ($Room_types as $room_type)
+                        <option value="{{$room_type->Rooms_type_name}}"> {{$room_type->Rooms_type_name}}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>ราคาห้องต่อคืน *</label>
-                    <input type="number" name="room_price" class="form-control" value="{{ $RoomID->petTypeRoomType->Room_price}}" required>
+                    <input type="number" name="room_price" class="form-control" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>รายละเอียดห้อง *</label>
-                    <textarea name="room_description" class="form-control" rows="3">{{ $RoomID->petTypeRoomType->Rooms_type_description }}</textarea>
+                    <textarea name="room_description" class="form-control" rows="3"></textarea>
                 </div>
 
-                
                 <!-- Submit Button -->
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success">บันทึกการเปลี่ยนแปลง</button>
+                    <button type="submit" class="btn btn-primary">เพิ่มห้องพัก</button>
                     <a href="{{ route('Admin.rooms') }}" class="btn btn-secondary">ยกเลิก</a>
                 </div>
                 
@@ -79,6 +75,7 @@
         </div>
     </div>
 </div>
+
 <script>
     const imageInput = document.getElementById('imageInput');
     const previewImage = document.getElementById('previewImage');
@@ -96,4 +93,3 @@
     });
 </script>
 @endsection
-

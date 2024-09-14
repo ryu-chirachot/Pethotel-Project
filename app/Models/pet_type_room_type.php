@@ -17,7 +17,7 @@ class pet_type_room_type extends Model
     protected $primaryKey = 'Pet_Room_typeID'; // Adjust this to your actual primary key column
 
     protected $fillable = [
-        'Rooms_type_id', 'Pet_type_id', 'Rooms_type_description', 'Room_price', 'ImagesID','updateat','deleteat'
+        'Rooms_type_id', 'Pet_type_id', 'Rooms_type_description', 'Room_price', 'ImagesID','updated_at','deleted_at'
     ];
 
     public function roomType()

@@ -9,11 +9,11 @@
     <!-- Dashboard Cards Overview -->
     <div class="row text-center">
         <!-- Bookings Card -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="card bg-info text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title">การจอง</h5>
-                    <p class="card-text">การจองของวันนี้ทั้งหมด: 15</p>
+                    <p class="card-text">การจองของวันนี้ทั้งหมด: ดึงDB</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('Admin.bookings') }}" class="text-white">ดูรายละเอียด &rarr;</a>
@@ -22,11 +22,11 @@
         </div>
 
         <!-- Available Rooms Card -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="card bg-success text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title">ห้องที่ยังว่างอยู่</h5>
-                    <p class="card-text">ว่าง: 8 / 20</p>
+                    <p class="card-text">ว่าง: {{count($AvailableRooms)}} / {{count($Rooms)}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('Admin.rooms') }}" class="text-white">ดูรายละเอียด &rarr;</a>
@@ -35,27 +35,14 @@
         </div>
 
         <!-- Pets Staying Card -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="card bg-warning text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title">สัตว์เลี้ยง</h5>
-                    <p class="card-text">สัตว์เลี้ยงทั้งหมด: 10</p>
+                    <p class="card-text">สัตว์เลี้ยงทั้งหมด: ดึงDB</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('Admin.pets') }}" class="text-white">ดูรายละเอียด &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Payments Card -->
-        <div class="col-lg-3 col-md-6 mb-4">
-            <div class="card bg-danger text-white h-100">
-                <div class="card-body">
-                    <h5 class="card-title">การชำระเงิน</h5>
-                    <p class="card-text">กำลังรอ: 1</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{ route('Admin.payments') }}" class="text-white">ดูรายละเอียด &rarr;</a>
                 </div>
             </div>
         </div>
@@ -76,18 +63,6 @@
                         <li> ห้องหมายเลข #101 - สมศักดิ์</li>
                     </ul>
                     <a href="{{ route('Admin.bookings') }}">ดูรายละเอียด &rarr;</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notifications -->
-        <div class="col-lg-6 mb-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>การแจ้งเตือน</h5>
-                </div>
-                <div class="card-body">
-                    <p>ยังไม่มีการแจ้งเตือนใหม่</p>
                 </div>
             </div>
         </div>

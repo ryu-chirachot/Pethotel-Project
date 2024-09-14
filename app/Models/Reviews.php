@@ -14,7 +14,7 @@ class Reviews extends Model
     protected $primaryKey = 'Review_id';
 
     protected $fillable = [
-        'BookingOrderID', 'Rating', 'comment','updateat','deleteat'
+        'BookingOrderID', 'Rating', 'comment','updated_at','deleted_at'
     ];
 
     public function booking()

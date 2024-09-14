@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Pet_type;
 use Illuminate\Http\Request;
 use App\Models\Rooms;
+use App\Models\Rooms_type;
 use Hamcrest\Type\IsString;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -12,8 +15,9 @@ class AdminController extends Controller
 {
     //
     public function index(){
-
-        return view("Admin.AdminHome");
+        $Rooms = Rooms::all();
+        $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
+        return view("Admin.AdminHome",compact("Rooms","AvailableRooms"));
     }
 
     public function rooms(){
@@ -30,7 +34,8 @@ class AdminController extends Controller
     public function editrooms($id) {
         try {
             $RoomID = Rooms::find($id);
-            return view("Admin.AdminRoomEdit", compact("RoomID"));
+            $Rooms = Rooms::all();
+            return view("Admin.AdminRoomEdit", compact("RoomID",'Rooms'));
         } catch (\Exception $e) {
             return view('error')->with('message', $e->getMessage());
         }
@@ -47,8 +52,8 @@ class AdminController extends Controller
                 }
         }
 
-    public function updateRoom(Request $request)
-    {
+    public function updateRoom(Request $request){
+
         try {
             if (empty($request->room_number)) {
                 return redirect()->back()->with('error', 'ไม่พบข้อมูลห้องที่ต้องการแก้ไข');
@@ -62,7 +67,12 @@ class AdminController extends Controller
 
             if ($room->petTypeRoomType) {
                 $petTypeRoomType = $room->petTypeRoomType;
-                
+
+                if ($petTypeRoomType->Pet_type) {
+                    $petTypeRoomType->Pet_type->Pet_nameType = $request->pet_type;
+                    $petTypeRoomType->Pet_type->save();
+                }
+
                 if ($petTypeRoomType->roomType) {
                     $petTypeRoomType->roomType->Rooms_type_name = $request->room_type;
                     $petTypeRoomType->roomType->save();
@@ -91,6 +101,21 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'เกิดข้อผิดพลาดอะไรบางอย่าง : ' . $e->getMessage());
             }
+        }
+
+        public function delete($id){
+            Rooms::destroy($id);
+            return redirect()->back();
+        }
+
+        public function create(){
+            $Pet_types = Pet_type::all();
+            $Room_types = Rooms_type::all();
+            return view('Admin.AdminCreateRooms',compact('Pet_types','Room_types'));
+        }
+
+        public function store(Request $request){
+            
         }
         
 }

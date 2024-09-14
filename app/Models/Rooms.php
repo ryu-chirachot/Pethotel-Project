@@ -13,7 +13,7 @@ class Rooms extends Model
 
     protected $primaryKey = 'Rooms_id';
     protected $fillable = [
-        'Pet_Room_typeID', 'Rooms_status','updateat','deleteat'
+        'Pet_Room_typeID', 'Rooms_status','updated_at','deleted_at'
     ];
 
     public function petTypeRoomType()

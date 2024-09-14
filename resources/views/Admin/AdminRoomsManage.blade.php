@@ -65,6 +65,11 @@
                                         <i class="fas fa-ellipsis-h"></i>
                                     </button>
                                 </td>
+                                <td>
+                                <button class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

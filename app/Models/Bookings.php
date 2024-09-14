@@ -13,12 +13,12 @@ class Bookings extends Model
 
     protected $primaryKey = 'BookingOrderID';
     protected $fillable = [
-        'BookingOrderID', 'User_id', 'Pet_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updateat','deleteat'
+        'BookingOrderID', 'User_id', 'Pet_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updated_at','deleted_at'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User_pethotel::class, 'User_id');
+        return $this->belongsTo(User::class, 'User_id');
     }
 
     public function pet()

@@ -22,7 +22,7 @@
     <div class="d-flex">
         <nav class="sidebar bg-light p-3" style="width: 250px;">
             <h4 class="mb-4 text-center">
-                <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="cat-footprint" style="width: 30px; height: 30px; margin-right: 10px;" >
+                <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="Logo" style="width: 1.5em; height: 1.5em; margin-right: 10px;" >
                 Pawsome Stay
             </h4>
             <ul class="nav flex-column">
@@ -36,21 +36,27 @@
                         <i class="fas fa-book me-2"></i> การจอง
                     </a>
                 </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">
+
+                <li class="nav-item mb-3" id="Rooms">
+                    <a class="nav-link" id="roomsButton">
                         <i class="fas fa-bed me-2"></i>ห้องพัก
                     </a>
+                    <ul id="roomSubMenu" style="display: none;">
+                        <li class="nav-item mb-3">
+                            <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">แก้ไขห้องพัก</a>
+                        </li>
+                        <li class="nav-item mb-3">
+                            <a class="nav-link {{ Request::is('Admin/Rooms/create') ? 'active' : '' }}" href="{{route('Admin.rooms.create')}}">เพิ่มห้องพัก</a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-item mb-3">
                     <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}}">
                         <i class="fas fa-paw me-2"></i>สัตว์เลี้ยง
                     </a>
                 </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Payments') ? 'active' : '' }}" href="{{route('Admin.payments')}}">
-                        <i class="fas fa-wallet me-2"></i>การชำระเงิน
-                    </a>
-                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('Admin/Settings') ? 'active' : '' }}" href="{{route('Admin.setting')}}">
                         <i class="fas fa-cog me-2"></i>การตั้งค่า
@@ -68,5 +74,6 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/rooms.js') }}"></script>
 </body>
 </html>

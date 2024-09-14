@@ -14,7 +14,7 @@ class Pet_type extends Model
 
     protected $table = 'pet_type';
     protected $primaryKey = 'pet_type_id';
-    protected $fillable = ['Pet_nameType','updateat','deleteat'];
+    protected $fillable = ['Pet_nametype','updated_at','deleted_at'];
 
     public function pets()
     {

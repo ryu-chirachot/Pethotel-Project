@@ -27,6 +27,12 @@ Route::get('/Admin/Bookings', function () {
 
 Route::get('/Admin/Rooms',[AdminController::class,'rooms'])->name('Admin.rooms');
 
+Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->name('rooms.update');
+
+Route::get('/Admin/Rooms/create',[AdminController::class,'create'])->name('Admin.rooms.create');
+
+Route::get('/Admin/Rooms/create/success',[AdminController::class,'store'])->name('Admin.rooms.store');
+
 Route::get('/Admin/Pets', function () {
     return view('Admin.AdminPets');
 })->name('Admin.pets');
@@ -43,5 +49,6 @@ Route::get('/Admin/Setting', function () {
 
 Route::get('/Admin/Rooms/search',[AdminController::class,'searchRoom'])->name('Admin.search');
 
-Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->name('rooms.update');
+
+
 

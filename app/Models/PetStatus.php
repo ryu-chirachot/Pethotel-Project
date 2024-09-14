@@ -12,7 +12,7 @@ class PetStatus extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'BookingOrderID', 'Report','updateat','deleteat'
+        'BookingOrderID', 'Report','updated_at','deleted_at'
     ];
 
     public function booking()

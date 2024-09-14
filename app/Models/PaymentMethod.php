@@ -13,7 +13,7 @@ class PaymentMethod extends Model
 
     protected $primaryKey = 'PaymentMethodID';
     protected $fillable = [
-        'PaymentName','updateat','deleteat'
+        'PaymentName','updated_at','deleted_at'
     ];
 
     public function bookings()
