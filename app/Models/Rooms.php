@@ -11,6 +11,7 @@ class Rooms extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'rooms';
     protected $primaryKey = 'Rooms_id';
     protected $fillable = [
         'Pet_Room_typeID', 'Rooms_status','updated_at','deleted_at'

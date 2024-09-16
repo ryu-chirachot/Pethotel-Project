@@ -42,10 +42,10 @@
                         <i class="fas fa-bed me-2"></i>ห้องพัก
                     </a>
                     <ul id="roomSubMenu" style="display: none;">
-                        <li class="nav-item mb-3">
+                        <li class="nav-item mb-1" style="margin-top: 5px;">
                             <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">แก้ไขห้องพัก</a>
                         </li>
-                        <li class="nav-item mb-3">
+                        <li class="nav-item mb-1">
                             <a class="nav-link {{ Request::is('Admin/Rooms/create') ? 'active' : '' }}" href="{{route('Admin.rooms.create')}}">เพิ่มห้องพัก</a>
                         </li>
                     </ul>

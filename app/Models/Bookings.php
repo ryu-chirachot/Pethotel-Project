@@ -11,6 +11,7 @@ class Bookings extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'bookings';
     protected $primaryKey = 'BookingOrderID';
     protected $fillable = [
         'BookingOrderID', 'User_id', 'Pet_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updated_at','deleted_at'
@@ -18,7 +19,7 @@ class Bookings extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'User_id');
+        return $this->belongsTo(User::class, 'id');
     }
 
     public function pet()

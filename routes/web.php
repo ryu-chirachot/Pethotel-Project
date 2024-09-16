@@ -33,13 +33,13 @@ Route::get('/Admin/Rooms/create',[AdminController::class,'create'])->name('Admin
 
 Route::get('/Admin/Rooms/create/success',[AdminController::class,'store'])->name('Admin.rooms.store');
 
+Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->name('Admin.rooms.delete');
+
 Route::get('/Admin/Pets', function () {
     return view('Admin.AdminPets');
 })->name('Admin.pets');
 
-Route::get('/Admin/Payments', function () {
-    return view('Admin.AdminPayments');
-})->name('Admin.payments');
+
 
 Route::get('/Admin/Rooms/Edit/{id}',[AdminController::class,'editrooms'])->name('Admin.editrooms');
 

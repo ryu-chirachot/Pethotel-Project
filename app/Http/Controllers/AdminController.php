@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookings;
 use App\Models\Pet_type;
 use Illuminate\Http\Request;
 use App\Models\Rooms;
 use App\Models\Rooms_type;
 use Hamcrest\Type\IsString;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -22,7 +22,8 @@ class AdminController extends Controller
 
     public function rooms(){
         try {
-            $Rooms = Rooms::all();
+            
+            $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
             $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
             $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
             return view("Admin.AdminRoomsManage", compact("Rooms","AvailableRooms","UnAvailableRooms"));

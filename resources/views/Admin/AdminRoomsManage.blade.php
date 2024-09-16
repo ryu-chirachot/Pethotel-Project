@@ -35,28 +35,49 @@
                             <tr>
                                 <th>หมายเลขห้อง</th>
                                 <th>ประเภทห้อง</th>
-                                <!-- <th>ขนาด</th> -->
-                                <th>สถานะ</th>
                                 <th>ประเภทของสัตว์เลี้ยง</th>
+                                <th>ชื่อผู้จอง</th>
+                                <th>ชื่อสัตว์เลี้ยง</th>
+                                <th>สถานะ</th>
                                 <th>แก้ไข</th>
                                 <th>อื่นๆ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($Rooms as $rm)
+                        @foreach ($Rooms as $rm)
                             <tr>
-                                <td>{{$rm->Rooms_id}}</td>
-                                <td>{{$rm->petTypeRoomType->roomType->Rooms_type_name}}</td>
-                                <!-- <td>3</td> -->
+                                <td>{{ $rm->Rooms_id }}</td>
+                                <td>{{ $rm->petTypeRoomType->roomType->Rooms_type_name }}</td>
+
+                                <!-- แสดงประเภทสัตว์เลี้ยง -->
+                                <td>{{ $rm->petTypeRoomType->petType->Pet_nametype }}</td>
+
+                                <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
+                                <td>
+                                    @if ($rm->bookings->isNotEmpty())
+                                        {{ $rm->bookings->first()->user->name }}
+                                    @else
+                                        <span>ไม่มีผู้จอง</span>
+                                    @endif
+                                </td>
+
+                                <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
+                                <td>
+                                    @if ($rm->bookings->isNotEmpty())
+                                        {{ $rm->bookings->first()->pet->Pet_name }}
+                                    @else
+                                        <span>ไม่มีสัตว์เลี้ยง</span>
+                                    @endif
+                                </td>
+
+                                <!-- ตรวจสอบสถานะห้อง -->
                                 @if ($rm->Rooms_status == 1)
                                     <td><span class="badge bg-success">ว่าง</span></td>
                                 @else
                                     <td><span class="badge bg-danger">ไม่ว่าง</span></td>
                                 @endif
-                                
-                                <td>{{$rm->petTypeRoomType->petType->Pet_nametype}}</td>
                                 <td>
-                                    <a id="Edit" href="{{route('Admin.editrooms', $rm->Rooms_id)}}" class="btn btn-warning btn-sm">
+                                    <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </td>
@@ -64,14 +85,14 @@
                                     <button class="btn btn-secondary btn-sm">
                                         <i class="fas fa-ellipsis-h"></i>
                                     </button>
-                                </td>
-                                <td>
-                                <button class="btn btn-danger btn-sm">
+                                    <button class="btn btn-danger btn-sm" onclick="ConfirmDel('{{ $rm->Rooms_id }}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
+                            
                             </tr>
-                            @endforeach
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -97,4 +118,5 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('js/delRoom.js') }}"></script>
 @endsection
