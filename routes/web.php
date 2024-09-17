@@ -7,15 +7,15 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/',[SearchController::class,'showpet']); 
 
+Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
 Route::post('/room/search',[SearchController::class,'search']
 ); 
 Route::get('/b', function () {
     return view('booking');
 });
-Route::post('/home/search',[SearchController::class,'search']
-); 
+// Route::post('/home/search',[SearchController::class,'search']
+// ); 
 
 Route::middleware([
     'auth:sanctum',

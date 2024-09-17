@@ -16,9 +16,9 @@ class Rooms extends Model
         'Pet_Room_typeID', 'Rooms_status','updateat','deleteat'
     ];
 
-    public function petTypeRoomType()
+    public function pet_Type_Room_Type()
     {
-        return $this->belongsTo(pet_type_room_type::class, 'Pet_Room_typeID');
+        return $this->belongsTo(Pet_type_room_type::class, 'Pet_Room_typeID');
     }
 
     public function bookings()

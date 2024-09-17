@@ -1,0 +1,153 @@
+body {
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.booking-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.date-inputs {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+select, input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.search-button {
+    background-color: #ffd54f;
+    border: none;
+    color: #333;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #ffc107;
+}
+
+.room-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+}
+
+.room-images {
+    width: 33%;
+    padding: 15px;
+}
+
+.room-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.room-details {
+    width: 67%;
+    padding: 20px;
+}
+
+.room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.room-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.room-availability {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.room-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.room-amenities {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.amenity {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.amenity-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+.book-button {
+    background-color: #e0e0e0;
+    border: none;
+    color: #333;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.book-button:hover {
+    background-color: #d0d0d0;
+}
+
+@media (max-width: 768px) {
+    .room-card {
+        flex-direction: column;
+    }
+
+    .room-images, .room-details {
+        width: 100%;
+    }
+}
