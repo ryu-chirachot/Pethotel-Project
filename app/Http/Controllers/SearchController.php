@@ -12,7 +12,7 @@ class SearchController extends Controller
     }
     function search(Request $request){
         {
-            $room=rooms::where("Rooms_status",1)->get();
+            $room=Rooms::where("Rooms_status",1)->get();
             $p_type=pet_type::where("pet_type_id",$request->input('pet_type'));
         }
     }

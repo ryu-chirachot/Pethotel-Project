@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rooms;
+use App\Models\Rooms_type;
+use App\Models\Images;
 use App\Models\Bookings;
 use App\Models\Pet_type;
 use App\Models\pet_type_room_type;
 use Illuminate\Http\Request;
-use App\Models\Rooms;
-use App\Models\Rooms_type;
-use Hamcrest\Type\IsString;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Models\Images;
+
 use Carbon\Carbon;
 
 
 class AdminController extends Controller
 {
+    
         //หน้าหลักของแอดมิน
         public function index(){
             $Rooms = Rooms::all();

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -72,4 +74,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pets::class);
     }
+
+    protected function role(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  ["user", "admin"][$value],
+        );
+    }
+    
 }

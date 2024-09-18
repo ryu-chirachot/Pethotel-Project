@@ -7,15 +7,13 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/',[SearchController::class,'showpet']); 
 
-Route::post('/room/search',[SearchController::class,'search']
-); 
-Route::get('/b', function () {
-    return view('booking');
+Route::middleware(['auth', 'user-access:admin'])->group(function () {
+
+    Route::get('/Admin/Home',[AdminController::class,'index'])->name('Admin.index'); //route สำหรับไปหน้าหลักของ แอดมิน
 });
-Route::post('/home/search',[SearchController::class,'search']
-); 
+
+
 
 Route::middleware([
     'auth:sanctum',
@@ -28,7 +26,7 @@ Route::middleware([
 });
 
 //โซน Route Admin
-Route::get('/Admin/Home',[AdminController::class,'index'])->name('Admin.index'); //route สำหรับไปหน้าหลักของ แอดมิน
+
 
 Route::get('/Admin/Bookings', function () {
     return view('Admin.AdminBookings');
@@ -61,3 +59,6 @@ Route::get('/Admin/Rooms/search',[AdminController::class,'searchRoom'])->name('A
 
 
 
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
