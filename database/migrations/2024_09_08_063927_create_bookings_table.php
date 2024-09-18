@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('Start_date');
             $table->date('End_date');
             $table->dateTime('Booking_date');
-            $table->char('Booking_status', 1);
+            $table->boolean('Booking_status');
             $table->integer('Price');
 
             $table->unsignedBigInteger('PaymentMethodID');

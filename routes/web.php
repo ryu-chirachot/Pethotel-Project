@@ -37,9 +37,7 @@ Route::post('/Admin/Rooms/create/success',[AdminController::class,'store'])->nam
 
 Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->name('Admin.rooms.delete'); //route สำหรับลบข้อมูลห้องใน Admin 
 
-Route::get('/Admin/Pets', function () {
-    return view('Admin.AdminPets');
-})->name('Admin.pets');
+Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->name('Admin.pets');
 
 
 

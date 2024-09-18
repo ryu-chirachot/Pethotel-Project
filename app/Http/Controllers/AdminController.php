@@ -21,8 +21,9 @@ class AdminController extends Controller
             $Rooms = Rooms::all();
             $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
             $Bookings = Bookings::all();
+            $Petbooking = Rooms::where('Rooms_status', "=", "0")->get();
             $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
-            return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings"));
+            return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
         }
 
 
@@ -169,6 +170,17 @@ class AdminController extends Controller
             return redirect()->to(route('Admin.rooms'))->with('success','เพิ่มห้องหมายเลข'.$request->room_number);
         }
         
+
+        public function petstatus(){
+            try {
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
+                $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
+                $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
+                return view("Admin.AdminPets", compact("Rooms","AvailableRooms","UnAvailableRooms"));
+            } catch (\Exception $e) {
+                return view('error')->with('message', $e->getMessage());
+            }
+        }
 }
 // public function searchRoom(Request $request)
     // {

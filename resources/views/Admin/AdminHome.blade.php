@@ -40,7 +40,7 @@
             <div class="card bg-warning text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title">สัตว์เลี้ยง</h5>
-                    <p class="card-text">สัตว์เลี้ยงทั้งหมด: ดึงDB</p>
+                    <p class="card-text">สัตว์เลี้ยงทั้งหมด: {{count($Petbooking)}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('Admin.pets') }}" class="text-white">ดูรายละเอียด &rarr;</a>
