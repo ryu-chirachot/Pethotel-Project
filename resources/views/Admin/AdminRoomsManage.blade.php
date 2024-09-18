@@ -40,6 +40,7 @@
                                 <th>ชื่อสัตว์เลี้ยง</th>
                                 <th>สถานะ</th>
                                 <th>แก้ไข</th>
+                                <th>ลบ</th>
                                 <th>อื่นๆ</th>
                             </tr>
                         </thead>
@@ -82,11 +83,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                    </button>
                                     <button class="btn btn-danger btn-sm" onclick="ConfirmDel('{{ $rm->Rooms_id }}')">
                                         <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-ellipsis-h"></i>
                                     </button>
                                 </td>
                             

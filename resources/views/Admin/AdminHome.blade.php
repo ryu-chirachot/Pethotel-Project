@@ -13,7 +13,8 @@
             <div class="card bg-info text-white h-100">
                 <div class="card-body">
                     <h5 class="card-title">การจอง</h5>
-                    <p class="card-text">การจองของวันนี้ทั้งหมด: ดึงDB</p>
+                    <p class="card-text text-center mb-1">การจองวันนี้: {{count($TodayBookings)}}</p>
+                    <p class="card-text text-center mb-1">การจองทั้งหมด: {{count($Bookings)}}</p>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('Admin.bookings') }}" class="text-white">ดูรายละเอียด &rarr;</a>

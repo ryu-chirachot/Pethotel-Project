@@ -13,7 +13,7 @@ class Pet_type extends Model
     use SoftDeletes;
 
     protected $table = 'pet_type';
-    protected $primaryKey = 'pet_type_id';
+    protected $primaryKey = 'Pet_type_id';
     protected $fillable = ['Pet_nametype','updated_at','deleted_at'];
 
     public function pets()

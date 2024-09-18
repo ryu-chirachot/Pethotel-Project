@@ -44,7 +44,7 @@
                     <label>ประเภทสัตว์เลี้ยง *</label>
                     <select name="pet_type" class="form-control" required>
                         @foreach ($Rooms as $rm)
-                        <option value="{{ $rm->petTypeRoomType->Pet_type->Pet_nameType }}">{{ $rm->petTypeRoomType->Pet_type->Pet_nameType }}</option>
+                        <option value="{{ $rm->petTypeRoomType->petType->Pet_nametype }}">{{ $rm->petTypeRoomType->petType->Pet_nametype }}</option>
                         @endforeach
                     </select>
                 </div>

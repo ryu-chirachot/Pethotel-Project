@@ -15,18 +15,20 @@
                 <!-- Room Images -->
                 <div class="form-group mb-3">
                     <label>รูปภาพ ห้องพัก *</label>
-                    <div class="d-flex gap-3">
-                        <div class="room-image-upload">
-                            <input type="file" name="room_image" id="imageInput" accept="image/*" class="form-control" required>
-                            <img id="previewImage" class="img-fluid rounded mt-3" alt="Room Image" style="display:none;" width="200px" height="300px">
-                        </div>
+                    <div class="room-image-upload empty">
+                        <input type="file" name="room_image" id="roomImageInput" accept="image/*" onchange="previewImage(this)" required>
                     </div>
                 </div>
 
                 <!-- Room Details -->
                 <div class="form-group mb-3">
-                    <label>หมายเลขห้อง *</label>
-                    <input type="text" name="room_number" class="form-control" required>
+                    @if ($latestRoom)
+                        <label>หมายเลขห้อง {{ $latestRoom->Rooms_id+1}}</label>
+                        <input type="text" name="room_number" class="form-control" value="{{ $latestRoom->Rooms_id+1 }}" disabled>
+                    @else
+                        <label>หมายเลขห้อง 1</label>
+                        <input type="text" name="room_number" class="form-control" value="1" disabled>
+                    @endif
                 </div>
 
                 <div class="form-group mb-3">
@@ -76,20 +78,6 @@
     </div>
 </div>
 
-<script>
-    const imageInput = document.getElementById('imageInput');
-    const previewImage = document.getElementById('previewImage');
+<script src="{{ asset('js/Addimg.js') }}"></script>
 
-    imageInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
 @endsection
