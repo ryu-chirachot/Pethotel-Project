@@ -8,13 +8,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'user-access:admin'])->group(function () {
-
-    Route::get('/Admin/Home',[AdminController::class,'index'])->name('Admin.index'); //route สำหรับไปหน้าหลักของ แอดมิน
-});
-
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -26,6 +19,9 @@ Route::middleware([
 });
 
 //โซน Route Admin
+
+Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
+
 
 
 Route::get('/Admin/Bookings', function () {
@@ -45,10 +41,6 @@ Route::post('/Admin/Rooms/create/success',[AdminController::class,'store'])->nam
 Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->name('Admin.rooms.delete'); //route สำหรับลบข้อมูลห้องใน Admin 
 
 Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->name('Admin.pets');
-
-
-
-
 
 Route::get('/Admin/Setting', function () {
     return view('Admin.AdminSetting');

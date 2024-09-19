@@ -62,6 +62,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'integer',
         ];
     }
 
@@ -73,13 +74,6 @@ class User extends Authenticatable
     public function pets()
     {
         return $this->hasMany(Pets::class);
-    }
-
-    protected function role(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) =>  ["user", "admin"][$value],
-        );
     }
     
 }

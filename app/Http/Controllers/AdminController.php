@@ -10,24 +10,27 @@ use App\Models\Pet_type;
 use App\Models\pet_type_room_type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 use Carbon\Carbon;
 
 
 class AdminController extends Controller
 {
+
+        
     
         //หน้าหลักของแอดมิน
         public function index(){
-            $Rooms = Rooms::all();
-            $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
-            $Bookings = Bookings::all();
-            $Petbooking = Rooms::where('Rooms_status', "=", "0")->get();
-            $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
-            return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
-        }
+            
+                $Rooms = Rooms::all();
+                $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
+                $Bookings = Bookings::all();
+                $Petbooking = Rooms::where('Rooms_status', "=", "0")->get();
+                $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
+                return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
 
+        }
 
         //หน้าแสดงห้องทั้งหมด
         public function rooms(){
