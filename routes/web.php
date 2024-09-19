@@ -22,8 +22,6 @@ Route::middleware([
 
 
 Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
-
-
 Route::get('/Admin/Bookings', function () {
     return view('Admin.AdminBookings');
 })->middleware('admin')->name('Admin.bookings');
