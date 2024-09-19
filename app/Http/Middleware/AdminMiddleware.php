@@ -18,11 +18,11 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         
-        if (Auth::users()->role == 1) {
+        if (Auth::user()->role == "admin") {
             return $next($request); 
         }
         
-        return redirect("/");
+        abort(401);
         
     }
     

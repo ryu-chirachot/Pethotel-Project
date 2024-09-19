@@ -18,8 +18,6 @@ use Carbon\Carbon;
 class AdminController extends Controller
 {
 
-        
-    
         //หน้าหลักของแอดมิน
         public function index(){
             
