@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 
 
 class AdminController extends Controller
@@ -170,10 +171,12 @@ class AdminController extends Controller
             $newRoom->Rooms_status = $request->room_status;
             $newRoom->save();
 
-            return redirect()->to(route('Admin.rooms'))->with('success','เพิ่มห้องหมายเลข'.$request->room_number);
+            $roomID = Rooms::latest('Rooms_id')->first()->Rooms_id;
+
+            return redirect()->to(route('Admin.rooms'))->with('success','เพิ่มห้องหมายเลข #'.$roomID. ' เรียบร้อย!');
         }
         
-
+        //โชว์สถานะสัตว์เลี้ยง
         public function petstatus(){
             try {
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
@@ -183,8 +186,11 @@ class AdminController extends Controller
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
+
         }
-}
+        
+    }
+
 // public function searchRoom(Request $request)
     // {
     // $query = $request->get('query');

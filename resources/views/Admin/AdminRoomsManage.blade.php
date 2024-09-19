@@ -14,7 +14,7 @@
                 <h3 class="mb-0"><b>ห้องพัก</b></h3>
                 <form method="GET" action="{{ route('Admin.search') }}">
                     @csrf
-                <input type="text" class="form-control w-100" name="query" placeholder="ค้นหาห้อง..." oninput="this.form.submit()">
+                <input type="text" class="form-control w-100" name="query" placeholder="พิมพ์ชื่อผู้จอง..." oninput="this.form.submit()">
                 </form>
             </div>
 
