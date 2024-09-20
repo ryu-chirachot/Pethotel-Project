@@ -9,7 +9,7 @@ use App\Http\Controllers\EditUserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
-
+use App\Http\Controllers\BookingController;
 
 Route::get('/payment', function () {
     return view('payment');
@@ -26,6 +26,21 @@ Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
+Route::get('/test', function () {
+    return view('layouts.navbar');
+});
+Route::post('/o',[BookingController::class,'petInfo']);
+Route::get('/info', function () {
+    return view('main.petinfo');
+});
+Route::get('/payment',[BookingController::class,'book'])->name('payment');
+
+Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
+Route::post('/room/search',[SearchController::class,'search']
+);// Route::post('/home/search',[SearchController::class,'search']
+// ); 
+
+
 
 
 

@@ -1,35 +1,51 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use App\Models\Pet_type;
 use Illuminate\Http\Request;
+use App\Models\Rooms;
+use App\Models\Pet_Type_Room_Type;
+
 
 class SearchController extends Controller
 {       
-    function showpet(){
-        $p_type=pet_type::all();
-        return view("layouts.searchbar",compact('p_type'));
+    public function showpet($viewname)
+    {
+        $p_type = pet_type::all();
+        return view(('main/').$viewname,compact('p_type'));
     }
-    function search(Request $request){
-        {
-            $room=Rooms::where("Rooms_status",1)->get();
-            $p_type=pet_type::where("pet_type_id",$request->input('pet_type'));
-        }
-    }
-    // function search($request){
 
-    //     $search= Rooms::all();
-    //     if($request->$p_type->ptype_name ="กระต่าย")
-    //     $roomcount = count($search->room=="1");
-    //     $type1count=count();
-    //     $type2count=count();
-    //     $type3count=count();
-    // }
-    // function searchResult(){
-    //     $result=Rooms::all();
-    //     $roomtype1=//ข้อมูลต่างๆที่จะแสดง;
-    //     $roomtype2=//ข้อมูลต่างๆที่จะแสดง;
-    //     $roomtype3=//ข้อมูลต่างๆที่จะแสดง;
-    // }
+
     
+    public function search(Request $request)
+{
+    $p_type = pet_type::all();
+    $petTypeId = $request->input('pet_type_id');
+    $c_in=$request->input('check_in');
+    $c_out=$request->input('check_out');
+    $rooms = Rooms::with('pet_Type_Room_Type.petType')
+    ->where('Rooms_status', 1)
+    ->whereHas('pet_Type_Room_Type', function($query) use ($petTypeId) {
+        $query->where('Pet_type_id', $petTypeId);
+    })
+    //เช็คประเภทสัตว์เลี้ยง
+    ->whereDoesntHave('bookings', function($query) use ($c_in, $c_out) {
+        $query->where(function($q) use ($c_in, $c_out) {
+            $q->whereBetween('Start_date', [$c_in, $c_out])
+              ->orWhereBetween('End_date', [$c_in, $c_out])
+              ->orWhere(function($q) use ($c_in, $c_out) {
+                  $q->where('Start_date', '<=', $c_in)
+                    ->where('End_date', '>=', $c_out);
+                    // เช็ควัน
+              });
+        });
+    })
+    ->get();
+
+$count = $rooms->count();
+// นับห้อง
+
+return view('main.result', compact('rooms', 'count', 'p_type'));
+}
 }
