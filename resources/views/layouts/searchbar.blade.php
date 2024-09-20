@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
   
 </head>
-<body id="mg">
-   <div >
-    <nav >
-        <div  class="logo-container">
+<body>
+   <div>
+    <nav>
+        <div class="logo-container">
             <img src="logo.png" alt="Logo" class="logo">
             <span class="website-name">ชื่อเว็บไซต์</span>
         </div>
@@ -23,30 +23,32 @@
             <li><a href="#about">About</a></li>
         </ul>
     </nav>  
-
     </div>
-
 
     <div id="cen" class="container">
         <form class="booking-form" action="/room/search" method="post">
             @csrf
-            <div>
+        <div>
         <p>
-        <select  name="pet_type_id" id="petSelect">
-            
-            @foreach($p_type as $type)
-                <option  value="{{ $type->Pet_type_id }}">{{ $type->Pet_nametype }}</option>
-            @endforeach
-        </select>
+        <select name="pet_type_id" id="petSelect">
+        <option >เลือกประเภทสัตว์เลี้ยง</option>
+        @foreach($p_type as $type)
+            <option value="{{ $type->pet_type_id }}">{{ $type->Pet_nametype }}</option>
+        @endforeach
+    </select>
             <label>วันเข้าพัก</label>
             <input type="date" name="check_in">
             <label>สิ้นสุด</label>
             <input type="date" name="check_out">
         </p>
-            <button type="submit">ค้นหาห้องพัก</button>
+        </div>
+            <div><button type="submit">ค้นหาห้องพัก</button>
+
+            </div>
         </form>
+        
     </div>
-    <div id="cen" class="container">
+    <div >
         @yield('content')
         </div>
 </body>

@@ -2,7 +2,7 @@
 
 .container {
     width: 60%;
-    margin: 0%;
+    margin: 10%;
     padding: 20px;
 }
 
@@ -14,8 +14,8 @@ form {
     font-family: "IBM Plex Sans Thai", sans-serif;
     font-weight: 400;
     font-style: normal;
-    height: 30%;
-    width: 60%;
+    height: auto;
+    width: auto;
     padding: 3% 3% 3% 3%;
     margin-top: 5%;
     margin-left: auto;
@@ -33,7 +33,7 @@ input[type="date"] {
 }
 
  #cen{
-    display: contents;
+    display: flex;
     margin-left: auto;
     margin-right: auto;
  }

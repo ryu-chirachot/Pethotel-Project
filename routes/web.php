@@ -3,18 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/test', function () {
+    return view('layouts.navbar');
+});
+Route::post('/o',[BookingController::class,'petInfo']);
+Route::get('/info', function () {
+    return view('main.petinfo');
+});
 Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
 Route::post('/room/search',[SearchController::class,'search']
-); 
-Route::get('/b', function () {
-    return view('booking');
-});
-// Route::post('/home/search',[SearchController::class,'search']
+)// Route::post('/home/search',[SearchController::class,'search']
 // ); 
 
 Route::middleware([
