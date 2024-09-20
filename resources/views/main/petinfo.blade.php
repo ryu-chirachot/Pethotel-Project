@@ -16,8 +16,9 @@
     <div class="max-w-md mx-auto bg-white p-5 rounded-lg shadow">
         
         <form action="/o" method="post">
+        @csrf
         <h2 class="text-2xl font-bold mb-4">ข้อมูลสัตว์เลี้ยง</h2>
-            @csrf
+            
             <div>
             <div class="mb-4">
                 <input type="text" name="name" class="w-full p-2 border rounded" placeholder="ชื่อของสัตว์เลี้ยง">

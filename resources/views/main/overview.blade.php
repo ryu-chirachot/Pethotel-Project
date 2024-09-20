@@ -66,6 +66,7 @@
     </style>
 
 <body>
+    <form action="{{route('payment')}}" method="post"></form>
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
         <div class="detail-row">
@@ -114,7 +115,7 @@
         </div>
         <div class="buttons">
             <button class="btn btn-back" onclick="history.back()">แก้ไขข้อมูล</button>
-            <button class="btn btn-confirm" onclick="location.href='payment.html'">ยืนยันและชำระเงิน</button>
+            <button class="btn btn-confirm" type="submit">ยืนยันและชำระเงิน</button>
         </div>
     </div>
     </body>
