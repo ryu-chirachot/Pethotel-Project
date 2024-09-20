@@ -22,18 +22,6 @@ class BookingController extends Controller
         return view(('main.overview'),compact('p_name','p_breed','p_age','p_weight','p_gender','p_description'));
 }
     function book(){
-        
+        return view("payment");
     }
 }
-// เครยด หยอกหัว
-
-// ใใใใใใใใใใใใใใใใกังวล
-
-// หายฝจ บีบมือ
-
-// บอดี้สแกน
-
-// B12
-
-
-// ออกกลำังกาย

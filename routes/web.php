@@ -3,11 +3,28 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EditUserController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
+use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 use App\Http\Controllers\BookingController;
+
+Route::get('/payment', function () {
+    return view('payment');
+});
+
 
 
 Route::get('/', function () {
     return view('welcome');
+})->name('welcome');
+
+
+Route::middleware('checkLogin')->group(function(){
+    Route::get('/edit', [UserController::class, 'edit']);
+    Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
 Route::get('/test', function () {
     return view('layouts.navbar');
@@ -22,6 +39,8 @@ Route::get('/home/{viewname}',[SearchController::class,'showpet']);
 Route::post('/room/search',[SearchController::class,'search']
 );// Route::post('/home/search',[SearchController::class,'search']
 // ); 
+
+
 
 Route::middleware([
     'auth:sanctum',
