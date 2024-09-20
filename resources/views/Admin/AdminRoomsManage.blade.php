@@ -4,7 +4,11 @@
 
 @if (session('success'))
     <script>
-        alert("{{ session('success') }}");
+        Swal.fire({
+  title: "The Internet?",
+  text: "That thing is still around?",
+  icon: "question"
+});
     </script>
 @endif
 <div class="container">
@@ -12,10 +16,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0"><b>ห้องพัก</b></h3>
-                <form method="GET" action="{{ route('Admin.search') }}">
-                    @csrf
-                <input type="text" class="form-control w-100" name="query" placeholder="พิมพ์ชื่อผู้จอง..." oninput="this.form.submit()">
-                </form>
+                <input type="text" class="form-control w-100" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
             </div>
 
             <!-- Room Filters -->
@@ -30,7 +31,7 @@
             <!-- Room Table -->
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <table class="table table-hover table-responsive-md table-striped table-bordered">
+                    <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
                         <thead class="table-dark">
                             <tr>
                                 <th>หมายเลขห้อง</th>
@@ -83,7 +84,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm" onclick="ConfirmDel('{{ $rm->Rooms_id }}')">
+                                    <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </td>
@@ -121,5 +122,61 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('js/delRoom.js') }}"></script>
+<script>
+    function ConfirmDelete(id){
+
+    
+    const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success me-3",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: true
+                });
+                swalWithBootstrapButtons.fire({
+                title: `คุณแน่ใจใช่ไหมว่าจะลบ ห้องหมายเลข ${id} ?`,
+                text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "ใช่",
+                cancelButtonText: "ยกเลิก",
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire({
+                        title: "ลบ เรียบร้อย",
+                        text: "ข้อมูลของคุณถูกลบสำเร็จ",
+                        icon: "success"
+                    });
+                    setTimeout(()=>{
+                        window.location.href = `/Admin/Rooms/delete/${id}`;
+                    },800)
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                    title: "ยกเลิก",
+                    text: "ข้อมูลของคุณยังคงอยู่ :)",
+                    icon: "error"
+                    });
+                }
+    });
+}
+</script>
+
+<script> 
+    function searchTable() {
+        var input = document.getElementById("search").value.toLowerCase();
+        var rows = document.querySelectorAll("#table tbody tr");
+        rows.forEach(function(row) {
+            var rowData = row.innerText.toLowerCase();
+            if (rowData.includes(input)) {
+                row.style.display = ""; // Show row
+            } else {
+                row.style.display = "none"; // Hide row
+            }
+        });
+    }
+</script>
 @endsection

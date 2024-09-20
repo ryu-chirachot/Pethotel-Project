@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Rooms;
 use App\Models\Rooms_type;
 use App\Models\Images;
 use App\Models\Bookings;
 use App\Models\Pet_type;
 use App\Models\pet_type_room_type;
+use App\Models\PetStatus;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
-use GuzzleHttp\Client;
+
 
 
 class AdminController extends Controller
@@ -180,9 +180,7 @@ class AdminController extends Controller
         public function petstatus(){
             try {
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
-                $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
-                $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
-                return view("Admin.AdminPets", compact("Rooms","AvailableRooms","UnAvailableRooms"));
+                return view("Admin.AdminPets", compact("Rooms"));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
@@ -190,12 +188,3 @@ class AdminController extends Controller
         }
         
     }
-
-// public function searchRoom(Request $request)
-    // {
-    // $query = $request->get('query');
-    // // ค้นหาห้องที่มีหมายเลขตาม input
-    // $rooms = Rooms::where('number', 'LIKE', "%{$query}%")->get();
-    // // ส่งผลลัพธ์กลับไปยัง view
-    // return redirect()->back()->with("query", $query);
-    // }
