@@ -14,7 +14,7 @@ class Images extends Model
     protected $table = "images";
     protected $primaryKey = "ImagesID";
     protected $fillable = [
-        'ImagesName', 'ImagesPath','updateat','deleteat'
+        'ImagesName', 'ImagesPath','updated_at','deleted_at'
     ];
 
     public function petRoomType()

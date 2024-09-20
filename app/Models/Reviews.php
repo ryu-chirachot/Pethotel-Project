@@ -11,10 +11,10 @@ class Reviews extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'reviews';
     protected $primaryKey = 'Review_id';
-
     protected $fillable = [
-        'BookingOrderID', 'Rating', 'comment','updateat','deleteat'
+        'BookingOrderID', 'Rating', 'comment','updated_at','deleted_at'
     ];
 
     public function booking()

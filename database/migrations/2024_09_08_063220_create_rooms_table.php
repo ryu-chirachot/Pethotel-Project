@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('Pet_Room_typeID');
             $table->foreign('Pet_Room_typeID')->references('Pet_Room_typeID')->on('pet_type_room_type')->onDelete('cascade');
             
-            $table->boolean('Rooms_status');
+            $table->tinyInteger('Rooms_status')->default(1);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes();

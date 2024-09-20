@@ -41,11 +41,20 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label>ประเภทสัตว์เลี้ยง *</label>
+                    <select name="pet_type" class="form-control" required>
+                        @foreach ($Rooms as $rm)
+                        <option value="{{ $rm->petTypeRoomType->petType->Pet_nametype }}">{{ $rm->petTypeRoomType->petType->Pet_nametype }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
                     <label>ประเภทห้อง *</label>
                     <select name="room_type" class="form-control" required>
-                        <option value="Deluxe" {{ $RoomID->petTypeRoomType->roomType->Rooms_type_name == 'Standard' ? 'selected' : '' }}>Standard</option>
-                        <option value="Standard" {{ $RoomID->petTypeRoomType->roomType->Rooms_type_name == 'Deluxe' ? 'selected' : '' }}>Deluxe</option>
-                        <option value="Standard" {{ $RoomID->petTypeRoomType->roomType->Rooms_type_name == 'Presidential' ? 'selected' : '' }}>Presidential</option>
+                        @foreach ($Rooms as $rm)
+                        <option value="{{$rm->petTypeRoomType->roomType->Rooms_type_name}}"> {{$rm->petTypeRoomType->roomType->Rooms_type_name}}</option>
+                        @endforeach
                     </select>
                 </div>
 

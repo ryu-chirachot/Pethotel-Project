@@ -15,7 +15,7 @@ class Pet_Type_Room_Type extends Model
     protected $primaryKey = 'Pet_Room_typeID';
 
     protected $fillable = [
-        'Rooms_type_id', 'Pet_type_id', 'Rooms_type_description', 'Room_price', 'ImagesID', 'updateat', 'deleteat'
+        'Rooms_type_id', 'Pet_type_id', 'Rooms_type_description', 'Room_price', 'ImagesID','updated_at','deleted_at'
     ];
 
     public function roomType()
