@@ -186,5 +186,24 @@ class AdminController extends Controller
             }
 
         }
+
+         // Submit the report
+    public function submitReport(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
+            'report' => 'required|string',
+        ]);
+
+        // Store the report
+        PetStatus::create([
+            'booking_id' => $request->input('booking_id'),
+            'report' => $request->input('report'),
+            'admin_id' => auth()->user()->id(),
+        ]);
+
+        return redirect()->route('admin.report', $request->input('booking_id'))
+                        ->with('success', 'Report submitted successfully.');
+    }
         
     }

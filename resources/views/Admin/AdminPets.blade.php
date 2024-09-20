@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0"><b>สถานะสัตว์เลี้ยง</b></h3>
-                <input type="text" class="form-control w-100" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+                <input type="text" class="form-control w-25" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
             </div>
 
             <!-- Room Table -->
