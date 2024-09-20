@@ -24,7 +24,8 @@
     <div class="d-flex">
         <nav class="sidebar bg-light p-3" style="width: 250px;">
             <h4 class="mb-4 text-center">
-                <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="Logo" style="width: 1.5em; height: 1.5em; margin-right: 10px;" >
+                <!-- <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="Logo" style="width: 1.5em; height: 1.5em; margin-right: 10px;" > -->
+                <i class="fas fa-paw"></i>&nbsp;
                 Pawsome Stay
             </h4>
             <ul class="nav flex-column">
@@ -41,7 +42,7 @@
 
                 <li class="nav-item mb-3" id="Rooms">
                     <a class="nav-link" id="roomsButton">
-                        <i class="fas fa-bed me-2"></i>ห้องพัก
+                        <i class="fas fa-bed me-2"></i>ห้องพัก<i id="drop" class="fas fa-caret-down"></i>
                     </a>
                     <ul id="roomSubMenu" style="display: none;">
                         <li class="nav-item mb-1" style="margin-top: 5px;">

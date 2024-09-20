@@ -112,3 +112,15 @@
     opacity: 0;
     cursor: pointer;
 }
+
+th{
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+#drop {
+    float: right;
+}

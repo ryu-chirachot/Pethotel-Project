@@ -48,8 +48,9 @@ class AdminController extends Controller
         public function editrooms($id) {
             try {
                 $RoomID = Rooms::find($id);
-                $Rooms = Rooms::all();
-                return view("Admin.AdminRoomEdit", compact("RoomID",'Rooms'));
+                $petType = Pet_type::select('Pet_nametype')->distinct()->get();
+                $roomType = Rooms_type::select('Rooms_type_name')->distinct()->get();
+                return view("Admin.AdminRoomEdit", compact("RoomID",'petType','roomType'));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
@@ -85,22 +86,22 @@ class AdminController extends Controller
                 $room->Rooms_status = $request->room_status;
                 $room->save();
 
-                if ($room->petTypeRoomType) {
-                    $petTypeRoomType = $room->petTypeRoomType;
+                if ($room->pet_Type_Room_Type) {
+                    $pet_Type_Room_Type = $room->pet_Type_Room_Type;
 
-                    if ($petTypeRoomType->Pet_type) {
-                        $petTypeRoomType->Pet_type->Pet_nameType = $request->pet_type;
-                        $petTypeRoomType->Pet_type->save();
+                    if ($pet_Type_Room_Type->Pet_type) {
+                        $pet_Type_Room_Type->Pet_type->Pet_nameType = $request->pet_type;
+                        $pet_Type_Room_Type->Pet_type->save();
                     }
 
-                    if ($petTypeRoomType->roomType) {
-                        $petTypeRoomType->roomType->Rooms_type_name = $request->room_type;
-                        $petTypeRoomType->roomType->save();
+                    if ($pet_Type_Room_Type->roomType) {
+                        $pet_Type_Room_Type->roomType->Rooms_type_name = $request->room_type;
+                        $pet_Type_Room_Type->roomType->save();
                     }
                     
-                    $petTypeRoomType->Room_price = $request->room_price;
-                    $petTypeRoomType->Rooms_type_description = $request->room_description;
-                    $petTypeRoomType->save();
+                    $pet_Type_Room_Type->Room_price = $request->room_price;
+                    $pet_Type_Room_Type->Rooms_type_description = $request->room_description;
+                    $pet_Type_Room_Type->save();
                     
                     if ($request->hasFile('imgchange')) {
                         $file = $request->file('imgchange');
@@ -108,13 +109,13 @@ class AdminController extends Controller
                         if (!is_string($_basename)) {
                             return $_basename;
                         }
-                        $petTypeRoomType->image->ImagesPath = $_basename;
-                        $petTypeRoomType->image->save();
+                        $pet_Type_Room_Type->image->ImagesPath = $_basename;
+                        $pet_Type_Room_Type->image->save();
                     }
                 } else {
                         return redirect()->back()->with('error', 'ไม่พบข้อมูลประเภทห้องและสัตว์เลี้ยงที่เกี่ยวข้อง');
                     }
-                    return redirect()->to(route('Admin.rooms'))->with('success', 'เปลี่ยนแปลงข้อมูลห้อง ' . $request->room_number . ' เรียบร้อย!');
+                    return redirect()->to(route('Admin.rooms'))->with('success', 'ห้องหมายเลข #' . $request->room_number . ' เรียบร้อย!');
             
             } catch (ModelNotFoundException $e) {
                 return redirect()->back()->with('error', 'ไม่พบข้อมูลห้องที่ต้องการแก้ไข');
@@ -157,7 +158,7 @@ class AdminController extends Controller
             $idroomType = Rooms_type::where('Rooms_type_name','=',$roomType)->first();
             $idpetType = Pet_type::where('Pet_nametype','=',$petType)->first();
             $idImg = Images::latest('ImagesID')->first()->ImagesID;
-            $newPetRoomtype = new pet_type_room_type();
+            $newPetRoomtype = new Pet_Type_Room_Type();
             $newPetRoomtype->Rooms_type_id = $idroomType->Rooms_type_id; // ดึงค่า id
             $newPetRoomtype->Pet_type_id = $idpetType->Pet_type_id; // ดึงค่า id
             $newPetRoomtype->Rooms_type_description = $request->room_description;
@@ -167,13 +168,13 @@ class AdminController extends Controller
             $newPetRoomtype->save();
 
             $newRoom = new Rooms();    
-            $newRoom->Pet_Room_typeID = pet_type_room_type::latest('Pet_Room_typeID')->first()->Pet_Room_typeID;
+            $newRoom->Pet_Room_typeID = Pet_Type_Room_Type::latest('Pet_Room_typeID')->first()->Pet_Room_typeID;
             $newRoom->Rooms_status = $request->room_status;
             $newRoom->save();
 
             $roomID = Rooms::latest('Rooms_id')->first()->Rooms_id;
 
-            return redirect()->to(route('Admin.rooms'))->with('success','เพิ่มห้องหมายเลข #'.$roomID. ' เรียบร้อย!');
+            return redirect()->to(route('Admin.rooms'))->with('complete','ห้องหมายเลข #'.$roomID. ' เรียบร้อย!');
         }
         
         //โชว์สถานะสัตว์เลี้ยง

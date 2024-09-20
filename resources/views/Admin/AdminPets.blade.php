@@ -36,7 +36,7 @@
                             @foreach ($Rooms as $rm)
                                 <tr>
                                     <td>{{ $rm->Rooms_id }}</td>
-                                    <td>{{ $rm->petTypeRoomType->roomType->Rooms_type_name }}</td>
+                                    <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
                                     <td>
                                         @if ($rm->bookings->isNotEmpty())
                                             {{ $rm->bookings->first()->user->name }}
@@ -51,9 +51,9 @@
                                             <span>ไม่มีสัตว์เลี้ยง</span>
                                         @endif
                                     </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>ดึง booking</td>
+                                    <td>ดึง booking</td>
+                                    <td>ดึง auth ID</td>
                                     @if ($rm->Rooms_status == 1)
                                         <td><span class="badge bg-success">ว่าง</span></td>
                                     @else

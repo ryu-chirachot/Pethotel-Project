@@ -5,9 +5,18 @@
 @if (session('success'))
     <script>
         Swal.fire({
-  title: "The Internet?",
-  text: "That thing is still around?",
-  icon: "question"
+  title: "เปลี่ยนแปลงข้อมูล",
+  text: "{{ session('success') }}",
+  icon: "success"
+});
+    </script>
+@endif
+@if (session('complete'))
+    <script>
+        Swal.fire({
+  title: "เพิ่มข้อมูลห้องพัก",
+  text: "{{ session('complete') }}",
+  icon: "success"
 });
     </script>
 @endif
@@ -49,10 +58,10 @@
                         @foreach ($Rooms as $rm)
                             <tr>
                                 <td>{{ $rm->Rooms_id }}</td>
-                                <td>{{ $rm->petTypeRoomType->roomType->Rooms_type_name }}</td>
+                                <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
 
                                 <!-- แสดงประเภทสัตว์เลี้ยง -->
-                                <td>{{ $rm->petTypeRoomType->petType->Pet_nametype }}</td>
+                                <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
 
                                 <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
                                 <td>
@@ -134,13 +143,13 @@
                 buttonsStyling: true
                 });
                 swalWithBootstrapButtons.fire({
-                title: `คุณแน่ใจใช่ไหมว่าจะลบ ห้องหมายเลข ${id} ?`,
+                title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
                 text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonText: "ใช่",
+                confirmButtonText: "ยืนยัน",
                 cancelButtonText: "ยกเลิก",
-                reverseButtons: true
+                reverseButtons: false
                 }).then((result) => {
                 if (result.isConfirmed) {
                     swalWithBootstrapButtons.fire({
