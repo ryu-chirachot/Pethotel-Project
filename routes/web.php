@@ -18,7 +18,7 @@ Route::get('/info', function () {
 });
 Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
 Route::post('/room/search',[SearchController::class,'search']
-)// Route::post('/home/search',[SearchController::class,'search']
+);// Route::post('/home/search',[SearchController::class,'search']
 // ); 
 
 Route::middleware([
