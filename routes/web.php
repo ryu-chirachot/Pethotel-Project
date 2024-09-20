@@ -61,11 +61,8 @@ Route::get('/Admin/Bookings', function () {
 })->middleware('admin')->name('Admin.bookings');
 
 Route::get('/Admin/Rooms',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด
-Route::get('/Admin/Rooms/ห้องที่ว่าง',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด
-Route::get('/Admin/Rooms/ห้องที่ไม่ว่าง',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด
-
-
-
+Route::get('/Admin/Rooms/ห้องที่ว่าง',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.available'); //route สำหรับเรียกดูห้องทั้งหมด
+Route::get('/Admin/Rooms/ห้องที่ไม่ว่าง',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.unavailable'); //route สำหรับเรียกดูห้องทั้งหมด
 Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->middleware('admin')->name('rooms.update'); //route สำหรับ ไปหน้าแก้ไขห้อง
 
 Route::get('/Admin/Rooms/Edit/{id}',[AdminController::class,'editrooms'])->middleware('admin')->name('Admin.editrooms'); //route สำหรับส่งค่าไปแก้ไขห้องใน DB
@@ -82,7 +79,6 @@ Route::get('/Admin/Setting', function () {
     return view('Admin.AdminSetting');
 })->name('Admin.setting');
 
-Route::get('/Admin/Rooms/search',[AdminController::class,'searchRoom'])->middleware('admin')->name('Admin.search');
 
 
 
