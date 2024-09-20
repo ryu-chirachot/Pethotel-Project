@@ -13,6 +13,7 @@ use App\Models\PetStatus;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -200,7 +201,7 @@ class AdminController extends Controller
         PetStatus::create([
             'booking_id' => $request->input('booking_id'),
             'report' => $request->input('report'),
-            'admin_id' => auth()->user()->id(),
+            'admin_id' => Auth::user()->id,
         ]);
 
         return redirect()->route('admin.report', $request->input('booking_id'))
