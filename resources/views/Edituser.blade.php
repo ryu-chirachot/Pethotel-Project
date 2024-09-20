@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +7,9 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 <style>
-     body {
+    body {
             background-color: #E7F2F4;
             font-family: Kanit;
         }
@@ -42,7 +40,7 @@
         }
       
         button {
-            margin: 10px 0px 0px 125px;
+            margin: 10px 0px 0px 115px;
             padding: 10px 40px;
             border: none;
             background-color: #FFD700;
@@ -77,10 +75,9 @@
         }
 </style>
 <body>
-    
 <div class="container">
         <div class="login-form">
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('user.edit_update') }}">
             @csrf
             <div class="paw">
                     <img width="30" height="30" src="https://img.icons8.com/forma-bold-filled/24/cat-footprint.png" alt="cat-footprint"/>
@@ -88,31 +85,31 @@
                     
                 </div>
                 <div class="text">
-                    <h1>สร้างบัญชีใหม่</h1>
-                    <p>มีบัญชีอยู่แล้ว <a href="login"><b>เข้าสู่ระบบ</b></a></p>
+                    <h1>แก้ไขบัญชีผู้ใช้</h1>
                 </div>
 
             <div class="name">
             <div class="info">
-                <label for="name" value="{{ __('Name') }}" />
-                <input id="email" class="form-control" type="text" placeholder="ชื่อ"  name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <label for="email" value="{{ __('Name') }}" />
+                <input id="email" class="form-control" type="text" placeholder="ชื่อ"  name="name" :value="old('name')" value="{{auth()->user()->name}}" required autofocus autocomplete="name" />
             </div>
             </div>
 
             <div class="info">
                 <label for="email" value="{{ __('Email') }}" />
-                <input id="email" class="form-control" type="email" placeholder="email" name="email" :value="old('email')" required autocomplete="username"  />
+                <input id="email" class="form-control" type="email" placeholder="email" name="email" :value="old('email')" value="{{auth()->user()->email}}" required autocomplete="username"  />
             </div>
 
             <div class="info">
                 <label for="password" value="{{ __('Password') }}" />
-                <input id="password" class="form-control" type="password" name="password" placeholder="สร้างรหัสผ่าน" required autocomplete="new-password" />
+                <input id="password" class="form-control" type="password" name="password" placeholder="สร้างรหัสผ่าน"  required autocomplete="new-password" />
             </div>
 
-            <div class="info">
-                <label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <input id="password_confirmation" class="form-control" type="password"placeholder="ยืนยันรหัสผ่าน" name="password_confirmation" required autocomplete="new-password" />
-            </div>
+            @if ($errors->has("msg"))
+                <p class="text-danger">{{ $errors->first("msg") }}</p>
+            @endif
+
+
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
@@ -135,11 +132,11 @@
         
 
                 <button type="submit">
-                    {{ __('สร้างบัญชี') }}
+                    {{ __('บันทึกข้อมูล') }}
                 </button>
             </div>
         </form>
-        <div class="col-7">
+<div class="col-7">
         <div class="grid">
             <div class="grid-item">
                 <img class="img-dog" src="{{ asset('images/dog.png') }}" alt="Dog">
@@ -155,12 +152,7 @@
             </div>
         </div>
 
-        
-    </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-       
-        </body>
+</body>
 </html>
-
-        
