@@ -158,3 +158,17 @@ select, input[type="text"] {
         width: 100%;
     }
 }
+#book{
+    
+        display: flex;
+        padding: 10px;
+        margin-top: 10px;
+        background: #ffce72; /* Orange submit button */
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: auto;
+    
+}

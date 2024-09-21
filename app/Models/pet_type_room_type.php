@@ -20,7 +20,7 @@ class Pet_Type_Room_Type extends Model
 
     public function roomType()
     {
-        return $this->belongsTo(RoomsType::class, 'Rooms_type_id');
+        return $this->belongsTo(Rooms_Type::class, 'Rooms_type_id');
     }
 
     public function petType()

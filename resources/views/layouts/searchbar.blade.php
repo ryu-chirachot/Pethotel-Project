@@ -30,16 +30,16 @@
             @csrf
         <div>
         <p>
-        <select name="pet_type_id" id="petSelect">
-        <option >เลือกประเภทสัตว์เลี้ยง</option>
+        <select name="pet_type_id" id="petSelect" required>
+        <option value="">เลือกประเภทสัตว์เลี้ยง</option>
         @foreach($p_type as $type)
-            <option value="{{ $type->pet_type_id }}">{{ $type->Pet_nametype }}</option>
+            <option value="{{ $type->Pet_type_id }}">{{ $type->Pet_nametype }}</option>
         @endforeach
     </select>
             <label>วันเข้าพัก</label>
-            <input type="date" name="check_in">
+            <input type="date" name="check_in" required>
             <label>สิ้นสุด</label>
-            <input type="date" name="check_out">
+            <input type="date" name="check_out" required>
         </p>
         </div>
             <div><button type="submit">ค้นหาห้องพัก</button>

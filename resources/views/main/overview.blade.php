@@ -66,9 +66,20 @@
     </style>
 
 <body>
-<form action="{{route('payment')}}" method="post"></form>
+    <form action="{{route('payment')}}" method="post">
+        @csrf
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
+        <input type="hidden" name="room_type" value="Standard Room">
+        <input type="hidden" name="checkin" value="18/09/2024">
+        <input type="hidden" name="checkout" value="20/09/2024">
+        <input type="hidden" name="pet_name" value="{{ $p_name }}">
+        <input type="hidden" name="pet_breed" value="{{ $p_breed }}">
+        <input type="hidden" name="pet_age" value="{{ $p_age }}">
+        <input type="hidden" name="pet_weight" value="{{ $p_weight }}">
+        <input type="hidden" name="pet_gender" value="{{ $p_gender }}">
+        <input type="hidden" name="vaccine_history" value="ชื่อวัคซีนที่เลือก">
+        <input type="hidden" name="additional_info" value="{{ $p_description }}">
         <div class="detail-row">
             <span class="detail-label">ประเภทห้อง:</span>
             <span class="detail-value">Standard Room</span>
@@ -79,7 +90,7 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">เช็คเอาท์:</span>
-            <span class="detail-value">20/09/2024</span>
+            <span class="detail-value"></span>
         </div>
         <div class="detail-row">
             <span class="detail-label">ชื่อของสัตว์เลี้ยง:</span>
@@ -112,14 +123,13 @@
         <div class="detail-row">
             <span class="detail-label">คำแนะนำเพิ่มเติม:</span>
             <span class="detail-value">{{$p_description}}</span>
-            
+        </div>
         <div class="buttons">
-            <button class="btn btn-back" onclick="history.back()">แก้ไขข้อมูล</button>
+            <a class="btn btn-back" onclick="history.back()">แก้ไขข้อมูล</a>
             <button class="btn btn-confirm" type="submit">ยืนยันและชำระเงิน</button>
         </div>
     </div>
-</form>
-
+    </form>
     </body>
     @section('title','สรุป')
 @endsection

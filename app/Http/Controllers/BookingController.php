@@ -21,7 +21,17 @@ class BookingController extends Controller
         // dd($request->all());
         return view(('main.overview'),compact('p_name','p_breed','p_age','p_weight','p_gender','p_description'));
 }
-    function book(){
-        return view("payment");
+    function book(Request $request){
+        $roomType = $request->input('room_type');
+        $checkin = $request->input('checkin');
+        $checkout = $request->input('checkout');
+        $petName = $request->input('pet_name');
+        $petBreed = $request->input('pet_breed');
+        $petAge = $request->input('pet_age');
+        $petWeight = $request->input('pet_weight');
+        $petGender = $request->input('pet_gender');
+        $vaccineHistory = $request->input('vaccine_history');
+        $additionalInfo = $request->input('additional_info'); 
+        dd($request);
     }
 }

@@ -11,9 +11,6 @@ use App\Http\Controllers\UserController;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 use App\Http\Controllers\BookingController;
 
-Route::get('/payment', function () {
-    return view('payment');
-});
 
 
 
@@ -29,11 +26,11 @@ Route::middleware('checkLogin')->group(function(){
 Route::get('/test', function () {
     return view('layouts.navbar');
 });
-Route::post('/o',[BookingController::class,'petInfo']);
+Route::post('/o',[BookingController::class,'petInfo'])->name('overview');
 Route::get('/info', function () {
     return view('main.petinfo');
-});
-Route::get('/payment',[BookingController::class,'book'])->name('payment');
+})->name('info');
+Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
 Route::post('/room/search',[SearchController::class,'search']
