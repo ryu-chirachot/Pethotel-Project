@@ -24,10 +24,10 @@
     <div class="d-flex">
         <nav class="sidebar bg-light p-3" style="width: 250px;">
             <h4 class="mb-4 text-center">
-                <!-- <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="Logo" style="width: 1.5em; height: 1.5em; margin-right: 10px;" > -->
                 <i class="fas fa-paw"></i>&nbsp;
                 Pawsome Stay
             </h4>
+            <hr>
             <ul class="nav flex-column">
                 <li class="nav-item mb-3">
                     <a class="nav-link {{ Request::is('Admin/Home') ? 'active' : '' }}" href="{{route('Admin.index')}}">
@@ -74,9 +74,8 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies ใช้ในการทำ tooltpis-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/rooms.js') }}"></script>
 </body>
 </html>

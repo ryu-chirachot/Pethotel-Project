@@ -22,14 +22,12 @@ class AdminController extends Controller
 
         //หน้าหลักของแอดมิน
         public function index(){
-            
                 $Rooms = Rooms::all();
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $Bookings = Bookings::all();
                 $Petbooking = Rooms::where('Rooms_status', "=", "0")->get();
                 $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
                 return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
-
         }
 
         //หน้าแสดงห้องทั้งหมด
@@ -71,8 +69,6 @@ class AdminController extends Controller
             }
         
         
-
-
         //ส่งค่าที่จะแก้ไขห้องไป DB
         public function updateRoom(Request $request){
 
@@ -181,7 +177,7 @@ class AdminController extends Controller
         //โชว์สถานะสัตว์เลี้ยง
         public function petstatus(){
             try {
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet','bookings.pet_status'])->get();
                 return view("Admin.AdminPets", compact("Rooms"));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
@@ -189,23 +185,31 @@ class AdminController extends Controller
 
         }
 
-         // Submit the report
-    public function submitReport(Request $request)
-    {
-        $request->validate([
-            'booking_id' => 'required|exists:bookings,id',
-            'report' => 'required|string',
-        ]);
+         // ส่งค่าไปรายงาน
+        public function submitReport(Request $request)
+        {
+            $request->validate([
+                'booking_id' => 'required|exists:bookings,id',
+                'report' => 'required|string',
+            ]);
 
-        // Store the report
-        PetStatus::create([
-            'booking_id' => $request->input('booking_id'),
-            'report' => $request->input('report'),
-            'admin_id' => Auth::user()->id,
-        ]);
+            // Store the report
+            PetStatus::create([
+                'BookingOrderID' => $request->input('booking_id'),
+                'Report' => $request->input('report'),
+                'admin_id' => Auth::user()->id,
+                'status' => 'รายงานแล้ว',
+            ]);
 
-        return redirect()->route('admin.report', $request->input('booking_id'))
-                        ->with('success', 'Report submitted successfully.');
-    }
-        
-    }
+            return redirect()->route('admin.report', $request->input('booking_id'))
+                            ->with('success', $request->input('booking_id'));
+        }
+            
+        public function showBookings(){
+            return redirect()->route('Admin.bookings');
+        }
+
+        public function detail($id){
+            $bookings = Bookings::findOrFail($id);
+        }
+}

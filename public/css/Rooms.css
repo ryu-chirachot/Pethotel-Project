@@ -114,6 +114,7 @@
 }
 
 th{
+    font-size: 0.9em;
     text-align: center;
 }
 
@@ -124,3 +125,8 @@ td {
 #drop {
     float: right;
 }
+
+.no-caret::after {
+    display: none !important;
+}
+

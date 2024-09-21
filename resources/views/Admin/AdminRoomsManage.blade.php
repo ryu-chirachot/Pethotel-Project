@@ -1,7 +1,6 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-
 @if (session('success'))
     <script>
         Swal.fire({
@@ -98,19 +97,24 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-secondary btn-sm">
+                                    <div class="btn-group">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fas fa-ellipsis-h"></i>
-                                    </button>
+                                    </button>                      
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $rm->Rooms_id) }}">ดูรายละเอียดการจอง</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $rm->Rooms_id) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
+                                            
+                                        </ul>
+                                    </div>
                                 </td>
-                            
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
-
             <!-- Pagination -->
             <nav class="mt-3">
                 <ul class="pagination justify-content-center">
@@ -133,45 +137,43 @@
 </div>
 <script>
     function ConfirmDelete(id){
-
-    
-    const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-success me-3",
-                    cancelButton: "btn btn-danger"
-                },
-                buttonsStyling: true
-                });
-                swalWithBootstrapButtons.fire({
-                title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
-                text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "ยืนยัน",
-                cancelButtonText: "ยกเลิก",
-                reverseButtons: false
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    swalWithBootstrapButtons.fire({
-                        title: "ลบ เรียบร้อย",
-                        text: "ข้อมูลของคุณถูกลบสำเร็จ",
-                        icon: "success"
+        const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-success me-3",
+                        cancelButton: "btn btn-danger"
+                    },
+                    buttonsStyling: true
                     });
-                    setTimeout(()=>{
-                        window.location.href = `/Admin/Rooms/delete/${id}`;
-                    },800)
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
                     swalWithBootstrapButtons.fire({
-                    title: "ยกเลิก",
-                    text: "ข้อมูลของคุณยังคงอยู่ :)",
-                    icon: "error"
-                    });
-                }
-    });
-}
+                    title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
+                    text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ยืนยัน",
+                    cancelButtonText: "ยกเลิก",
+                    reverseButtons: false
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        swalWithBootstrapButtons.fire({
+                            title: "ลบ เรียบร้อย",
+                            text: "ข้อมูลของคุณถูกลบสำเร็จ",
+                            icon: "success"
+                        });
+                        setTimeout(()=>{
+                            window.location.href = `/Admin/Rooms/delete/${id}`;
+                        },800)
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                        title: "ยกเลิก",
+                        text: "ข้อมูลของคุณยังคงอยู่ :)",
+                        icon: "error"
+                        });
+                    }
+        });
+    }
 </script>
 
 <script> 

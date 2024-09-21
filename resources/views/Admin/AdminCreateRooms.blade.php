@@ -14,7 +14,7 @@
                 @csrf
                 <!-- Room Images -->
                 <div class="form-group mb-3">
-                    <label>รูปภาพ ห้องพัก *</label>
+                    <label>รูปภาพ ห้องพัก *</label><i class="bi bi-card-image">รูป</i>
                     <div class="room-image-upload empty">
                         <input type="file" name="room_image" id="roomImageInput" accept="image/*" onchange="previewImage(this)" required>
                     </div>

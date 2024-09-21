@@ -17,7 +17,7 @@
                     <h2 class="room-title">
                     
                         <p>ไม่พบห้องที่ว่าง</p>
-                   
+                    
                     </div>
                     @else
                     </h2>
