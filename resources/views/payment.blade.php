@@ -137,12 +137,14 @@
        
 </style>
 <body>
+
+
 <div class="container">
   <div class="row">
     <div class="col">
     <div class="room-section">
     <div class="card ">ห้อง
-        <h2>Room Type</h2>
+        <h2>{{$roomTypeName}}</h2>
         <div class="review-score"></div> <br>
         เครื่องปรับอากาศ <br>
         น้ำดื่ม <br>
@@ -154,18 +156,14 @@
         <div class="date-range">
             <div class="date">
                 <div class="date-label">เช็คอิน</div>
-                <div class="date-value">จันทร์ 15 ส.ค 2024</div>
+                <div class="date-value">{{$checkIn}}</div>
                 <div class="time">ตั้งแต่ 14:00</div>
             </div>
             <div class="date">
                 <div class="date-label">เช็คเอาท์</div>
-                <div class="date-value">อังคาร 16 ส.ค 2024</div>
-                <div class="time">ถึง 14:00</div>
+                <div class="date-value">{{$checkOut}}</div>
+                <div class="time">ถึง 12:00</div>
             </div>
-        </div>
-        <div class="info">
-            <p>ระยะเวลาการเข้าพัก : <br> <b></b></p> <hr>
-            <p>ท่านเลือก : <br> <b></b> </p>
         </div>
     </div>
     </div>

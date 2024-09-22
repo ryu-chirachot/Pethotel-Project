@@ -19,7 +19,7 @@ class Rooms extends Model
 
     public function pet_Type_Room_Type()
     {
-        return $this->belongsTo(Pet_type_room_type::class, 'Pet_Room_typeID');
+        return $this->belongsTo(Pet_Type_Room_Type::class, 'Pet_Room_typeID');
     }
 
     public function bookings()

@@ -70,9 +70,11 @@
         @csrf
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
-        <input type="hidden" name="room_type" value="Standard Room">
-        <input type="hidden" name="checkin" value="18/09/2024">
-        <input type="hidden" name="checkout" value="20/09/2024">
+
+        <input type="hidden" name="room_type" value="{{$roomTypeId}}">
+        <input type="hidden" name="roomTypename" value="{{$roomTypename}}">
+        <input type="hidden" name="checkin" value="{{$checkIn}}">
+        <input type="hidden" name="checkout" value="{{$checkOut}}">
         <input type="hidden" name="pet_name" value="{{ $p_name }}">
         <input type="hidden" name="pet_breed" value="{{ $p_breed }}">
         <input type="hidden" name="pet_age" value="{{ $p_age }}">
@@ -82,15 +84,15 @@
         <input type="hidden" name="additional_info" value="{{ $p_description }}">
         <div class="detail-row">
             <span class="detail-label">ประเภทห้อง:</span>
-            <span class="detail-value">Standard Room</span>
+            <span class="detail-value">{{$roomTypename}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">เช็คอิน:</span>
-            <span class="detail-value">18/09/2024</span>
+            <span class="detail-value">{{$checkIn}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">เช็คเอาท์:</span>
-            <span class="detail-value"></span>
+            <span class="detail-value">{{$checkOut}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">ชื่อของสัตว์เลี้ยง:</span>
@@ -98,7 +100,7 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">ประเภทสัตว์เลี้ยง:</span>
-            <span class="detail-value">บลาๆๆ</span>
+            <span class="detail-value">{{$petTypeId}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">สายพันธุ์:</span>
