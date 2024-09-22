@@ -33,39 +33,35 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            @foreach ($Rooms as $rm)
+                                @foreach ($BooksRooms as $bk)
                                 <tr>
-                                    <td>{{ $rm->Rooms_id }}</td>
-                                    <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                    <td>{{ $bk->room->Rooms_id }}</td>
+                                    <td>{{ $bk->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
                                     <td>
-                                        @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->user->name }}
+                                        @if ($bk->user->name)
+                                            {{ $bk->user->name }}
                                         @else
                                             <span>ไม่มีผู้จอง</span>
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->pet->Pet_name }}
+                                        @if ($bk->pet->Pet_name)
+                                            {{ $bk->pet->Pet_name }}
                                         @else
                                             <span>ไม่มีสัตว์เลี้ยง</span>
                                         @endif
                                     </td>
 
                                     <td>
-                                    @if ($rm->bookings->isNotEmpty())
-                                        @foreach ($rm->bookings as $booking)
-                                            {{ $booking->Start_date }}<br>
-                                        @endforeach
+                                    @if ($bk->Start_date)
+                                            {{ $bk->Start_date }}
                                     @else
                                         <span>ไม่มีวันจอง</span>
                                     @endif
                                     </td>
                                     <td>
-                                    @if ($rm->bookings->isNotEmpty())
-                                        @foreach ($rm->bookings as $booking)
-                                            {{ $booking->End_date }}<br>
-                                        @endforeach
+                                    @if ($bk->End_date)
+                                            {{ $bk->End_date }}
                                     @else
                                         <span>ไม่มีวันจอง</span>
                                     @endif
@@ -73,28 +69,32 @@
 
                                     <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                        </svg>&nbsp;auth ID</td>
-                                    @if ($rm->pet_status)
-                                        <td><span class="badge bg-success">{{$rm->pet_status->status}}</span></td>
-                                    @else
-                                        <td><span class="badge bg-danger">ไม่มี</span></td>
-                                    @endif
+                                        </svg>&nbsp;{{$admin}}</td>
+                                    <td>
+                                        @foreach($bk->pet_status as $petstatus)
+                                            @if(!$petstatus->Report)
+                                                <span>ยังไม่รายงาน</span>
+                                            @else
+                                                <span>{{$petstatus->status}}</span>
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td class="align-items-center">
-                                        <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
+                                        <a id="Edit" href="{{ route('Admin.editrooms', $bk->room->Rooms_id) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
                                     <td class="align-items-center">
-                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $bk->room->Rooms_id }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                     <td class="align-items-center">
-                                        <button class="btn btn-primary btn-sm">
+                                        <a class="btn btn-primary btn-sm" href="{{route('Admin.report',$bk->BookingOrderID)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-heart" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                                             </svg>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -123,6 +123,47 @@
         </div>
     </div>
 </div>
+<script>
+    function ConfirmDelete(id){
+        const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-success me-3",
+                        cancelButton: "btn btn-danger"
+                    },
+                    buttonsStyling: true
+                    });
+                    swalWithBootstrapButtons.fire({
+                    title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลการจองหมายเลข ${id} ?`,
+                    text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "ยืนยัน",
+                    cancelButtonText: "ยกเลิก",
+                    reverseButtons: false
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        swalWithBootstrapButtons.fire({
+                            title: "ลบ เรียบร้อย",
+                            text: "ข้อมูลของคุณถูกลบสำเร็จ",
+                            icon: "success"
+                        });
+                        setTimeout(()=>{
+                            window.location.href = `/Admin/Rooms/delete/${id}`;
+                        },800)
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire({
+                        title: "ยกเลิก",
+                        text: "ข้อมูลของคุณยังคงอยู่ :)",
+                        icon: "error"
+                        });
+                    }
+        });
+    }
+</script>
+
 <script> 
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();

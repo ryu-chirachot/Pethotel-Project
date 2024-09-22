@@ -61,18 +61,19 @@ Route::get('/Admin/Bookings/{id}',[AdminController::class,'detail'])->middleware
 
 //ห้อง
 Route::get('/Admin/Rooms',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด
-Route::get('/Admin/Rooms/ห้องที่ว่าง',[AdminController::class,'available'])->middleware('admin')->name('Admin.available'); //route สำหรับเรียกดูห้องทั้งหมด
-Route::get('/Admin/Rooms/ห้องที่ไม่ว่าง',[AdminController::class,'unavailable'])->middleware('admin')->name('Admin.unavailable'); //route สำหรับเรียกดูห้องทั้งหมด
+Route::get('/Admin/Rooms/ว่าง',[AdminController::class,'Available'])->middleware('admin')->name('Admin.available');
+Route::get('/Admin/Rooms/ห้องที่ไม่ว่าง',[AdminController::class,'Unavailable'])->middleware('admin')->name('Admin.unavailable'); //route สำหรับเรียกดูห้องทั้งหมด
 Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->middleware('admin')->name('rooms.update'); //route สำหรับ ไปหน้าแก้ไขห้อง
 Route::get('/Admin/Rooms/Edit/{id}',[AdminController::class,'editrooms'])->middleware('admin')->name('Admin.editrooms'); //route สำหรับส่งค่าไปแก้ไขห้องใน DB
-Route::get('/Admin/Rooms/create',[AdminController::class,'create'])->middleware('admin')->name('Admin.rooms.create'); //route สำหรับไปที่หน้าสร้างห้อง
+
+Route::get('/Admin/Rooms/create',[AdminController::class,'createRooms'])->middleware('admin')->name('Admin.rooms.create'); //route สำหรับไปที่หน้าสร้างห้อง
 Route::post('/Admin/Rooms/create/success',[AdminController::class,'store'])->middleware('admin')->name('Admin.rooms.store');
 Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middleware('admin')->name('Admin.rooms.delete'); //route สำหรับลบข้อมูลห้องใน Admin 
 
 //รายงานสถานะสัตว์เลี้ยง
 Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->middleware('admin')->name('Admin.pets');
 Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
-Route::post('',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
+Route::post('/Admin/Pets/report',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
 
 Route::get('/Admin/Setting', function () {
     return view('Admin.AdminSetting');

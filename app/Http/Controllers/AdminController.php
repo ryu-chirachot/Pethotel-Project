@@ -33,16 +33,31 @@ class AdminController extends Controller
         //หน้าแสดงห้องทั้งหมด
         public function rooms(){
             try {
-                
+                $allRooms = Rooms::all();
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
-                return view("Admin.AdminRoomsManage", compact("Rooms","AvailableRooms","UnAvailableRooms"));
+                return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
         }
+
+        public function Available(){
+                $allRooms = Rooms::all();
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->where('Rooms_status', "=", "1")->get();
+                $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
+                $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
+                return view('Admin.AvailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
+        }
         
+        public function Unavailable(){
+                $allRooms = Rooms::all();
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->where('Rooms_status', "=", "0")->get();
+                $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
+                $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
+                return view('Admin.UnavailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
+        }
         //หน้าแก้ไขห้อง
         public function editrooms($id) {
             try {
@@ -128,7 +143,7 @@ class AdminController extends Controller
         }
 
         //หน้าสร้างห้อง
-        public function create(){
+        public function createRooms(){
             $Pet_types = Pet_type::all();
             $Room_types = Rooms_type::all();
             $latestRoom = Rooms::latest('Rooms_id')->first();
@@ -177,8 +192,9 @@ class AdminController extends Controller
         //โชว์สถานะสัตว์เลี้ยง
         public function petstatus(){
             try {
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet','bookings.pet_status'])->get();
-                return view("Admin.AdminPets", compact("Rooms"));
+                $BooksRooms = Bookings::with('pet_status')->get();
+                $admin = Auth::user()->name;
+                return view("Admin.AdminPets", compact("BooksRooms","admin"));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
@@ -205,10 +221,15 @@ class AdminController extends Controller
                             ->with('success', $request->input('booking_id'));
         }
             
+        //จัดการ การจองห้อง
+
+        //โชว์รายการจอง
         public function showBookings(){
-            return redirect()->route('Admin.bookings');
+            $Bookings = Bookings::with(['room.pet_Type_Room_Type']);
+            return view('Admin.AdminBookings', compact('Bookings'));
         }
 
+        //โชว์รายละเอียดการจองแต่ละอัน
         public function detail($id){
             $bookings = Bookings::findOrFail($id);
         }

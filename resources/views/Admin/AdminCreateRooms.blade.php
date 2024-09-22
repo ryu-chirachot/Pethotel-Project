@@ -1,11 +1,7 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-@if (session('error'))
-    <script>
-        alert("{{ session('error') }}");
-    </script>
-@endif
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -14,7 +10,7 @@
                 @csrf
                 <!-- Room Images -->
                 <div class="form-group mb-3">
-                    <label>รูปภาพ ห้องพัก *</label><i class="bi bi-card-image">รูป</i>
+                    <label>รูปภาพ ห้องพัก *</label>
                     <div class="room-image-upload empty">
                         <input type="file" name="room_image" id="roomImageInput" accept="image/*" onchange="previewImage(this)" required>
                     </div>
