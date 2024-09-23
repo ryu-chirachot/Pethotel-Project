@@ -8,7 +8,7 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <style>
-     body {
+        body {
             font-family: 'Kanit', sans-serif;
             background-color: #f0f0f0;
             display: flex;

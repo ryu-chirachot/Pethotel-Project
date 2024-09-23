@@ -52,7 +52,9 @@ class AdminController extends Controller
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
                                     ->whereHas('bookings', function ($query) {
                                         $query->where('End_date', '>', Carbon::today());
-                                    })->get();
+                                    })
+                                    ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
+                                    ->get();
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
