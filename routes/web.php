@@ -53,9 +53,10 @@ Route::middleware([
 });
 
 //โซน Route Admin
+//หน้าHome
+Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
 
 //การจอง
-Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
 Route::get('/Admin/Bookings', [AdminController::class,'showBookings'])->middleware('admin')->name('Admin.bookings');
 Route::get('/Admin/Bookings/{id}',[AdminController::class,'detail'])->middleware('admin')->name('Admin.bookings.detail');
 
@@ -74,7 +75,7 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->middleware('admin')->name('Admin.pets');
 Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
 Route::post('/Admin/Pets/report',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
-
+Route::get('//Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
 Route::get('/Admin/Setting', function () {
     return view('Admin.AdminSetting');
 })->name('Admin.setting');

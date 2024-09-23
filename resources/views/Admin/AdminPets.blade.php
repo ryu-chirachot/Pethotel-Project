@@ -5,6 +5,18 @@
         alert("{{ session('error') }}");
     </script>
 @endif
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+  title: "รายงานข้อมูล",
+  text: "{{ session('success') }}",
+  icon: "success"
+});
+    </script>
+@endif
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -66,16 +78,17 @@
                                         <span>ไม่มีวันจอง</span>
                                     @endif
                                     </td>
-
+                                    @foreach($bk->pet_status as $petstatus)
                                     <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                        </svg>&nbsp;{{$admin}}</td>
+                                        </svg>&nbsp;{{$petstatus->user->name}}</td>
                                     <td>
-                                        @foreach($bk->pet_status as $petstatus)
-                                            @if(!$petstatus->Report)
-                                                <span>ยังไม่รายงาน</span>
+                                            @if($bk->Booking_status == 2)
+                                                <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
+                                            @elseif(!$petstatus->Report)
+                                                <span class="badge bg-danger">ยังไม่รายงาน</span>
                                             @else
-                                                <span>{{$petstatus->status}}</span>
+                                                <span class="badge bg-success">รายงานแล้ว</span>
                                             @endif
                                         @endforeach
                                     </td>
@@ -90,7 +103,7 @@
                                         </button>
                                     </td>
                                     <td class="align-items-center">
-                                        <a class="btn btn-primary btn-sm" href="{{route('Admin.report',$bk->BookingOrderID)}}">
+                                        <a class="btn btn-primary btn-sm" href="{{route('Admin.pets.detail',$bk->BookingOrderID)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-heart" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                                             </svg>

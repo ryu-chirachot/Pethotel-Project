@@ -30,11 +30,29 @@ class AdminController extends Controller
                 return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
         }
 
+        public function updateExpiredBookings()
+        {
+                $today = Carbon::today();
+                
+                $expiredBookings = Bookings::where('End_date', '<', $today)
+                                        ->where('Booking_status', '!=', 2)
+                                        ->get();
+                
+                foreach ($expiredBookings as $booking) {
+                    $booking->update(['Booking_status' => 2]);
+                }
+                
+                return "อัปเดตการจองที่หมดอายุแล้ว " . $expiredBookings->count() . " รายการ";
+        }
+
         //หน้าแสดงห้องทั้งหมด
         public function rooms(){
             try {
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
+                                    ->whereHas('bookings', function ($query) {
+                                        $query->where('End_date', '>', Carbon::today());
+                                    })->get();
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -201,32 +219,47 @@ class AdminController extends Controller
 
         }
 
+        public function petdetail($id){
+            $booking = Bookings::findOrFail($id);
+            $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
+            return view('Admin.AdminReport', compact('booking','petstatus'));
+        }
+
          // ส่งค่าไปรายงาน
         public function submitReport(Request $request)
         {
-            $request->validate([
-                'booking_id' => 'required|exists:bookings,id',
-                'report' => 'required|string',
-            ]);
-
             // Store the report
-            PetStatus::create([
-                'BookingOrderID' => $request->input('booking_id'),
-                'Report' => $request->input('report'),
-                'admin_id' => Auth::user()->id,
-                'status' => 'รายงานแล้ว',
-            ]);
+            $idReport = PetStatus::findOrFail($request->status_id);
+            $idReport->status = 1;
+            $idReport->Report = $request->report;
+            $idReport->Admin_id = Auth::user()->id;
+            $idReport->save();
 
-            return redirect()->route('admin.report', $request->input('booking_id'))
-                            ->with('success', $request->input('booking_id'));
+            return redirect()->route('Admin.pets')->with('success', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
             
+
+        public function checkout(Request $request){
+            $idCheckout = Bookings::findOrFail($request->booking_id);
+            $idCheckout->Booking_status = 2;
+            $idCheckout->save();
+
+            return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
+        }
         //จัดการ การจองห้อง
 
         //โชว์รายการจอง
         public function showBookings(){
-            $Bookings = Bookings::with(['room.pet_Type_Room_Type']);
-            return view('Admin.AdminBookings', compact('Bookings'));
+            $countDates = [];
+            $bookings = Bookings::with(['room']);
+            foreach($bookings as $bk) {
+                $checkinDate = Carbon::parse($bk->Start_date);
+                $checkoutDate = Carbon::parse($bk->End_date);
+                $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
+            }
+            dd($bookings);
+            // return view('Admin.AdminBookings', compact('bookings','countDates'));
+
         }
 
         //โชว์รายละเอียดการจองแต่ละอัน
