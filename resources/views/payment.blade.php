@@ -10,43 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/payment.css') }}">
 </head>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
-    
-    
-    .navbar-nav {
-        margin-left: auto;
-        margin-right: auto;
-        }
-        .navbar-brand{
-        margin-left: 10px;
-        font-family: "Fredoka", sans-serif;    
-        font-weight: bold;
-        left: 10px;
-        font-size: 22px; 
-        
-
-        }
-        .navbar {
-        background-color: #FFE797;
-        padding: 30px 0 30px 0;
-    }
-        .navbar-nav {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    .nav-item{
-        font-family: "Fredoka", sans-serif;   
-        font-size: 22px; 
-
-    }
-    .room-sections-wrapper {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 60px;
-        }
-    
+   
  
         
 </style>
