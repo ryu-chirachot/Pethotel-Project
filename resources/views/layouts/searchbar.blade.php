@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
   
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <body>
    <div>
     <nav>
@@ -26,28 +29,34 @@
     </div>
 
     <div id="cen" class="container">
-        <form class="booking-form" action="/room/search" method="post">
-            @csrf
+    <form class="booking-form" action="/room/search" method="post">
+        @csrf
         <div>
-        <p>
-        <select name="pet_type_id" id="petSelect">
-        <option >เลือกประเภทสัตว์เลี้ยง</option>
-        @foreach($p_type as $type)
-            <option value="{{ $type->pet_type_id }}">{{ $type->Pet_nametype }}</option>
-        @endforeach
-    </select>
-            <label>วันเข้าพัก</label>
-            <input type="date" name="check_in">
-            <label>สิ้นสุด</label>
-            <input type="date" name="check_out">
-        </p>
+            <label for="petSelect">เลือกประเภทสัตว์เลี้ยง</label>
+            <select name="pet_type_id" id="petSelect" required>
+                <option value="">เลือกประเภทสัตว์เลี้ยง</option>
+                @foreach($p_type as $type)
+                <option value="{{ $type->Pet_type_id }}" {{ session('pet_type_id') == $type->Pet_type_id ? 'selected' : '' }}>
+                    {{ $type->Pet_nametype }}
+                </option>
+                @endforeach
+            </select>
         </div>
-            <div><button type="submit">ค้นหาห้องพัก</button>
 
-            </div>
-        </form>
-        
-    </div>
+        <div>
+            <label for="check_in">วันเข้าพัก</label>
+            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}">
+        </div>
+
+        <div>
+            <label for="check_out">สิ้นสุด</label>
+            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}">
+        </div>
+
+        <button type="submit">ค้นหาห้องพัก</button>
+    </form>
+</div>
+
     <div >
         @yield('content')
         </div>

@@ -11,33 +11,24 @@ use App\Http\Controllers\UserController;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 use App\Http\Controllers\BookingController;
 
-Route::get('/payment', function () {
-    return view('payment');
-});
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+
 
 
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
-Route::get('/test', function () {
-    return view('layouts.navbar');
-});
-Route::post('/o',[BookingController::class,'petInfo']);
-Route::get('/info', function () {
-    return view('main.petinfo');
-});
-Route::get('/payment',[BookingController::class,'book'])->name('payment');
+Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
+Route::post('/info', [BookingController::class, 'send'])->name('info');
 
-Route::get('/home/{viewname}',[SearchController::class,'showpet']); 
+Route::post('/payment',[BookingController::class,'book'])->name('payment');
+
+Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
 Route::post('/room/search',[SearchController::class,'search']
-);// Route::post('/home/search',[SearchController::class,'search']
+)->name('search.result');// Route::post('/home/search',[SearchController::class,'search']
 // ); 
 
 
