@@ -48,6 +48,8 @@
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
+            margin-left: auto;
+            margin-right: auto;
         }
         h1{
             font-weight: bold;
