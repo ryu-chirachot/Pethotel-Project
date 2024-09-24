@@ -13,7 +13,10 @@ use App\Models\PetStatus;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
+=======
+>>>>>>> boss
 
 
 
@@ -210,15 +213,21 @@ class AdminController extends Controller
         //โชว์สถานะสัตว์เลี้ยง
         public function petstatus(){
             try {
+<<<<<<< HEAD
                 $BooksRooms = Bookings::with('pet_status')->get();
                 $admin = Auth::user()->name;
                 return view("Admin.AdminPets", compact("BooksRooms","admin"));
+=======
+                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
+                return view("Admin.AdminPets", compact("Rooms"));
+>>>>>>> boss
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
 
         }
 
+<<<<<<< HEAD
         public function petdetail($id){
             $booking = Bookings::findOrFail($id);
             $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
@@ -267,3 +276,25 @@ class AdminController extends Controller
             $bookings = Bookings::findOrFail($id);
         }
 }
+=======
+         // Submit the report
+    public function submitReport(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
+            'report' => 'required|string',
+        ]);
+
+        // Store the report
+        PetStatus::create([
+            'booking_id' => $request->input('booking_id'),
+            'report' => $request->input('report'),
+            'admin_id' => auth()->user()->id(),
+        ]);
+
+        return redirect()->route('admin.report', $request->input('booking_id'))
+                        ->with('success', 'Report submitted successfully.');
+    }
+        
+    }
+>>>>>>> boss

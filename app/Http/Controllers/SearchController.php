@@ -52,7 +52,6 @@ class SearchController extends Controller
     // นับจำนวนห้องในแต่ละประเภท
     $roomCounts = $groupedRooms->map(function ($group) {
         return $group->count();
-    dd($$rooms);
     });
     
     // ส่งข้อมูลไปยัง view

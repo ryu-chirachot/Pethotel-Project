@@ -29,7 +29,11 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
+<<<<<<< HEAD
                         <thead id="petstatus" class="table-dark">
+=======
+                        <thead class="table-dark">
+>>>>>>> boss
                             <tr>
                                 <th>หมายเลขการจอง</th>
                                 <th>ประเภทห้อง</th>
@@ -45,6 +49,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
+<<<<<<< HEAD
                                 @foreach ($BooksRooms as $bk)
                                 <tr>
                                     <td>{{ $bk->room->Rooms_id }}</td>
@@ -52,17 +57,32 @@
                                     <td>
                                         @if ($bk->user->name)
                                             {{ $bk->user->name }}
+=======
+                            @foreach ($Rooms as $rm)
+                                <tr>
+                                    <td>{{ $rm->Rooms_id }}</td>
+                                    <td>{{ $rm->petTypeRoomType->roomType->Rooms_type_name }}</td>
+                                    <td>
+                                        @if ($rm->bookings->isNotEmpty())
+                                            {{ $rm->bookings->first()->user->name }}
+>>>>>>> boss
                                         @else
                                             <span>ไม่มีผู้จอง</span>
                                         @endif
                                     </td>
                                     <td>
+<<<<<<< HEAD
                                         @if ($bk->pet->Pet_name)
                                             {{ $bk->pet->Pet_name }}
+=======
+                                        @if ($rm->bookings->isNotEmpty())
+                                            {{ $rm->bookings->first()->pet->Pet_name }}
+>>>>>>> boss
                                         @else
                                             <span>ไม่มีสัตว์เลี้ยง</span>
                                         @endif
                                     </td>
+<<<<<<< HEAD
 
                                     <td>
                                     @if ($bk->Start_date)
@@ -94,20 +114,42 @@
                                     </td>
                                     <td class="align-items-center">
                                         <a id="Edit" href="{{ route('Admin.editrooms', $bk->room->Rooms_id) }}" class="btn btn-warning btn-sm">
+=======
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    @if ($rm->Rooms_status == 1)
+                                        <td><span class="badge bg-success">ว่าง</span></td>
+                                    @else
+                                        <td><span class="badge bg-danger">ไม่ว่าง</span></td>
+                                    @endif
+                                    <td class="align-items-center">
+                                        <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
+>>>>>>> boss
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
                                     <td class="align-items-center">
+<<<<<<< HEAD
                                         <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $bk->room->Rooms_id }}')">
+=======
+                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+>>>>>>> boss
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                     <td class="align-items-center">
+<<<<<<< HEAD
                                         <a class="btn btn-primary btn-sm" href="{{route('Admin.pets.detail',$bk->BookingOrderID)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-heart" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
                                             </svg>
                                         </a>
+=======
+                                        <button class="btn btn-secondary btn-sm">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+>>>>>>> boss
                                     </td>
                                 </tr>
                             @endforeach
@@ -136,6 +178,7 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 <script>
     function ConfirmDelete(id){
         const swalWithBootstrapButtons = Swal.mixin({
@@ -176,6 +219,8 @@
         });
     }
 </script>
+=======
+>>>>>>> boss
 
 <script> 
     function searchTable() {
@@ -191,4 +236,8 @@
         });
 }
 </script>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> boss
