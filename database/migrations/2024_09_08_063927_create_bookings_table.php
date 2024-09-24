@@ -31,7 +31,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('PaymentMethodID');
             $table->foreign('PaymentMethodID')->references('PaymentMethodID')->on('payment_methods')->onDelete('cascade');            
-            $table->dateTime('PaymentDate');
+            $table->dateTime('PaymentDate')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes();

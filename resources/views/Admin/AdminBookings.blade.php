@@ -31,13 +31,16 @@
         }
     </style>
 </head>
+<div class="display-inline text-center my-1">
+        <h3><b>หน้าแรก</b></h3>
+    </div>
     <div class="container">
+        
         @foreach ($bookings as $bk)
         <h1>รายละเอียดการจอง</h1>
         <div class="reservation">
             <p>1 ผู้เข้าพัก | {{$countDates[$bk->BookingOrderID]}} คืน</p> <!-- แสดงจำนวนคืน -->
             <p>วันที่เข้าพัก: {{ $bk->Start_date }} ถึง {{ $bk->End_date }}</p> <!-- แสดงวันที่เข้าพัก -->
-            
             <p>ห้องพัก: {{ $bk->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p> <!-- แสดงชื่อห้องพัก -->
             <p>หมายเลขการจอง: <span class="booking-code">{{ $bk->BookingOrderID }}</span></p> <!-- แสดงหมายเลขการจอง -->
         </div>

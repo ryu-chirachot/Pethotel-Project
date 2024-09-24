@@ -55,7 +55,7 @@
                 </li>
 
                 <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}}">
+                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}} " data-toggle="tooltip" data-placement="right" title="รายงานสถานะ">
                         <i class="fas fa-paw me-2"></i>สัตว์เลี้ยง
                     </a>
                 </li>
