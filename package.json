@@ -20,10 +20,10 @@
     },
     "dependencies": {
 <<<<<<< HEAD
-        "sweetalert2": "^11.14.1"
-=======
         "bootstrap-icons": "^1.11.3",
         "sweetalert2": "^11.14.0"
->>>>>>> d601f923bfeb5b554769701ab45e4041f6938beb
+=======
+        "sweetalert2": "^11.14.1"
+>>>>>>> boss
     }
 }

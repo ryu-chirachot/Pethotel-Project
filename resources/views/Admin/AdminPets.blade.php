@@ -85,8 +85,8 @@
                                     <td>
                                             @if($bk->Booking_status == 2)
                                                 <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
-                                            @elseif(!$petstatus->Report)
-                                                <span class="badge bg-danger">ยังไม่รายงาน</span>
+                                            @elseif($petstatus->Report == NULL)
+                                                <span class="badge bg-danger">{{$petstatus->status}}</span>
                                             @else
                                                 <span class="badge bg-success">รายงานแล้ว</span>
                                             @endif
@@ -113,26 +113,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{$BooksRooms->links('pagination::bootstrap-5')}}
                 </div>
             </div>
 
-            <!-- Pagination -->
-            <nav class="mt-3">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a class="page-link" href="#">หน้าที่แล้ว</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">หน้าถัดไป</a>
-                    </li>
-                </ul>
-            </nav>
         </div>
     </div>
 </div>

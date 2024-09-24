@@ -63,23 +63,30 @@
                                     <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
 
                                     <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
-                                    <td>
-                                        @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->user->name }}
-                                        @else
-                                            <span>ไม่มีผู้จอง</span>
-                                        @endif
-                                    </td>
-
                                     <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
-                                    <td>
-                                        @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->pet->Pet_name }}
-                                        @else
+                                    @if($rm->bookings->isNotEmpty())
+                                        @foreach($rm->bookings as $bk)
+                                            @if ($bk->Booking_status != 2)
+                                                <td>{{ $bk->user->name }}</td>
+                                                <td>{{ $bk->pet->Pet_name }}</td>  
+                                            @else
+                                                <td>
+                                                    <span>ไม่มีผู้จอง</span>
+                                                </td>
+                                                <td>
+                                                    <span>ไม่มีสัตว์เลี้ยง</span>
+                                                </td>                      
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <td>
+                                            <span>ไม่มีผู้จอง</span>
+                                        </td>
+                                        <td>
                                             <span>ไม่มีสัตว์เลี้ยง</span>
-                                        @endif
-                                    </td>
-
+                                        </td> 
+                                    @endif   
+                                    
                                     <!-- ตรวจสอบสถานะห้อง -->
                                     @if ($rm->Rooms_status == 1)
                                         <td><span class="badge bg-success">ว่าง</span></td>
@@ -112,26 +119,10 @@
                             @endforeach
                             </tbody>
                         </table>
-                        
+                        {{$Rooms->links('pagination::bootstrap-5')}}
                     </div>
                 </div>
-                <!-- Pagination -->
-                <nav class="mt-3">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">หน้าที่แล้ว</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">หน้าถัดไป</a>
-                        </li>
-                    </ul>
-                </nav>
+
             </div>
         </div>
     </div>
@@ -191,5 +182,4 @@
         });
     }
 </script>
-
 @endsection
