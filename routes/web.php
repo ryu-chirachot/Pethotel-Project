@@ -14,8 +14,9 @@ use App\Http\Controllers\BookingController;
 
 
 
-
-
+Route::get('/', function () {
+    return redirect()->route('main', ['viewname' => 'homepage']);
+})->name('home');
 
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
@@ -28,9 +29,9 @@ Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
 Route::post('/room/search',[SearchController::class,'search']
-)->name('search.result');// Route::post('/home/search',[SearchController::class,'search']
-// ); 
+)->name('search.result');
 
+Route::post('/success',[BookingController::class,'booked'])->name('success');
 
 
 Route::middleware([
