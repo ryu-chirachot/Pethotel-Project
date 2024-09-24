@@ -20,7 +20,6 @@ class AuthMiddleware
         if($user){
             return $next($request);
         }
-
         return redirect()->route('login');
     }
 }

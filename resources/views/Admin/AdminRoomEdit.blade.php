@@ -18,7 +18,7 @@
                     <div class="d-flex gap-3">
                     
                     <div class="room-image">
-                        <img id="previewImage" src="{{ asset('images/'.$RoomID->petTypeRoomType->image->ImagesPath) }}" class="img-fluid rounded" alt="Room Image" width="200px" height="300px">
+                        <img id="previewImage" src="{{ asset('images/'.$RoomID->pet_Type_Room_Type->image->ImagesPath) }}" class="img-fluid rounded" alt="Room Image" width="200px" height="300px">
                     </div>
                         <div class="room-image-upload">
                             <input type="file" name="imgchange" id="imageInput" accept="image/*" class="form-control">
@@ -43,8 +43,8 @@
                 <div class="form-group mb-3">
                     <label>ประเภทสัตว์เลี้ยง *</label>
                     <select name="pet_type" class="form-control" required>
-                        @foreach ($Rooms as $rm)
-                        <option value="{{ $rm->petTypeRoomType->petType->Pet_nametype }}">{{ $rm->petTypeRoomType->petType->Pet_nametype }}</option>
+                        @foreach ($petType as $pt)
+                        <option value="{{ $pt->Pet_nametype }}" {{ $RoomID->pet_Type_Room_Type->petType->Pet_nametype == $pt->Pet_nametype ? 'selected' : ''}}>{{ $pt->Pet_nametype }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -52,20 +52,20 @@
                 <div class="form-group mb-3">
                     <label>ประเภทห้อง *</label>
                     <select name="room_type" class="form-control" required>
-                        @foreach ($Rooms as $rm)
-                        <option value="{{$rm->petTypeRoomType->roomType->Rooms_type_name}}"> {{$rm->petTypeRoomType->roomType->Rooms_type_name}}</option>
+                        @foreach ($roomType as $rt)
+                        <option value="{{$rt->Rooms_type_name}}" {{ $RoomID->pet_Type_Room_Type->roomType->Rooms_type_name == $rt->Rooms_type_name ? 'selected': '' }} > {{$rt->Rooms_type_name}}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>ราคาห้องต่อคืน *</label>
-                    <input type="number" name="room_price" class="form-control" value="{{ $RoomID->petTypeRoomType->Room_price}}" required>
+                    <input type="number" name="room_price" class="form-control" value="{{ $RoomID->pet_Type_Room_Type->Room_price}}" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>รายละเอียดห้อง *</label>
-                    <textarea name="room_description" class="form-control" rows="3">{{ $RoomID->petTypeRoomType->Rooms_type_description }}</textarea>
+                    <textarea name="room_description" class="form-control" rows="3">{{ $RoomID->pet_Type_Room_Type->Rooms_type_description }}</textarea>
                 </div>
 
                 

@@ -112,3 +112,21 @@
     opacity: 0;
     cursor: pointer;
 }
+
+th{
+    font-size: 0.9em;
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+#drop {
+    float: right;
+}
+
+.no-caret::after {
+    display: none !important;
+}
+

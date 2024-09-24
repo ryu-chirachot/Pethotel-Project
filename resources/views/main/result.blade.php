@@ -17,6 +17,25 @@
         <span class="badge bg-success">ว่าง {{ $roomCounts[$roomTypeName] }} ห้อง</span> <!-- แสดงจำนวนห้องในประเภท -->
         </div>
         
+<<<<<<< HEAD
+            
+            
+            <div class="room-details">
+                <div class="room-header">
+                    <h2 class="room-title">
+                    
+                        <p>ไม่พบห้องที่ว่าง</p>
+                    
+                    </div>
+                    @else
+                    </h2>
+                    <span class="room-availability">{{$count}}</span>
+                <div>
+                <p class="room-description">Standard Room </p>
+                <div class="room-amenities">
+                    
+
+=======
             <div class="row g-2 mb-3">
                 <!-- รูปภาพห้อง -->
                 <div class="col-4">
@@ -63,6 +82,7 @@
                 <div class="d-flex align-items-center mx-2">
                     <i class="bi bi-brush me-1"></i>
                     <small>อาบน้ำตัดขน</small>
+>>>>>>> 3a820ab1fdf7b27b8b8bcf467626a46fc5f417d9
                 </div>
             </div>
         </div>

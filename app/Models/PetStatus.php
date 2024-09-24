@@ -14,11 +14,16 @@ class PetStatus extends Model
     protected $table = 'pet_status';
     protected $primaryKey = 'PetStatusID';
     protected $fillable = [
-        'BookingOrderID', 'Report','updated_at','deleted_at'
+        'BookingOrderID', 'Report','status','updated_at','deleted_at'
     ];
 
     public function booking()
     {
         return $this->belongsTo(Bookings::class, 'PetStatusID');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'Admin_id' ,'id');
     }
 }
