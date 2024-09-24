@@ -31,13 +31,10 @@
         }
     </style>
 </head>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 <div class="display-inline text-center my-1">
         <h3><b>หน้าแรก</b></h3>
     </div>
->>>>>>> ryu
+
     <div class="container">
         
         @foreach ($bookings as $bk)
@@ -49,23 +46,4 @@
             <p>หมายเลขการจอง: <span class="booking-code">{{ $bk->BookingOrderID }}</span></p> <!-- แสดงหมายเลขการจอง -->
         </div>
         @endforeach
-=======
-<body>
-    <div class="container">
-        <h1>รายละเอียดการจอง</h1>
-        
-        <?php foreach ($bookings as $booking): ?>
-        <div class="reservation">
-            <h2><?php echo $booking['name']; ?></h2>
-            <p>1 ผู้เข้าพัก | <?php echo $booking['nights']; ?> คืน</p>
-            <p>วันที่เข้าพัก: <?php echo $booking['check_in']; ?> ถึง <?php echo $booking['check_out']; ?></p>
-            <p>ห้องพัก: <?php echo $booking['room']; ?></p>
-            <p>หมายเลขการจอง: <span class="booking-code"><?php echo $booking['booking_code']; ?></span></p>
-        </div>
-        <?php endforeach; ?>
-        
->>>>>>> boss
-    </div>
-</body>
-</html>
 @endsection

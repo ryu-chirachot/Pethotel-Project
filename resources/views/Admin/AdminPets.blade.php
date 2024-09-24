@@ -29,11 +29,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
-<<<<<<< HEAD
                         <thead id="petstatus" class="table-dark">
-=======
-                        <thead class="table-dark">
->>>>>>> boss
                             <tr>
                                 <th>หมายเลขการจอง</th>
                                 <th>ประเภทห้อง</th>
