@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('PetStatusID');
             $table->unsignedBigInteger('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
-            $table->text('Report');
-            $table->string('status')->default('ยังไม่รายงาน');
-            $table->unsignedBigInteger('Admin_id');
+            $table->text('Report')->nullable();
+            $table->tinyInteger('status')->default(0);
+            $table->unsignedBigInteger('Admin_id')->nullable();
             $table->foreign('Admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();

@@ -13,10 +13,7 @@ use App\Models\PetStatus;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
-=======
->>>>>>> boss
 
 
 
@@ -37,15 +34,17 @@ class AdminController extends Controller
         {
                 $today = Carbon::today();
                 
-                $expiredBookings = Bookings::where('End_date', '<', $today)
+                $expiredBookings = Bookings::where('End_date', '<=', $today)
                                         ->where('Booking_status', '!=', 2)
                                         ->get();
                 
-                foreach ($expiredBookings as $booking) {
-                    $booking->update(['Booking_status' => 2]);
-                }
+                $expiredBookingIds = $expiredBookings->pluck('BookingOrderID');
+                Bookings::whereIn('BookingOrderID', $expiredBookingIds)->update(['Booking_status' => 2]);
+                                        
+                $roomIds = $expiredBookings->pluck('Rooms_id');
+                Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
                 
-                return "อัปเดตการจองที่หมดอายุแล้ว " . $expiredBookings->count() . " รายการ";
+                return redirect()->to(route('Admin.rooms'))->with('update',"อัปเดตการจองที่หมดอายุแล้ว " . $expiredBookings->count() . " รายการ");
         }
 
         //หน้าแสดงห้องทั้งหมด
@@ -54,8 +53,10 @@ class AdminController extends Controller
                 $allRooms = Rooms::all();
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
                                     ->whereHas('bookings', function ($query) {
-                                        $query->where('End_date', '>', Carbon::today());
-                                    })->get();
+                                        $query->where('End_date', '>=', Carbon::today());
+                                    })
+                                    ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
+                                    ->paginate(3);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -213,21 +214,15 @@ class AdminController extends Controller
         //โชว์สถานะสัตว์เลี้ยง
         public function petstatus(){
             try {
-<<<<<<< HEAD
                 $BooksRooms = Bookings::with('pet_status')->get();
                 $admin = Auth::user()->name;
                 return view("Admin.AdminPets", compact("BooksRooms","admin"));
-=======
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->get();
-                return view("Admin.AdminPets", compact("Rooms"));
->>>>>>> boss
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
 
         }
 
-<<<<<<< HEAD
         public function petdetail($id){
             $booking = Bookings::findOrFail($id);
             $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
@@ -266,8 +261,8 @@ class AdminController extends Controller
                 $checkoutDate = Carbon::parse($bk->End_date);
                 $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
             }
-            dd($bookings);
-            // return view('Admin.AdminBookings', compact('bookings','countDates'));
+            
+            return view('Admin.AdminBookings', compact('bookings','countDates'));
 
         }
 
@@ -276,25 +271,3 @@ class AdminController extends Controller
             $bookings = Bookings::findOrFail($id);
         }
 }
-=======
-         // Submit the report
-    public function submitReport(Request $request)
-    {
-        $request->validate([
-            'booking_id' => 'required|exists:bookings,id',
-            'report' => 'required|string',
-        ]);
-
-        // Store the report
-        PetStatus::create([
-            'booking_id' => $request->input('booking_id'),
-            'report' => $request->input('report'),
-            'admin_id' => auth()->user()->id(),
-        ]);
-
-        return redirect()->route('admin.report', $request->input('booking_id'))
-                        ->with('success', 'Report submitted successfully.');
-    }
-        
-    }
->>>>>>> boss

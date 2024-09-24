@@ -26,7 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
-    ->withSchedule(function (Schedule $schedule) { // เพิ่มส่วนนี้
+    ->withSchedule(function (Schedule $schedule) {
         $schedule->call(function () {
             (new AdminController)->updateExpiredBookings();
         })->daily();

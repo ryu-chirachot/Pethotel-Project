@@ -1,32 +1,7 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-<<<<<<< HEAD
 <head>
-=======
-<?php
-// ตัวอย่างรายการจอง
-$bookings = [
-    [
-        'name' => 'คุณ ดวงใจ ใจดี',
-        'nights' => 1,
-        'check_in' => '15 สิงหาคม',
-        'check_out' => '16 สิงหาคม',
-        'room' => 'Standard Room',
-        'booking_code' => 'OR12569722564874456'
-    ],
-// เพิ่มการจองเพิ่มเติมตามความจำเป็น
-];
-
-?>
-
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pawsome Stay Hotel System</title>
->>>>>>> boss
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -57,13 +32,19 @@ $bookings = [
     </style>
 </head>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<div class="display-inline text-center my-1">
+        <h3><b>หน้าแรก</b></h3>
+    </div>
+>>>>>>> ryu
     <div class="container">
+        
         @foreach ($bookings as $bk)
         <h1>รายละเอียดการจอง</h1>
         <div class="reservation">
             <p>1 ผู้เข้าพัก | {{$countDates[$bk->BookingOrderID]}} คืน</p> <!-- แสดงจำนวนคืน -->
             <p>วันที่เข้าพัก: {{ $bk->Start_date }} ถึง {{ $bk->End_date }}</p> <!-- แสดงวันที่เข้าพัก -->
-            
             <p>ห้องพัก: {{ $bk->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p> <!-- แสดงชื่อห้องพัก -->
             <p>หมายเลขการจอง: <span class="booking-code">{{ $bk->BookingOrderID }}</span></p> <!-- แสดงหมายเลขการจอง -->
         </div>

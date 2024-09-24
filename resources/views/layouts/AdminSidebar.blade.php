@@ -55,7 +55,7 @@
                 </li>
 
                 <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}}">
+                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}} " data-toggle="tooltip" data-placement="right" title="รายงานสถานะ">
                         <i class="fas fa-paw me-2"></i>สัตว์เลี้ยง
                     </a>
                 </li>
@@ -74,14 +74,8 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <!-- Bootstrap Bundle with Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-=======
-    <!-- Bootstrap JS and dependencies ใช้ในการทำ tooltpis-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
->>>>>>> boss
     <script src="{{ asset('js/rooms.js') }}"></script>
 </body>
 </html>
