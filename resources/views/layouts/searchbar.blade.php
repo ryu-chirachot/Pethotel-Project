@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,7 +19,7 @@
 <nav class="navbar navbar-expand-lg  bg-warning">
     <div class="container-fluid ms-2 me-2">
       <a class="navbar-brand" href="#">
-        <img class="logo" src="img/logo2.png" alt="รูปภาพโลโก้เว็บไซต์ Tail and Paw" height="50">
+      <i class="fa-solid fa-paw"> Paw some Hotel</i>
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
         <span class="d-flex me-3 iconphone">
@@ -35,18 +36,18 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       
           <li class="nav-item">
-            <a class="nav-link" href="{{route('home')}}">Home</a>
+            <a class="nav-link" href="{{route('home')}}">
+            หน้าหลัก</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="About.html">test</a>
+            <a class="nav-link" href="About.html">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Contack.html">Contact</a>
+            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
           </li>
         </ul>
 
 
-        <!-- ปุ่ม Cart และ Login/Register -->
         <ul class="navbar-nav ms-auto">
          
           <li class="nav-item">
@@ -60,7 +61,6 @@
     </div>
   </nav>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <div id="cen" class="container">
@@ -80,12 +80,12 @@
 
         <div>
             <label for="check_in">วันเข้าพัก</label>
-            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}">
+            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
         </div>
 
         <div>
             <label for="check_out">สิ้นสุด</label>
-            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}">
+            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
         </div>
 
         <button type="submit">ค้นหาห้องพัก</button>

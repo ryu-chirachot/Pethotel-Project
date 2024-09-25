@@ -31,8 +31,12 @@ Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main')
 Route::post('/room/search',[SearchController::class,'search']
 )->name('search.result');
 
-Route::post('/success',[BookingController::class,'booked'])->name('success');
 
+
+Route::post('/success',[BookingController::class,'booked'])->name('success');
+Route::get('/test', function () {
+    return view('reviews');});
+    Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 Route::middleware([
     'auth:sanctum',

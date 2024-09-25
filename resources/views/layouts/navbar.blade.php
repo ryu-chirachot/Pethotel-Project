@@ -14,7 +14,7 @@
 <nav class="navbar navbar-expand-lg  bg-warning">
     <div class="container-fluid ms-2 me-2">
       <a class="navbar-brand" href="#">
-        <img class="logo" src="img/logo2.png" alt="รูปภาพโลโก้เว็บไซต์ Tail and Paw" height="50">
+      <i class="fa-solid fa-paw"> Paw some Hotel</i>
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
         <span class="d-flex me-3 iconphone">
@@ -31,45 +31,30 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       
           <li class="nav-item">
-            <a class="nav-link" href="{{route('home')}}">Home</a>
+            <a class="nav-link" href="{{route('home')}}">
+            หน้าหลัก</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="About.html">test</a>
+            <a class="nav-link" href="About.html">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Contack.html">Contact</a>
+            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
           </li>
         </ul>
 
 
-      <!-- ปุ่ม Login/Register -->
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        @if (Route::has('login'))
-          @auth
-            <!-- ถ้าผู้ใช้ล็อกอินแล้ว แสดงลิงก์ Dashboard -->
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
-            </li>
-          @else
-            <!-- ถ้ายังไม่ได้ล็อกอิน แสดงลิงก์ Login -->
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">Login</a>
-            </li>
-
-            @if (Route::has('register'))
-              <!-- ลิงก์ Register -->
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">Register</a>
-              </li>
-            @endif
-          @endauth
-        @endif
-      </ul>
+        <ul class="navbar-nav ms-auto">
+         
+          <li class="nav-item">
+            <a href="login.html" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+          </li>
+          <li class="nav-item">
+            <a href="register.html" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+  </nav>
 
   
     <div>
