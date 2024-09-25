@@ -38,35 +38,39 @@
             </p>
             <form action="{{ route('info') }}" method="POST" class="booking-form">
                 @csrf
-                <input type="hidden" name="pet_type_id" value="{{ session('pet_type_id') }}">
-                <input type="hidden" name="check_in" value="{{ session('check_in') }}">
-                <input type="hidden" name="check_out" value="{{ session('check_out') }}">
-                <input type="hidden" name="room_type_name" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_name }}">
-                <input type="hidden" name="room_type" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_id }}">                <button type="submit" class="btn btn-success float-end">จองเลย</a>
+                @foreach($rooms as $room)
+                    <input type="hidden" name="room_id" value="{{$room->Rooms_id}}">
+                    <input type="hidden" name="pet_type_id" value="{{ session('pet_type_id') }}">
+                    <input type="hidden" name="check_in" value="{{ session('check_in') }}">
+                    <input type="hidden" name="check_out" value="{{ session('check_out') }}">
+                    <input type="hidden" name="room_type_name" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_name }}">
+                    <input type="hidden" name="room_type" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_id }}">
+                @endforeach<!--  ปิดลูปไอดีห้อง -->
+                <button type="submit" class="btn btn-success float-end">จองเลย</a>  
             </form>
-        </div>
-        
-        <div class="card-footer bg-light">
-            <div class="d-flex justify-content-center">
-                <div class="d-flex align-items-center mx-2">
-                    <i class="bi bi-fan me-1"></i>
-                    <small>เครื่องปรับอากาศ</small>
-                </div>
-                <div class="d-flex align-items-center mx-2">
-                    <i class="bi bi-moon me-1"></i>
-                    <small>เบาะนอน</small>
-                </div>
-                <div class="d-flex align-items-center mx-2">
-                    <i class="bi bi-droplet me-1"></i>
-                    <small>น้ำดื่ม</small>
-                </div>
-                <div class="d-flex align-items-center mx-2">
-                    <i class="bi bi-brush me-1"></i>
-                    <small>อาบน้ำตัดขน</small>
+            </div>
+                <div class="card-footer bg-light">
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex align-items-center mx-2">
+                            <i class="bi bi-fan me-1"></i>
+                            <small>เครื่องปรับอากาศ</small>
+                        </div>
+                        <div class="d-flex align-items-center mx-2">
+                            <i class="bi bi-moon me-1"></i>
+                            <small>เบาะนอน</small>
+                        </div>
+                        <div class="d-flex align-items-center mx-2">
+                            <i class="bi bi-droplet me-1"></i>
+                            <small>น้ำดื่ม</small>
+                        </div>
+                        <div class="d-flex align-items-center mx-2">
+                            <i class="bi bi-brush me-1"></i>
+                            <small>อาบน้ำตัดขน</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        
     @endforeach <!-- ปิดลูปประเภทห้อง -->
 </div>
 @endsection

@@ -49,8 +49,14 @@ Route::middleware([
 Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
 
 //การจอง
-Route::get('/Admin/Bookings', [AdminController::class,'showBookings'])->middleware('admin')->name('Admin.bookings');
-Route::get('/Admin/Bookings/{id}',[AdminController::class,'detail'])->middleware('admin')->name('Admin.bookings.detail');
+Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(function () {
+    
+    Route::get('/', [AdminController::class, 'showBookings'])->name('bookings');
+    Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
+    Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('boookings.confirmPayment');
+    Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
+    Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
+});
 
 //ห้อง
 Route::get('/Admin/Rooms',[AdminController::class,'rooms'])->middleware('admin')->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด

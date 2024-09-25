@@ -1,6 +1,7 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
+
 @if (session('success'))
     <script>
         Swal.fire({
@@ -10,6 +11,7 @@
 });
     </script>
 @endif
+
 @if (session('complete'))
     <script>
         Swal.fire({
@@ -20,6 +22,15 @@
     </script>
 @endif
 
+@if (session('error'))
+    <script>
+        Swal.fire({
+  title: "ยังไม่มีข้อมูลการจองห้องนี้",
+  text: "{{ session('error') }}",
+  icon: "info"
+});
+    </script>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">

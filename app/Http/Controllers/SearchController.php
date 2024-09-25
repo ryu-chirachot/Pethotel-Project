@@ -38,7 +38,7 @@ class SearchController extends Controller
     // ดึงข้อมูลห้องที่ว่างตามเงื่อนไขโดยกรองตามประเภทสัตว์เลี้ยงและวันที่จอง
     $rooms = Rooms::whereDoesntHave('bookings', function ($query) use ($checkIn, $checkOut) {
             $query->where('Start_date', '<=', $checkOut)
-                  ->where('End_date', '>=', $checkIn);
+                ->where('End_date', '>=', $checkIn);
         })
         ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
             $query->where('pet_type_id', $petTypeId);

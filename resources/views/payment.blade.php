@@ -14,7 +14,9 @@
                 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid ">
     <div class="paw"> 
-    <a class="navbar-brand" href="#">Pawsome Stay Hotel</a>
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-paw"></i>&nbsp;
+    Pawsome Stay Hotel</a>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -79,6 +81,8 @@
                 </div>
                 <form action="{{route('success')}}" method="post">
                     @csrf
+                    <input type="hidden" name="room_id" value="{{ $room_id }}">
+                    <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
                     <input type="hidden" name="roomTypeName" value="{{ $roomTypeName }}">
                     <input type="hidden" name="checkIn" value="{{ $checkIn }}">
                     <input type="hidden" name="checkOut" value="{{ $checkOut }}">
@@ -91,14 +95,19 @@
                     <input type="hidden" name="pet_gender" value="{{ $pet_gender }}">
                     <input type="hidden" name="price" value="{{ $price }}">
                     <h2>ช่องทางการชำระเงิน</h2>
-                    <p>
-                    <input type="radio" class="btn-check" name="payment" id="success-outlined" value="1" autocomplete="off" checked>
-                    <label class="btn btn-outline-success" for="success-outlined">เงินสด</label>
-                    </p>
-                    <p>
-                    <input type="radio" class="btn-check" name="payment" id="danger-outlined" value="2" autocomplete="off">
-                    <label class="btn btn-outline-success" for="danger-outlined">พร้อมเพย์</label>
-                    </p>
+                    @foreach($payment as $pay)
+                    @if($pay->PaymentMethodID == 1)
+                      <p>
+                      <input type="radio" class="btn-check" name="payment" id="success-outlined" value="{{$pay->PaymentMethodID}}" autocomplete="off" checked>
+                      <label class="btn btn-outline-success" for="success-outlined">{{$pay->MethodName}}</label>
+                      </p>
+                    @else
+                      <p>
+                      <input type="radio" class="btn-check" name="payment" id="danger-outlined" value="{{$pay->PaymentMethodID}}" autocomplete="off">
+                      <label class="btn btn-outline-success" for="danger-outlined">{{$pay->MethodName}}</label>
+                      </p>
+                    @endif
+                    @endforeach
                 <button type="submit" ><b>ยืนยัน</b></button>
                 </form>
             </div>

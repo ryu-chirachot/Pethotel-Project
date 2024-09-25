@@ -60,11 +60,16 @@
                     </a>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('Admin/Settings') ? 'active' : '' }}" href="{{route('Admin.setting')}}">
-                        <i class="fas fa-cog me-2"></i>การตั้งค่า
+                @auth
+                <li class="nav-item mb-3">
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                        @csrf
+                    </form>
+                    <a class="nav-link" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ
                     </a>
                 </li>
+                @endauth
             </ul>
         </nav>
 
