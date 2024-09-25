@@ -3,15 +3,16 @@
 <!-- ส่วนที่จะทำ -->
 <style>
         body {
+
             font-family: 'Kanit', sans-serif;
             background-color: #f4f4f4;
-            margin:2 ;
+            margin: 0px; ;
             padding: 20px;
         }
         .booking-summary {
             background-color: white;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
