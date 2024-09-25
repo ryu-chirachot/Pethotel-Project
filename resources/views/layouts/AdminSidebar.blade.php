@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/Rooms.css') }}">
     <style>
@@ -22,9 +24,10 @@
     <div class="d-flex">
         <nav class="sidebar bg-light p-3" style="width: 250px;">
             <h4 class="mb-4 text-center">
-                <img src="https://img.icons8.com/ios-filled/100/cat-footprint.png" alt="cat-footprint" style="width: 30px; height: 30px; margin-right: 10px;" >
+                <i class="fas fa-paw"></i>&nbsp;
                 Pawsome Stay
             </h4>
+            <hr>
             <ul class="nav flex-column">
                 <li class="nav-item mb-3">
                     <a class="nav-link {{ Request::is('Admin/Home') ? 'active' : '' }}" href="{{route('Admin.index')}}">
@@ -36,26 +39,37 @@
                         <i class="fas fa-book me-2"></i> การจอง
                     </a>
                 </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">
-                        <i class="fas fa-bed me-2"></i>ห้องพัก
+
+                <li class="nav-item mb-3" id="Rooms">
+                    <a class="nav-link" id="roomsButton">
+                        <i class="fas fa-bed me-2"></i>ห้องพัก<i id="drop" class="fas fa-caret-down"></i>
                     </a>
+                    <ul id="roomSubMenu" style="display: none;">
+                        <li class="nav-item mb-1" style="margin-top: 5px;">
+                            <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">แก้ไขห้องพัก</a>
+                        </li>
+                        <li class="nav-item mb-1">
+                            <a class="nav-link {{ Request::is('Admin/Rooms/create') ? 'active' : '' }}" href="{{route('Admin.rooms.create')}}">เพิ่มห้องพัก</a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}}">
+                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}} " data-toggle="tooltip" data-placement="right" title="รายงานสถานะ">
                         <i class="fas fa-paw me-2"></i>สัตว์เลี้ยง
                     </a>
                 </li>
+                
+                @auth
                 <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Payments') ? 'active' : '' }}" href="{{route('Admin.payments')}}">
-                        <i class="fas fa-wallet me-2"></i>การชำระเงิน
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                        @csrf
+                    </form>
+                    <a class="nav-link" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('Admin/Settings') ? 'active' : '' }}" href="{{route('Admin.setting')}}">
-                        <i class="fas fa-cog me-2"></i>การตั้งค่า
-                    </a>
-                </li>
+                @endauth
             </ul>
         </nav>
 
@@ -65,8 +79,8 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/rooms.js') }}"></script>
 </body>
 </html>

@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>@yield('title','')</title>
     <link rel="stylesheet" href="/css/nav.css">
-    
 </head>
-<body id="mg">
-<header>
-       
-<nav>
+<body>
+<div>
+    <nav>
         <div class="logo-container">
             <img src="logo.png" alt="Logo" class="logo">
             <span class="website-name">ชื่อเว็บไซต์</span>
@@ -20,7 +18,10 @@
             <li><a href="#booking">Booking</a></li>
             <li><a href="#about">About</a></li>
         </ul>
-    </nav>
-</header>
+    </nav>  
+    </div>
+    <div>
+  @yield('content')
+  </div>
 </body>
 </html>

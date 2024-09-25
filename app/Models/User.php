@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -24,9 +25,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'fname',
+        'lname',
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -61,5 +65,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Bookings::class,'BookingOrderID');
+    }
+
+    public function pets()
+    {
+        return $this->hasMany(Pets::class,'Pet_id');
+    }
+    
+    public function pet_status()
+    {
+        return $this->belongsTo(PetStatus::class, 'PetStatusID');
     }
 }

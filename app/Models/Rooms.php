@@ -11,14 +11,15 @@ class Rooms extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'rooms';
     protected $primaryKey = 'Rooms_id';
     protected $fillable = [
-        'Pet_Room_typeID', 'Rooms_status','updateat','deleteat'
+        'Pet_Room_typeID', 'Rooms_status','updated_at','deleted_at'
     ];
 
-    public function petTypeRoomType()
+    public function pet_Type_Room_Type()
     {
-        return $this->belongsTo(pet_type_room_type::class, 'Pet_Room_typeID');
+        return $this->belongsTo(Pet_Type_Room_Type::class, 'Pet_Room_typeID');
     }
 
     public function bookings()

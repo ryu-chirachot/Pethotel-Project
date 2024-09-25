@@ -14,7 +14,7 @@ class Rooms_type extends Model
 
     protected $table = 'rooms_type';
     protected $primaryKey = 'Rooms_type_id';
-    protected $fillable = ['name', 'description', 'price','updateat','deleteat'];
+    protected $fillable = ['Rooms_type_name','updated_at','deleted_at'];
 
     public function petTypes(): BelongsToMany
     {

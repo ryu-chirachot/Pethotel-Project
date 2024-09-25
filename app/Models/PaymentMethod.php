@@ -11,9 +11,10 @@ class PaymentMethod extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table= 'payment_methods';
     protected $primaryKey = 'PaymentMethodID';
     protected $fillable = [
-        'PaymentName','updateat','deleteat'
+        'PaymentName','updated_at','deleted_at'
     ];
 
     public function bookings()

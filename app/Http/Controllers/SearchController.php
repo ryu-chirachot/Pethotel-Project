@@ -1,35 +1,84 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use App\Models\Pet_type;
 use Illuminate\Http\Request;
+use App\Models\Rooms;
+use App\Models\Pet_Type_Room_Type;
+use App\Models\Bookings;
+use App\Models\Rooms_type;
+
 
 class SearchController extends Controller
 {       
-    function showpet(){
-        $p_type=pet_type::all();
-        return view("layouts.searchbar",compact('p_type'));
+    public function showpet($viewname)
+    {
+        $p_type = pet_type::all();
+        return view(('main/').$viewname,compact('p_type'));
     }
-    function search(Request $request){
-        {
-            $room=rooms::where("Rooms_status",1)->get();
-            $p_type=pet_type::where("pet_type_id",$request->input('pet_type'));
-        }
-    }
-    // function search($request){
 
-    //     $search= Rooms::all();
-    //     if($request->$p_type->ptype_name ="กระต่าย")
-    //     $roomcount = count($search->room=="1");
-    //     $type1count=count();
-    //     $type2count=count();
-    //     $type3count=count();
-    // }
-    // function searchResult(){
-    //     $result=Rooms::all();
-    //     $roomtype1=//ข้อมูลต่างๆที่จะแสดง;
-    //     $roomtype2=//ข้อมูลต่างๆที่จะแสดง;
-    //     $roomtype3=//ข้อมูลต่างๆที่จะแสดง;
-    // }
+
     
+    public function search(Request $request)
+{
+    // ดึงข้อมูลประเภทสัตว์เลี้ยงทั้งหมด
+    $p_type = Pet_type::all();
+
+    // รับข้อมูลจากฟอร์ม
+    $petTypeId = $request->input('pet_type_id');
+    $checkIn = $request->input('check_in');
+    $checkOut = $request->input('check_out');
+
+    // เก็บค่าใน session
+    session()->put('pet_type_id', $petTypeId);
+    session()->put('check_in', $checkIn);
+    session()->put('check_out', $checkOut);
+
+    // ดึงข้อมูลห้องที่ว่างตามเงื่อนไขโดยกรองตามประเภทสัตว์เลี้ยงและวันที่จอง
+    $rooms = Rooms::whereDoesntHave('bookings', function ($query) use ($checkIn, $checkOut) {
+            $query->where('Start_date', '<=', $checkOut)
+                ->where('End_date', '>=', $checkIn);
+        })
+        ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
+            $query->where('pet_type_id', $petTypeId);
+        })
+        ->with(['pet_Type_Room_Type.roomType'])
+        ->get();
+
+    // จัดกลุ่มห้องตาม Rooms_type_id
+    $groupedRooms = $rooms->groupBy('pet_Type_Room_Type.roomType.Rooms_type_id');
+
+    // นับจำนวนห้องในแต่ละประเภท
+    $roomCounts = $groupedRooms->map(function ($group) {
+        return $group->count();
+    });
+    
+    // ส่งข้อมูลไปยัง view
+    return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts'));
 }
+
+    public function refresh()
+{
+    // ลบค่าทั้งหมดใน Session
+    session()->flush();
+    
+    // แสดงหน้า Homepage
+    return redirect()->back();
+}
+}
+
+// // $rooms = Rooms::with([
+//     'pet_Type_Room_Type.petType',  // ดึงข้อมูล petType
+//     'pet_Type_Room_Type.roomType',
+//     'pet_Type_Room_Type.rooms.bookings'
+// ])
+// ->where('Rooms_status', 1)
+// ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
+//     $query->where('Pet_type_id', $petTypeId);
+// })
+// ->whereHas('bookings', function ($query) use ($c_in, $c_out) {
+//     $query->whereNotBetween('Start_date', [$c_in, $c_out])
+//           ->whereNotBetween('End_date', [$c_in, $c_out]);
+// })
+// ->get();

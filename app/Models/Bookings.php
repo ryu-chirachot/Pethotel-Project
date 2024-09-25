@@ -11,14 +11,15 @@ class Bookings extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'bookings';
     protected $primaryKey = 'BookingOrderID';
     protected $fillable = [
-        'BookingOrderID', 'User_id', 'Pet_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updateat','deleteat'
+        'BookingOrderID', 'User_id', 'Pet_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updated_at','deleted_at'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User_pethotel::class, 'User_id');
+        return $this->belongsTo(User::class,'User_id' ,'id');
     }
 
     public function pet()
@@ -43,7 +44,8 @@ class Bookings extends Model
 
 
     public function pet_status()
-    {
-        return $this->hasMany(PetStatus::class, 'PetStatusID');
-    }
+{
+    return $this->hasMany(PetStatus::class, 'BookingOrderID', 'BookingOrderID');
+}
+
 }

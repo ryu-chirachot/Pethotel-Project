@@ -11,12 +11,20 @@ class PetStatus extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'pet_status';
+    protected $primaryKey = 'PetStatusID';
     protected $fillable = [
-        'BookingOrderID', 'Report','updateat','deleteat'
+        'BookingOrderID', 'Report','status','updated_at','deleted_at'
     ];
 
     public function booking()
     {
-        return $this->belongsTo(Bookings::class, 'PetStatusID');
+    return $this->belongsTo(Bookings::class, 'BookingOrderID', 'BookingOrderID');
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'Admin_id' ,'id');
     }
 }
