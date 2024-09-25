@@ -41,7 +41,6 @@ class Bookings extends Model
         return $this->hasOne(Reviews::class, 'BookingOrderID');
     }
 
-
     public function pet_status()
     {
         return $this->hasMany(PetStatus::class, 'PetStatusID');

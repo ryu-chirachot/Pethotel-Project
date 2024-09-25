@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\ReviewController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,3 +57,7 @@ Route::get('/Admin/Rooms/search',[AdminController::class,'searchRoom'])->name('A
 
 Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->name('rooms.update');
 
+// จองห้องพัก
+Route::get('/bookings', [BooksController::class, 'showRoomsPets']);
+// หน้ารีวิว
+Route::get('/review', [ReviewController::class, 'showReview']);
