@@ -31,6 +31,16 @@
 });
     </script>
 @endif
+
+@if (session('update'))
+    <script>
+        Swal.fire({
+  title: "อัปเดตการจองที่หมดอายุแล้ว ",
+  text: "{{ session('update') }}",
+  icon: "success"
+});
+    </script>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">

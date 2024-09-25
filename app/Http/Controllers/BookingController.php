@@ -11,6 +11,7 @@ use App\Models\bookings;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PetStatus; 
+
 class BookingController extends Controller
 {
     function send(Request $request)
@@ -119,5 +120,41 @@ class BookingController extends Controller
 
         // dd($pet);
         return redirect()->route('home');
+    }
+
+
+
+
+    public function index()
+    {
+        // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
+        $usID = Auth::user()->id;
+        $bookings = bookings::where('User_id', $usID)
+        ->orderBy('BookingOrderID', 'desc')
+        ->get();
+        return view('User.DetailBookings', compact('bookings'));
+    }
+
+    // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการ
+    public function show($id)
+    {
+        // ดึงข้อมูลการจองที่เลือก
+        $usID = Auth::user()->id;
+        $booking = bookings::where('BookingOrderID', $id)
+                        ->where('User_id', $usID)
+                        ->firstOrFail();
+        return view('User.showDetail', compact('booking'));
+    }
+
+    // ฟังก์ชันแสดงสถานะสัตว์เลี้ยง
+    public function petStatus($id)
+    {
+        // ดึงข้อมูลสัตว์เลี้ยงที่เกี่ยวข้องกับการจอง
+        $usID = Auth::user()->id;
+        $pet = Pets::where('BookingOrderID', $id)
+                ->where('User_id', $usID)
+                ->firstOrFail();
+                
+        return view('User.Petstatus', compact('pet'));
     }
 }

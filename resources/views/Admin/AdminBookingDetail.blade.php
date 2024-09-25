@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.AdminSidebar')
 
 @section('content')
 <h1>รายละเอียดการจอง</h1>

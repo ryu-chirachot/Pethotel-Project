@@ -16,6 +16,15 @@
     </script>
 @endif
 
+@if (session('checkout'))
+    <script>
+        Swal.fire({
+  title: "แจ้งให้เช็คเอาท์",
+  text: "{{ session('checkout') }}",
+  icon: "success"
+});
+    </script>
+@endif
 
 <div class="container">
     <div class="row">
@@ -70,7 +79,9 @@
                                             @foreach($bk->pet_status as $pt)
                                                 @if($pt->status == 1)
                                                     <span class="badge bg-success">รายงานแล้ว</span>
-                                                @else
+                                                @elseif($bk->Booking_status == 2)
+                                                    <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
+                                                @else 
                                                     <span class="badge bg-danger">ยังไม่รายงาน</span>
                                                 @endif
                                             @endforeach
