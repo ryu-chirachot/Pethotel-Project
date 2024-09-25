@@ -1,18 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Models\Reviews;
 
 class ReviewController extends Controller
 {
-    // ฟังก์ชันสำหรับจัดการการส่งรีวิว
     public function submitReview(Request $request)
     {
         Reviews::create([
-            // 'BookingOrderID' => $request->BookingOrderID,
+            'BookingOrderID' => 1,
             'Rating' => $request->rating,
-            'comment' => $request->comment,
+            'content' => $request->comment,
         ]);
 
         // Redirect 

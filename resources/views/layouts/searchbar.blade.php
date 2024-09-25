@@ -94,6 +94,7 @@
 
     <div >
         @yield('content')
+        @yield('review')
         </div>
 </body>
 </html>

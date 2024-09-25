@@ -69,12 +69,16 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany(Bookings::class);
+        return $this->hasMany(Bookings::class,'BookingOrderID');
     }
 
     public function pets()
     {
-        return $this->hasMany(Pets::class);
+        return $this->hasMany(Pets::class,'Pet_id');
     }
     
+    public function pet_status()
+    {
+        return $this->belongsTo(PetStatus::class, 'PetStatusID');
+    }
 }
