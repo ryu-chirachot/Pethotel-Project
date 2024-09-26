@@ -1,42 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+@extends('layouts.navbar')
+@section('content')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/payment.css') }}">
-</head>
-<body>
-
- 
-                <nav class="navbar navbar-expand-lg">
-  <div class="container-fluid ">
-    <div class="paw"> 
-    <a class="navbar-brand" href="#">
-      <i class="fas fa-paw"></i>&nbsp;
-    Pawsome Stay Hotel</a>
-    </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Booking</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#">Contact</a>
-        </li>
-        
-      </ul>
-    </div> 
-  </div>
-</nav>
 
 
 <div class="container-fluid" id="section">
@@ -95,20 +61,15 @@
                     <input type="hidden" name="pet_gender" value="{{ $pet_gender }}">
                     <input type="hidden" name="price" value="{{ $price }}">
                     <h2>ช่องทางการชำระเงิน</h2>
-                    @foreach($payment as $pay)
-                    @if($pay->PaymentMethodID == 1)
-                      <p>
-                      <input type="radio" class="btn-check" name="payment" id="success-outlined" value="{{$pay->PaymentMethodID}}" autocomplete="off" checked>
-                      <label class="btn btn-outline-success" for="success-outlined">{{$pay->MethodName}}</label>
-                      </p>
-                    @else
-                      <p>
-                      <input type="radio" class="btn-check" name="payment" id="danger-outlined" value="{{$pay->PaymentMethodID}}" autocomplete="off">
-                      <label class="btn btn-outline-success" for="danger-outlined">{{$pay->MethodName}}</label>
-                      </p>
-                    @endif
-                    @endforeach
-                <button type="submit" ><b>ยืนยัน</b></button>
+                    <p>
+                    <input type="radio" class="btn-check" name="payment" id="success-outlined" value="1" autocomplete="off" checked>
+                    <label class="btn btn-outline-success" for="success-outlined">เงินสด</label>
+                    </p>
+                    <p>
+                    <input type="radio" class="btn-check" name="payment" id="danger-outlined" value="2" autocomplete="off">
+                    <label class="btn btn-outline-success" for="danger-outlined">พร้อมเพย์</label>
+                    </p>
+                <button class="d-flex align-items-center justify-content-center" type="submit" ><b>ยืนยัน</b></button>
                 </form>
             </div>
 
@@ -122,5 +83,4 @@
 </script>
 
     
-</body>
-</html>
+@endsection
