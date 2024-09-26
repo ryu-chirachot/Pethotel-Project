@@ -37,7 +37,7 @@ Route::post('/room/search',[SearchController::class,'search']
 
 
 Route::post('/success',[BookingController::class,'booked'])->name('success');
-Route::get('/test', function () {
+Route::get('/review', function () {
     return view('reviews');});
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 

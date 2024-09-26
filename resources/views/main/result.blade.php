@@ -25,16 +25,23 @@
         </div>
         
             <div class="row g-2 mb-3">
-                <!-- รูปภาพห้อง -->
-                <div class="col-4">
-                    <img src="https://via.placeholder.com/300x200" alt="Room view 1" class="img-fluid rounded">
+                @foreach ($Pets_rooms as $Pet_room)
+
+        @php
+            $imagePaths = explode(", ", $Pet_room->image->ImagesPath);
+            $count = 1;
+        @endphp
+
+        <div class="grid-container">
+            @foreach ($imagePaths as $path)
+                <div class="image{{ $count }}">
+                    <img src="{{asset('images/'.trim($path)) }}" alt="{{ $Pet_room->image->ImagesName }}">
                 </div>
-                <div class="col-4">
-                    <img src="https://via.placeholder.com/300x200" alt="Room view 2" class="img-fluid rounded">
-                </div>
-                <div class="col-4">
-                    <img src="https://via.placeholder.com/300x200" alt="Room view 3" class="img-fluid rounded">
-                </div>
+                @php
+                    $count++;
+                @endphp
+            @endforeach
+            @endforeach
             </div>
         <div class="card-body">
             <p class="card-text small mb-3">
@@ -81,7 +88,7 @@
     @endforeach <!-- ปิดลูปประเภทห้อง -->
     @endif
 </div>
+@section('title','ผลการค้นหา')
 @endsection
 
 
-@section('title','ผลการค้นหา')

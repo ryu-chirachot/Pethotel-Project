@@ -52,11 +52,11 @@
         <!-- ถ้ายังไม่ login  -->
         @guest
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+          <li class="nav-item ">
+            <a href="{{ route('login') }}" class="btn btn-danger">เข้าสู่ระบบ</a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('register') }}" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+            <a href="{{ route('register') }}" class="btn btn-danger">สมัครสมาชิก</a>
           </li>
           
         @endguest
@@ -130,12 +130,12 @@
 
         <div>
             <label for="check_in">วันเข้าพัก</label>
-            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         </div>
 
         <div>
             <label for="check_out">สิ้นสุด</label>
-            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
+            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}} re">
         </div>
 
         <button type="submit" class="btn btn-warning">ค้นหาห้องพัก</button>
@@ -146,5 +146,6 @@
         @yield('content')
         @yield('review')
         </div>
+        
 </body>
 </html>
