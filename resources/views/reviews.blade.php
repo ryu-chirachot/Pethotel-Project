@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label for="comment">ความคิดเห็น</label>
-                    <textarea name="comment" id="comment" class="form-control" rows="4"></textarea>
+                    <textarea name="content" id="comment" class="form-control" rows="4"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">ยืนยัน</button>
             </form>

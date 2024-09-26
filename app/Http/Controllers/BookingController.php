@@ -91,7 +91,7 @@ class BookingController extends Controller
         $pet->Pet_breed = $pet_breed;
         $pet->Pet_weight = $pet_weight;
         $pet->Pet_Gender = $pet_gender;
-        //$pet->additional_info = $additional_info;
+        $pet->additional_info = $additional_info;
         $pet->save();
 
         $room = Rooms::findOrFail($room_id);

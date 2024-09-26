@@ -24,7 +24,7 @@ Route::middleware('checkLogin')->group(function(){
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
 Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
-Route::post('/info', [BookingController::class, 'send'])->name('info');
+Route::post('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
 
 Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
@@ -40,15 +40,15 @@ Route::get('/test', function () {
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:admin',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/Admin', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
