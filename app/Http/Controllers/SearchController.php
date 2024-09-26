@@ -66,19 +66,11 @@ class SearchController extends Controller
     // แสดงหน้า Homepage
     return redirect()->back();
 }
+public function showRoomsPets()
+    {
+        $Pets_rooms = pet_type_room_type::with(['roomType', 'image'])->get();
+        
+        return view('bookings', compact('Pets_rooms'));
+    }
 }
 
-// // $rooms = Rooms::with([
-//     'pet_Type_Room_Type.petType',  // ดึงข้อมูล petType
-//     'pet_Type_Room_Type.roomType',
-//     'pet_Type_Room_Type.rooms.bookings'
-// ])
-// ->where('Rooms_status', 1)
-// ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
-//     $query->where('Pet_type_id', $petTypeId);
-// })
-// ->whereHas('bookings', function ($query) use ($c_in, $c_out) {
-//     $query->whereNotBetween('Start_date', [$c_in, $c_out])
-//           ->whereNotBetween('End_date', [$c_in, $c_out]);
-// })
-// ->get();

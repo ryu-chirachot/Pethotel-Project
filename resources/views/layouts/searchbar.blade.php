@@ -16,50 +16,81 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
-<nav class="navbar navbar-expand-lg  bg-warning">
+<nav class="navbar navbar-expand-lg bg-warning">
     <div class="container-fluid ms-2 me-2">
-      <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-paw"> Paw some Hotel</i>
-      </a>
-      <div class="d-flex d-lg-none ms-auto align-items-center">
-        <span class="d-flex me-3 iconphone">
-          <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-          <a class="nav-link" href="#">เข้าสู่ระบบ</a>
-        </span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
+        <a class="navbar-brand" href="#">
+            <i class="fa-solid fa-paw"> Paw some Hotel</i>
+        </a>
+        <div class="d-flex d-lg-none ms-auto align-items-center">
+            <span class="d-flex me-3 iconphone">
+                <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
+                <a class="nav-link" href="#">เข้าสู่ระบบ</a>
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
 
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('home')}}">
-            หน้าหลัก</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="About.html">ประวัติการจอง</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarText"> <!-- ใช้ justify-content-between -->
+            <!-- เมนูด้านซ้าย -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
+                </li>
+            </ul>
 
+            <!-- เมนูตรงกลาง -->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-center" href="About.html">ประวัติการจอง</a>
+                </li>
+            </ul>
 
-        <ul class="navbar-nav ms-auto">
-         
-          <li class="nav-item">
-            <a href="login.html" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
-          </li>
-          <li class="nav-item">
-            <a href="register.html" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
-          </li>
-        </ul>
-      </div>
+            <!-- เมนูด้านขวา -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="Contact.html">ติดต่อเรา</a>
+                </li>
+            </ul>
+        </div>
+
+            <div class="ml-auto">
+                <ul class="navbar-nav p-auto">
+                    @guest
+                        <li class="nav-item me-2">
+                            <a href="{{ route('login') }}" class="btn btn-success">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="btn btn-outline-success">Register</a>
+                        </li>
+                    @endguest
+
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">แก้ไขข้อมูล</a></li>
+                                <li><a class="dropdown-item" href="#">ศูนย์ช่วยเหลือ</a></li>
+                                <li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a class="dropdown-item" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ออกจากระบบ</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endauth
+                </ul>
+            </div>
+        </div>
     </div>
-  </nav>
+</nav>
+
 
 
 
@@ -80,12 +111,12 @@
 
         <div>
             <label for="check_in">วันเข้าพัก</label>
-            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+            <input type="date" id="check_in" name="check_in" value="{{ session('check_in') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" required>
         </div>
 
         <div>
             <label for="check_out">สิ้นสุด</label>
-            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
+            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}} re">
         </div>
 
         <button type="submit">ค้นหาห้องพัก</button>
@@ -96,5 +127,6 @@
         @yield('content')
         @yield('review')
         </div>
+        
 </body>
 </html>
