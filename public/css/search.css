@@ -46,11 +46,6 @@ button #submit-search{
     transition: background 0.3s;
 }
 
-/* button[type="submit"]:hover {
-    background: #ffae4b;
-} */
-
-
 #cen {
     display: flex;
     justify-content: center;
@@ -76,21 +71,21 @@ form > div {
     z-index: 1; /* กำหนด z-index ให้ .banner เพื่อให้อยู่ใต้ .form */
 }
 .img-banner1{
-    width: 20em;
+    width: 18em;
     position: absolute;
     background-color: #BAD6DA;
     border-radius: 100em;
     right: 100px;
-    bottom: 35px;
+    bottom: 55px;
 
 }
 .img-banner2{
-    width: 15em;
+    width: 12em;
     position: absolute;
     background-color: #FFE797;
     border-radius: 100em;
-    right: 500px;
-    bottom: 35px;
+    right: 430px;
+    bottom: 55px;
 
 }
 .title{
@@ -100,7 +95,7 @@ form > div {
 }
 .form {
     position: absolute;
-    bottom: 80px;
+    bottom: 60px;
     display: flex;
     align-items: center;
     list-style-type: none;
@@ -113,4 +108,7 @@ form > div {
     gap: 20px;
     z-index: 10; /* เพิ่ม z-index เพื่อให้ form อยู่ชั้นบนสุด */
     background-color: #ffffff; /* เพิ่มสีพื้นหลังให้ form เพื่อให้มองเห็นได้ชัดเจน */
+}
+.btn{
+    margin: 0 5px 0 0;
 }

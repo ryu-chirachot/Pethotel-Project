@@ -26,7 +26,7 @@ Route::middleware('checkLogin')->group(function(){
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
 Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
-Route::post('/info', [BookingController::class, 'send'])->name('info');
+Route::post('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
 
 Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
@@ -37,7 +37,7 @@ Route::post('/room/search',[SearchController::class,'search']
 
 
 Route::post('/success',[BookingController::class,'booked'])->name('success');
-Route::get('/test', function () {
+Route::get('/review', function () {
     return view('reviews');});
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
