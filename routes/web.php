@@ -49,6 +49,14 @@ Route::middleware([
     })->name('dashboard');
 });
 
+//รายละเอียดการจอง user 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/pets/status/{id}', [BookingController::class, 'petStatus'])->name('pets.status');
+});
+
+
 //โซน Route Admin
 //หน้าHome
 Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin')->name('Admin.index');
@@ -58,7 +66,7 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     
     Route::get('/', [AdminController::class, 'showBookings'])->name('bookings');
     Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
-    Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('boookings.confirmPayment');
+    Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
 });
@@ -78,7 +86,7 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->middleware('admin')->name('Admin.pets');
 Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
 Route::post('/Admin/Pets/report',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
-Route::get('//Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
+Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
 Route::get('/Admin/Setting', function () {
     return view('Admin.AdminSetting');
 })->name('Admin.setting');

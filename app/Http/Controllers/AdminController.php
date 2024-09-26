@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -32,6 +33,7 @@ class AdminController extends Controller
 
         public function updateExpiredBookings()
         {
+            try {
                 $today = Carbon::today();
                 
                 $expiredBookings = Bookings::where('End_date', '<=', $today)
@@ -39,12 +41,24 @@ class AdminController extends Controller
                                         ->get();
                 
                 $expiredBookingIds = $expiredBookings->pluck('BookingOrderID');
-                Bookings::whereIn('BookingOrderID', $expiredBookingIds)->update(['Booking_status' => 2]);
+                $updatedBookings = Bookings::whereIn('BookingOrderID', $expiredBookingIds)->update(['Booking_status' => 2]);
                                         
                 $roomIds = $expiredBookings->pluck('Rooms_id');
-                Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
+                $updatedRooms = Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
                 
-                return redirect()->to(route('Admin.rooms'))->with('update',"อัปเดตการจองที่หมดอายุแล้ว " . $expiredBookings->count() . " รายการ");
+                Log::info("Updated {$updatedBookings} bookings and {$updatedRooms} rooms.");
+                
+                return [
+                    'success' => true,
+                    'message' => "{$updatedBookings} bookings and {$updatedRooms} rooms updated.",
+                ];
+            } catch (\Exception $e) {
+                Log::error("Error updating expired bookings: " . $e->getMessage());
+                return [
+                    'success' => false,
+                    'message' => "Error updating expired bookings: " . $e->getMessage(),
+                ];
+            }
         }
 
         //หน้าแสดงห้องทั้งหมด
@@ -226,7 +240,7 @@ class AdminController extends Controller
                 }
         
                 // Fetch bookings with pet_status and paginate the results
-                $BooksRooms = Bookings::with('pet_status')->paginate(5);
+                $BooksRooms = Bookings::with('pet_status')->where('Booking_status',1)->paginate(5);
                 
                 
                 // Pass the variable to the view
@@ -263,6 +277,8 @@ class AdminController extends Controller
             $idCheckout->Booking_status = 2;
             $idCheckout->save();
 
+            PetStatus::destroy($request->status_id);
+
             return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
         //จัดการ การจองห้อง
@@ -270,7 +286,7 @@ class AdminController extends Controller
         //โชว์รายการจอง
         public function showBookings(){
             $countDates = [];
-            $bookings = Bookings::with('room')->paginate(5);
+            $bookings = Bookings::with('room')->orderBy('BookingOrderID', 'desc')->paginate(5);
             foreach($bookings as $bk) {
                 $checkinDate = Carbon::parse($bk->Start_date);
                 $checkoutDate = Carbon::parse($bk->End_date);
@@ -309,7 +325,7 @@ class AdminController extends Controller
         $booking->save();
 
         return redirect()->route('Admin.bookings')
-                        ->with('success', 'Booking cancelled successfully');
+                        ->with('cancel', 'Booking cancelled successfully');
     }
 
     // Extend booking
