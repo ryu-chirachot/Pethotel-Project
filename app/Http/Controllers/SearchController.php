@@ -45,6 +45,8 @@ class SearchController extends Controller
         })
         ->with(['pet_Type_Room_Type.roomType'])
         ->get();
+    
+        $img = Pet_Type_Room_Type::with(['roomType', 'image'])->where('pet_type_id', $petTypeId)->get();
 
     // จัดกลุ่มห้องตาม Rooms_type_id
     $groupedRooms = $rooms->groupBy('pet_Type_Room_Type.roomType.Rooms_type_id');
@@ -55,7 +57,7 @@ class SearchController extends Controller
     });
 
     // ส่งข้อมูลไปยัง view
-    return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts'));
+    return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts','img'));
 }
 
     public function refresh()

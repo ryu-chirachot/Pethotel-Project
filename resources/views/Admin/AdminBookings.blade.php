@@ -113,12 +113,12 @@
             <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>
             <p><strong>สถานะการจอง:</strong> 
             @if($booking->deleted_at)
-            <span class="status-checkout">
+            <span class="badge bg-danger">
                     เช็คเอาท์
                 </span>
             </p><hr>
                 <p><strong>สถานะการชำระเงิน:</strong>
-                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                    <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-secondary' }}">
                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
                     </span>
                 </p><hr>
@@ -127,13 +127,13 @@
                 <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
             </div>
             @else
-                <span class="{{ $booking->Booking_status == 1 ? 'status-check' : 'status-checkout' }}">
-                    {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'ถึงเวลาเช็คเอาท์' }}
+                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
+                    {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
                 </span>
             </p><hr>
             
             <p><strong>สถานะการชำระเงิน:</strong>
-                <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-secondary' }}">
                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
                 </span>
             </p><hr>

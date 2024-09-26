@@ -13,6 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/Rooms.css') }}">
+    <!-- Toastr.js Noti -->
+
     <style>
         *{
             font-family: "Mitr", sans-serif;
@@ -84,4 +86,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/rooms.js') }}"></script>
 </body>
+
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AdminNoti;
 use App\Models\User;
 use App\Models\Rooms;
 use App\Models\Rooms_type;
@@ -266,6 +267,8 @@ class AdminController extends Controller
             $idReport->Admin_id = Auth::user()->id;
             $idReport->save();
 
+            
+
             return redirect()->route('Admin.pets')->with('success', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
             
@@ -307,8 +310,11 @@ class AdminController extends Controller
     public function confirmPayment($id)
     {
         $booking = Bookings::findOrFail($id);
+        $booking->Booking_status = 1;
         $booking->PaymentDate = now(); 
         $booking->save();
+
+        
 
         return redirect()->route('Admin.bookings.detail', $id)
                         ->with('success', 'Payment confirmed successfully');

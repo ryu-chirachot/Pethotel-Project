@@ -110,7 +110,7 @@
                 <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
             </div>
             @else
-                <span class="{{ $booking->Booking_status == 0 ? '' : 'status-check' }}">
+                <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
                     {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
                 </span>
             </p><hr>

@@ -145,7 +145,7 @@
                 <img class="img-dog" src="{{ asset('images/dog.png') }}" alt="Dog">
             </div>
             <div class="grid-item">
-                <img class="img-cat" src="{{ asset('images/cat (2).png') }}" alt="Cat">
+                <img class="img-cat" src="{{ asset('images/cat.png') }}" alt="Cat">
             </div>
             <div class="grid-item">
                 <img class="img-bird" src="{{ asset('images/birdd.png') }}" alt="Bird">
