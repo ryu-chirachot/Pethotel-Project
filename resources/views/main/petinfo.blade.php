@@ -15,48 +15,42 @@
 <body class="bg-[#e6f2f2] p-4">
     <div class="max-w-md mx-auto bg-white p-5 rounded-lg shadow">
         
-        <form action="/o" method="post">
+        <form action="/overview" method="post">
         @csrf
+        <!-- ค่าเดิมจากหน้าก่อนหน้า -->
+        <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
+                <input type="hidden" name="checkIn" value="{{ $checkIn }}">
+                <input type="hidden" name="checkOut" value="{{ $checkOut }}">
+                <input type="hidden" name="roomTypeId"  value={{$roomTypeId}}>
+                <input type="hidden" name="roomTypename"  value={{$roomTypeName}}>
         <h2 class="text-2xl font-bold mb-4">ข้อมูลสัตว์เลี้ยง</h2>
             
             <div>
             <div class="mb-4">
-                <input type="text" name="name" class="w-full p-2 border rounded" placeholder="ชื่อของสัตว์เลี้ยง">
+                <input type="text" name="name" class="w-full p-2 border rounded" placeholder="ชื่อของสัตว์เลี้ยง" required>
             </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <select class="w-full p-2 border rounded" placeholder="ประเภทสัตว์เลี้ยงประเภทสัตว์เลี้ยง">
-                        <option value="test">ประเภทสัตว์เลี้ยง</option>
-
-                    </select>
-                </div>
-                <div>
-                    <input name="breed" type="text" class="w-full p-2 border rounded" placeholder="สายพันธุ์">
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                    <input name="age" type="number" class="w-full p-2 border rounded" placeholder="อายุ">
-                </div>
-                <div>
-                    
-                    <input type="number" name="weight"class="w-full p-2 border rounded" placeholder="น้ำหนัก (kg)">
-                </div>
-            </div>
-            <div class="mb-4">
-                <select name="gender">
+            <div class="grid grid-cols-2 gap-4 mb-4 ">
+                <select name="gender" placeholder='เพศ' class='grid grid-cols-2 gap-4 mb-4' required>
+                <option  value="" disbled>เพศ</option>
                 <option  value="Male">ชาย</option>
                 <option  value="Female">หญิง</option>
                </select>
             </div>
-            <div class="mb-4">
-                <select name="vac">
-                <label class="block mb-2">ประวัติการฉีดวัคซีน</label>
-                <!-- foreach($vac as $vaccine) -->
-                <input type="checkbox" name="vaccine" value="{$vaccine}">ประวัติการฉีดวัคซีน
-                <!-- endforeach -->
-                </select>
+                <div>
+                    <input name="breed" type="text" class="w-full p-2 border rounded" placeholder="สายพันธุ์" required>
+                </div>
             </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <input name="age" type="number" class="w-full p-2 border rounded" placeholder="อายุ" required>
+                </div>
+                <div>
+                    
+                    <input type="number" name="weight"class="w-full p-2 border rounded" placeholder="น้ำหนัก (kg)" required>
+                </div>
+            </div>
+            
             <div class="mb-4">
                 <label class="block mb-2">คำแนะนำ / ข้อกำหนดเพิ่มเติม :</label>
                 <textarea name="comment" class="w-full p-2 border rounded" rows="3" placeholder="เช่น โรคประจำตัว , สิ่งที่ต้องทำประจำ"></textarea>

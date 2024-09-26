@@ -130,6 +130,7 @@
                         </a>
                     @endif
                     <br><br>
+       
                     <button  type="submit">
                         {{ __('เข้าสู่ระบบ') }}
                     </button>

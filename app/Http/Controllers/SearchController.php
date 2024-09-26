@@ -11,7 +11,7 @@ use App\Models\Rooms_type;
 
 
 class SearchController extends Controller
-{       
+{
     public function showpet($viewname)
     {
         $p_type = pet_type::all();
@@ -19,7 +19,7 @@ class SearchController extends Controller
     }
 
 
-    
+
     public function search(Request $request)
 {
     // ดึงข้อมูลประเภทสัตว์เลี้ยงทั้งหมด
@@ -52,9 +52,8 @@ class SearchController extends Controller
     // นับจำนวนห้องในแต่ละประเภท
     $roomCounts = $groupedRooms->map(function ($group) {
         return $group->count();
-    dd($$rooms);
     });
-    
+
     // ส่งข้อมูลไปยัง view
     return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts'));
 }
@@ -63,23 +62,8 @@ class SearchController extends Controller
 {
     // ลบค่าทั้งหมดใน Session
     session()->flush();
-    
+
     // แสดงหน้า Homepage
     return redirect()->back();
 }
 }
-
-// // $rooms = Rooms::with([
-//     'pet_Type_Room_Type.petType',  // ดึงข้อมูล petType
-//     'pet_Type_Room_Type.roomType',
-//     'pet_Type_Room_Type.rooms.bookings'
-// ])
-// ->where('Rooms_status', 1)
-// ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
-//     $query->where('Pet_type_id', $petTypeId);
-// })
-// ->whereHas('bookings', function ($query) use ($c_in, $c_out) {
-//     $query->whereNotBetween('Start_date', [$c_in, $c_out])
-//           ->whereNotBetween('End_date', [$c_in, $c_out]);
-// })
-// ->get();

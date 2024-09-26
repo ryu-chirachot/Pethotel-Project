@@ -10,12 +10,14 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
 use App\Http\Controllers\BookingController;
->>>>>>>>> Temporary merge branch 2
 
 
 
 
 
+Route::get('/', function () {
+    return redirect()->route('main', ['viewname' => 'homepage']);
+})->name('home');
 
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
