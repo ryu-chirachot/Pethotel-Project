@@ -14,6 +14,7 @@ use App\Http\Controllers\ReviewController;
 
 
 
+// โซน user
 Route::get('/', function () {
     return redirect()->route('main', ['viewname' => 'homepage']);
 })->name('home');
@@ -40,6 +41,7 @@ Route::get('/test', function () {
     return view('reviews');});
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -51,7 +53,7 @@ Route::middleware([
 });
 
 //รายละเอียดการจอง user 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/pets/status/{id}', [BookingController::class, 'petStatus'])->name('pets.status');

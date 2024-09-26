@@ -157,4 +157,12 @@ class BookingController extends Controller
                 
         return view('User.Petstatus', compact('pet'));
     }
+
+    //show picture
+    public function showRoomsPets()
+    {
+        $Pets_rooms = pet_type_room_type::with(['roomType', 'image'])->get();
+        
+        return view('bookings', compact('Pets_rooms'));
+    }
 }

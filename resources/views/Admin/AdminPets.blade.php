@@ -81,7 +81,7 @@
                                                     <span class="badge bg-success">รายงานแล้ว</span>
                                                 @elseif($bk->Booking_status == 2)
                                                     <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
-                                                @else 
+                                                @else
                                                     <span class="badge bg-danger">ยังไม่รายงาน</span>
                                                 @endif
                                             @endforeach

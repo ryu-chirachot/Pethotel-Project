@@ -67,7 +67,8 @@ class AdminController extends Controller
                 $allRooms = Rooms::all();
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
                                     ->whereHas('bookings', function ($query) {
-                                        $query->where('End_date', '>=', Carbon::today());
+                                        $query->where('End_date', '>=', Carbon::today())
+                                        ->where('Start_date','<=',Carbon::today());
                                     })
                                     ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
                                     ->paginate(5);

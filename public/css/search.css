@@ -9,7 +9,8 @@
 form {
     display: flex;
     align-items: center;
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
+    list-style-type: none;
     font-family: "IBM Plex Sans Thai", sans-serif;
     font-weight: 400;
     padding: 2% 5%;
