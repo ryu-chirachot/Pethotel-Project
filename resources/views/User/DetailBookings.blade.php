@@ -1,14 +1,15 @@
+@extends ('layouts.navbar')
+@section('content')
 <head>
-    <!-- ลิงก์ไปยัง Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
-            padding-top: 20px;
+            padding-top: 0;
         }
 
         .container {
+            padding-top: 10px;
             max-width: 900px;
         }
 
@@ -75,7 +76,7 @@
 </head>
 
 <div class="container">
-    <h1 class="text-center mb-4">รายการจองห้องพักสัตว์เลี้ยงของคุณ</h1>
+    <h1 class="text-center mb-3">รายการจองห้องพักสัตว์เลี้ยงของคุณ</h1>
 
     @if($bookings->isEmpty())
         <div class="alert alert-warning" role="alert">
@@ -112,7 +113,4 @@
     @endif
 </div>
 
-<!-- ลิงก์ไปยัง Bootstrap JS และ jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+@endsection

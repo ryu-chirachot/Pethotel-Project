@@ -48,8 +48,6 @@
                                 <th>วันเช็คเอาท์</th>
                                 <th>พนักงานดูแล</th>
                                 <th>สถานะ</th>
-                                <th>แก้ไข</th>
-                                <th>ลบ</th>
                                 <th>รายงาน</th>
                             </tr>
                         </thead>
@@ -90,16 +88,6 @@
                                         @endif
                                     </td>
                                     
-                                    <td class="align-items-center">
-                                        <a id="Edit" href="{{ route('Admin.editrooms', $bk->room->Rooms_id) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td class="align-items-center">
-                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $bk->room->Rooms_id }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
                                     <td class="align-items-center">
                                         <a class="btn btn-primary btn-sm" href="{{route('Admin.pets.detail',$bk->BookingOrderID)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-heart" viewBox="0 0 16 16">

@@ -91,7 +91,7 @@
 
     @if($bookings->isEmpty())
         <div class="alert alert-warning" role="alert">
-            คุณยังไม่มีการจองในขณะนี้
+            ยังไม่มีการจองในเข้ามาในขณะนี้
         </div>
     @else
     @foreach ($bookings as $booking)
@@ -106,10 +106,26 @@
             <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
             <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>
             <p><strong>สถานะการจอง:</strong> 
+            @if($booking->deleted_at)
+            <span class="status-checkout">
+                    เช็คเอาท์
+                </span>
+            </p><hr>
+                <p><strong>สถานะการชำระเงิน:</strong>
+                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                    {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
+                    </span>
+                </p><hr>
+            </div>
+            <div class="card-footer text-right">
+                <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
+            </div>
+            @else
                 <span class="{{ $booking->Booking_status == 1 ? 'status-check' : 'status-checkout' }}">
                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'ถึงเวลาเช็คเอาท์' }}
                 </span>
             </p><hr>
+            
             <p><strong>สถานะการชำระเงิน:</strong>
                 <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
@@ -119,6 +135,7 @@
         <div class="card-footer text-right">
             <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom">ดูรายละเอียด</a>
         </div>
+        @endif
     </div>
     @endforeach
     @endif

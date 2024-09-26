@@ -59,9 +59,9 @@
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li> ห้องหมายเลข #103 - สมชาย</li>
-                        <li> ห้องหมายเลข #102 - สมหญิง</li>
-                        <li> ห้องหมายเลข #101 - สมศักดิ์</li>
+                        @foreach($Bookings as $booking)
+                        <li> <b>ห้องหมายเลข</b>  #{{$booking->BookingOrderID}}- <b>ชื่อผู้จอง</b> {{$booking->user->name}}</li>
+                        @endforeach
                     </ul>
                     <a href="{{ route('Admin.bookings') }}">ดูรายละเอียด &rarr;</a>
                 </div>

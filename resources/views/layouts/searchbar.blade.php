@@ -22,7 +22,7 @@
       <i class="fa-solid fa-paw"> Paw some Hotel</i>
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
-      <span class="d-flex me-3 iconphone">
+        <span class="d-flex me-3 iconphone">
           <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
           <a class="nav-link" href="#">เข้าสู่ระบบ</a>
         </span>
@@ -40,7 +40,7 @@
             หน้าหลัก</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
+            <a class="nav-link" href="About.html">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
@@ -48,32 +48,18 @@
         </ul>
 
 
-        <!-- ถ้ายังไม่ login  -->
-        @guest
         <ul class="navbar-nav ms-auto">
+         
           <li class="nav-item">
-            <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+            <a href="login.html" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('register') }}" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+            <a href="register.html" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
           </li>
-          
-        @endguest
-        <!-- ถ้า login มาแล้ว -->
-        @auth
-        <li class="nav-item">
-            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-outline-primary ms-2" style="text-decoration: none;">
-                    ออกจากระบบ
-                </button>
-            </form>
-        </li>
-        @endauth
         </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 
 
