@@ -52,11 +52,11 @@
         <!-- ถ้ายังไม่ login  -->
         @guest
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+          <li class="nav-item ">
+            <a href="{{ route('login') }}" class="btn btn-danger">เข้าสู่ระบบ</a>
           </li>
           <li class="nav-item">
-            <a href="{{ route('register') }}" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+            <a href="{{ route('register') }}" class="btn btn-danger">สมัครสมาชิก</a>
           </li>
           
         @endguest

@@ -19,7 +19,6 @@
         
             <div class="row g-2 mb-3">
                 @foreach ($Pets_rooms as $Pet_room)
-        <h2>{{ $Pet_room->roomType->Rooms_type_name }}</h2>
 
         @php
             $imagePaths = explode(", ", $Pet_room->image->ImagesPath);
