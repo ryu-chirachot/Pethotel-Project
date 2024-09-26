@@ -91,7 +91,7 @@ class BookingController extends Controller
         $pet->Pet_breed = $pet_breed;
         $pet->Pet_weight = $pet_weight;
         $pet->Pet_Gender = $pet_gender;
-        //$pet->additional_info = $additional_info;
+        $pet->additional_info = $additional_info;
         $pet->save();
 
         $room = Rooms::findOrFail($room_id);
@@ -129,7 +129,7 @@ class BookingController extends Controller
     {
         // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
         $usID = Auth::user()->id;
-        $bookings = bookings::where('User_id', $usID)
+        $bookings = bookings::withTrashed()->where('User_id', $usID)
         ->orderBy('BookingOrderID', 'desc')
         ->get();
         return view('User.DetailBookings', compact('bookings'));
@@ -140,7 +140,7 @@ class BookingController extends Controller
     {
         // ดึงข้อมูลการจองที่เลือก
         $usID = Auth::user()->id;
-        $booking = bookings::where('BookingOrderID', $id)
+        $booking = bookings::withTrashed()->where('BookingOrderID', $id)
                         ->where('User_id', $usID)
                         ->firstOrFail();
         return view('User.showDetail', compact('booking'));

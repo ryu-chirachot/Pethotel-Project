@@ -1,14 +1,15 @@
+@extends ('layouts.navbar')
+@section('content')
 <head>
-    <!-- ลิงก์ไปยัง Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
-            padding-top: 20px;
+            padding-top: 0;
         }
 
         .container {
+            padding-top: 10px;
             max-width: 900px;
         }
 
@@ -75,7 +76,7 @@
 </head>
 
 <div class="container">
-    <h1 class="text-center mb-4">รายการจองห้องพักสัตว์เลี้ยงของคุณ</h1>
+    <h1 class="text-center mb-3">รายการจองห้องพักสัตว์เลี้ยงของคุณ</h1>
 
     @if($bookings->isEmpty())
         <div class="alert alert-warning" role="alert">
@@ -85,34 +86,48 @@
     @foreach ($bookings as $booking)
     <div class="card">
         <div class="card-header">
-            หมายเลขการจอง: <span class="badge">{{ $booking->BookingOrderID }}</span>
+            หมายเลขการจอง: <span class="badge-booking-code">{{ $booking->BookingOrderID }}</span>
         </div>
         <div class="card-body">
-            <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p>
-            <p><strong>ชื่อสัตว์เลี้ยง:</strong> {{ $booking->pet->Pet_name }}</p>
-            <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p>
-            <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
-            <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p>
+            <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p><hr>
+            <p><strong>ชื่อสัตว์เลี้ยง:</strong> {{ $booking->pet->Pet_name }}</p><hr>
+            <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
+            <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
+            <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>
             <p><strong>สถานะการจอง:</strong> 
-                <span class="{{ $booking->Booking_status == 1 ? 'status-check' : 'status-checkout' }}">
-                    {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'ถึงเวลาเช็คเอาท์' }}
+            @if($booking->deleted_at)
+            <span class="status-checkout">
+                    เช็คเอาท์
                 </span>
-            </p>
-            <p><strong>สถานะการชำระเงิน:</strong> 
+            </p><hr>
+                <p><strong>สถานะการชำระเงิน:</strong>
+                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                    {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
+                    </span>
+                </p><hr>
+            </div>
+            <div class="card-footer text-right">
+                <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
+            </div>
+            @else
+                <span class="{{ $booking->Booking_status == 0 ? '' : 'status-check' }}">
+                    {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
+                </span>
+            </p><hr>
+            
+            <p><strong>สถานะการชำระเงิน:</strong>
                 <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
                 </span>
-            </p>
+            </p><hr>
         </div>
         <div class="card-footer text-right">
             <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-custom">ดูรายละเอียด</a>
         </div>
+        @endif
     </div>
     @endforeach
     @endif
 </div>
 
-<!-- ลิงก์ไปยัง Bootstrap JS และ jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+@endsection

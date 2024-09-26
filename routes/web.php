@@ -42,15 +42,15 @@ Route::get('/review', function () {
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:admin',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/Admin', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {

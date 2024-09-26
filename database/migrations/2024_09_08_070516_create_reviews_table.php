@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('Review_id');
             $table->unsignedBigInteger('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->unsignedTinyInteger('rating'); 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
