@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AdminMiddleware;
+use Illuminate\Console\Scheduling\Schedule;
+use App\Console\Commands\UpdateExpiredBookingsCommand;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,4 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->withCommands([
+        UpdateExpiredBookingsCommand::class,
+    ])
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->command('bookings:update-expired')->daily();
+    })
+    ->create();

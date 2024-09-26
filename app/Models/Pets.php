@@ -17,7 +17,7 @@ class Pets extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'User_id' ,'id');
     }
 
     public function petType()

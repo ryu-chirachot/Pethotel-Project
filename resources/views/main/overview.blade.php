@@ -3,15 +3,16 @@
 <!-- ส่วนที่จะทำ -->
 <style>
         body {
+
             font-family: 'Kanit', sans-serif;
             background-color: #f4f4f4;
-            margin:2 ;
+            margin: 0px; ;
             padding: 20px;
         }
         .booking-summary {
             background-color: white;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 20px auto;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -62,6 +63,9 @@
         .btn:hover {
             opacity: 0.9;
         }
+        select, input {
+        width: 100%; /* กำหนดให้ select และ input มีความกว้างเต็มพื้นที่ */
+    }
         
     </style>
 
@@ -70,7 +74,8 @@
         @csrf
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
-
+        <input type="hidden" name="room_id" value="{{ $room_id }}">
+        <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
         <input type="hidden" name="room_type" value="{{$roomTypeId}}">
         <input type="hidden" name="roomTypename" value="{{$roomTypename}}">
         <input type="hidden" name="checkin" value="{{$checkIn}}">
@@ -80,7 +85,6 @@
         <input type="hidden" name="pet_age" value="{{ $p_age }}">
         <input type="hidden" name="pet_weight" value="{{ $p_weight }}">
         <input type="hidden" name="pet_gender" value="{{ $p_gender }}">
-        <input type="hidden" name="vaccine_history" value="ชื่อวัคซีนที่เลือก">
         <input type="hidden" name="additional_info" value="{{ $p_description }}">
         <div class="detail-row">
             <span class="detail-label">ประเภทห้อง:</span>
@@ -117,10 +121,6 @@
         <div class="detail-row">
             <span class="detail-label">เพศ:</span>
             <span class="detail-value">{{$p_gender}}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">ประวัติการฉีดวัคซีน:</span>
-            <span class="detail-value">ชื่อวัคซีนที่เลือก</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">คำแนะนำเพิ่มเติม:</span>

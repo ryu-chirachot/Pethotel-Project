@@ -1,47 +1,31 @@
-#mg{
-    margin: 0;
-}
-body{
-    font-family: "IBM Plex Sans Thai", sans-serif;
-    font-weight: 400;
-    font-style: normal;
 
-}
-nav {
-    background-color: #ffc35a;
-    padding: 10px 20px;
-    margin: 0;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-.logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-.website-name {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-.nav-links {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.nav-links li a {
-    text-decoration: none;
-    color: #333;
-}
-ul li{
-    display: inline;
-}
+.navbar{
+    background-color: var(--footet_header-color);
+   }
+   .logo {
+     width: 4em;
+   }
+ 
+   .dropdown-menu {
+     display: none;
+     position: absolute;
+   }
+ 
+   .dropdown-menu.show {
+     display: block;
+   }
+ 
+   .dropdown-submenu {
+     position: relative;
+   }
+ 
+   .dropdown-submenu .dropdown-menu {
+     left: 100%;
+     top: 0;
+     margin-left: 0;
+     display: none;
+   }
+ 
+   .dropdown-submenu:hover .dropdown-menu {
+     display: block;
+   }

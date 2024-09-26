@@ -19,7 +19,7 @@ class Bookings extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class,'User_id' ,'id');
     }
 
     public function pet()
@@ -44,7 +44,8 @@ class Bookings extends Model
 
 
     public function pet_status()
-    {
-        return $this->hasMany(PetStatus::class, 'PetStatusID');
-    }
+{
+    return $this->hasMany(PetStatus::class, 'BookingOrderID', 'BookingOrderID');
+}
+
 }

@@ -115,14 +115,34 @@
                     <h1>เข้าสู่ระบบ</h1>
                     <p>ยังไม่มีบัญชี? <a href="register"><b>สร้างบัญชี</b></a></p>
                 </div>
-                <div class="info">
-                    <label for="email"value="{{ __('Email') }}" />
-                    <input id="email" name="email" type="text" class="form-control" placeholder="Email" aria-label="email" aria-describedby="basic-addon1">
-                </div>
-                <div class="info">
-                    <label for="password" value="{{ __('Password') }}" />
-                    <input id="password" name="password"  type="password" class="form-control" placeholder="Password" aria-label="password" aria-describedby="basic-addon1">
-                </div>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="info">
+                        <label for="email">{{ __('Email') }}</label>
+                        <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" aria-label="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="info">
+                        <label for="password">{{ __('Password') }}</label>
+                        <input id="password" name="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" aria-label="password" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                
+
+                @if ($errors->has('msg'))
+                    <p class="text-danger">{{ $errors->first('msg') }}</p>
+                @endif
+
+                
+                
                 <div>
                     @if (Route::has('password.request'))
                         <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">

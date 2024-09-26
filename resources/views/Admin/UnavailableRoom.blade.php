@@ -1,7 +1,6 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-
 @if (session('success'))
     <script>
         Swal.fire({
@@ -11,7 +10,6 @@
 });
     </script>
 @endif
-
 @if (session('complete'))
     <script>
         Swal.fire({
@@ -22,25 +20,6 @@
     </script>
 @endif
 
-@if (session('error'))
-    <script>
-        Swal.fire({
-  title: "ยังไม่มีข้อมูลการจองห้องนี้",
-  text: "{{ session('error') }}",
-  icon: "info"
-});
-    </script>
-@endif
-
-@if (session('update'))
-    <script>
-        Swal.fire({
-  title: "อัปเดตการจองที่หมดอายุแล้ว ",
-  text: "{{ session('update') }}",
-  icon: "success"
-});
-    </script>
-@endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -68,7 +47,7 @@
                                     <th>ประเภทของสัตว์เลี้ยง</th>
                                     <th>ชื่อผู้จอง</th>
                                     <th>ชื่อสัตว์เลี้ยง</th>
-                                    <th>สถานะห้อง</th>
+                                    <th>สถานะ</th>
                                     <th>แก้ไข</th>
                                     <th>ลบ</th>
                                     <th>อื่นๆ</th>
@@ -84,30 +63,23 @@
                                     <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
 
                                     <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
-                                    <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
-                                    @if($rm->bookings->isNotEmpty())
-                                        @foreach($rm->bookings as $bk)
-                                            @if ($bk->Booking_status != 2)
-                                                <td>{{ $bk->user->name }}</td>
-                                                <td>{{ $bk->pet->Pet_name }}</td>  
-                                            @else
-                                                <td>
-                                                    <span>ไม่มีผู้จอง</span>
-                                                </td>
-                                                <td>
-                                                    <span>ไม่มีสัตว์เลี้ยง</span>
-                                                </td>                      
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <td>
+                                    <td>
+                                        @if ($rm->bookings->isNotEmpty())
+                                            {{ $rm->bookings->first()->user->name }}
+                                        @else
                                             <span>ไม่มีผู้จอง</span>
-                                        </td>
-                                        <td>
+                                        @endif
+                                    </td>
+
+                                    <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
+                                    <td>
+                                        @if ($rm->bookings->isNotEmpty())
+                                            {{ $rm->bookings->first()->pet->Pet_name }}
+                                        @else
                                             <span>ไม่มีสัตว์เลี้ยง</span>
-                                        </td> 
-                                    @endif   
-                                    
+                                        @endif
+                                    </td>
+
                                     <!-- ตรวจสอบสถานะห้อง -->
                                     @if ($rm->Rooms_status == 1)
                                         <td><span class="badge bg-success">ว่าง</span></td>
@@ -140,10 +112,10 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{$Rooms->links('pagination::bootstrap-5')}}
+                        
                     </div>
                 </div>
-
+                {{$Rooms->links('pagination::bootstrap-5')}}
             </div>
         </div>
     </div>
@@ -203,4 +175,5 @@
         });
     }
 </script>
+
 @endsection

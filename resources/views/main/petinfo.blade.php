@@ -18,6 +18,7 @@
         <form action="/overview" method="post">
         @csrf
         <!-- ค่าเดิมจากหน้าก่อนหน้า -->
+        <input type="hidden" name="room_id" value="{{ $room_id }}">
         <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
                 <input type="hidden" name="checkIn" value="{{ $checkIn }}">
                 <input type="hidden" name="checkOut" value="{{ $checkOut }}">
@@ -33,8 +34,8 @@
             <div class="grid grid-cols-2 gap-4 mb-4 ">
                 <select name="gender" placeholder='เพศ' class='grid grid-cols-2 gap-4 mb-4' required>
                 <option  value="" disbled>เพศ</option>
-                <option  value="Male">ชาย</option>
-                <option  value="Female">หญิง</option>
+                <option  value="M">ชาย</option>
+                <option  value="F">หญิง</option>
                </select>
             </div>
                 <div>
