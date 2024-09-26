@@ -24,11 +24,14 @@ class SearchController extends Controller
 {
     // ดึงข้อมูลประเภทสัตว์เลี้ยงทั้งหมด
     $p_type = Pet_type::all();
+   
 
     // รับข้อมูลจากฟอร์ม
     $petTypeId = $request->input('pet_type_id');
     $checkIn = $request->input('check_in');
     $checkOut = $request->input('check_out');
+    
+    $img = Pet_Type_Room_Type::with(['roomType', 'image'])->where('pet_type_id', $petTypeId)->get();
 
     // เก็บค่าใน session
     session()->put('pet_type_id', $petTypeId);
@@ -55,7 +58,7 @@ class SearchController extends Controller
     });
 
     // ส่งข้อมูลไปยัง view
-    return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts'));
+    return view('main.result', compact('img','rooms', 'p_type', 'groupedRooms', 'roomCounts'));
 }
 
     public function refresh()
@@ -66,4 +69,6 @@ class SearchController extends Controller
     // แสดงหน้า Homepage
     return redirect()->back();
 }
+
 }
+

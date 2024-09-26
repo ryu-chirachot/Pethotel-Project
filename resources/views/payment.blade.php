@@ -2,7 +2,6 @@
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
 <style>
      body {
             font-family: 'Kanit', sans-serif;
@@ -87,8 +86,6 @@
             border-radius: 10px;
             padding: 20px ;
             width: 340px;
-       
-            
             
         }
         .total-wrapper {
@@ -100,11 +97,6 @@
             font-weight: bold;
             display: flex;
             justify-content: space-between;
-        }
-        .card{
-            
-            
-            
         }
         .review-score{
             width: 35px;
@@ -130,18 +122,14 @@
             border-radius: 5px;
         }
        
-       
 </style>
-<body>
 
-
-<div class="container">
   <div class="row">
     <div class="col">
     <div class="room-section">
     <div class="card ">ห้อง
         <h2>{{$roomTypeName}}</h2>
-        <div class="review-score"></div> <br>
+        <br>
         เครื่องปรับอากาศ <br>
         น้ำดื่ม <br>
         เบาะนอน <br>
@@ -185,10 +173,4 @@
             <input type="radio" id="promptpay" name="payment" value="promptpay"> 
         </div>
         <button><b>ยืนยัน</b></button>
- 
-       
-    </div>
-    </div>
-    
-</body>
-</html>
+        @endsection

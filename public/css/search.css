@@ -95,7 +95,8 @@ form > div {
 }
 .form {
     position: absolute;
-    bottom: 60px;
+    margin-top: 5%;
+    bottom: 400px;
     display: flex;
     align-items: center;
     list-style-type: none;
