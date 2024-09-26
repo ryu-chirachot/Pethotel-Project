@@ -87,7 +87,13 @@
 </head>
 
 <div class="container">
-    <h3 class="text-center mb-4"><b>รายการจองทั้งหมด</b></h3>
+<div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0"><b>รายการจองทั้งหมด</b></h3>
+                <input type="text" class="form-control w-25" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+            </div>
+    
 
     @if($bookings->isEmpty())
         <div class="alert alert-warning" role="alert">
@@ -140,5 +146,20 @@
     @endforeach
     @endif
 </div>
+<script>
+    function searchTable() {
+        var input = document.getElementById("search").value.toLowerCase();
+        var cards = document.querySelectorAll(".card"); // เลือกทุกการ์ด
+        
+        cards.forEach(function(card) {
+            var cardText = card.innerText.toLowerCase(); // นำข้อความทั้งหมดในการ์ดมาใช้ในการค้นหา
+            if (cardText.includes(input)) {
+                card.style.display = ""; // แสดงการ์ด
+            } else {
+                card.style.display = "none"; // ซ่อนการ์ด
+            }
+        });
+    }
+</script>
 
 @endsection

@@ -18,7 +18,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
-<nav class="navbar navbar-expand-lg " >
+<nav class="navbar navbar-expand-lg sticky-top" >
     <div class="container-fluid ms-2 me-2">
       <a class="navbar-brand" href="#">
       <i class="fa-solid fa-paw"> Paw some Hotel</i>

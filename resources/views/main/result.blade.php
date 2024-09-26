@@ -1,4 +1,5 @@
 @extends('layouts.searchbar')
+
 @section('content')
 <head>
  <meta charset="UTF-8">
@@ -8,8 +9,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
 <div class="container mt-4">
+    @if($groupedRooms->isEmpty())
+        <div class="alert alert-warning" role="alert">
+            คุณยังไม่มีการจองในขณะนี้
+        </div>
+    @else
     <!-- วนลูปแต่ละประเภทห้อง -->
     @foreach($groupedRooms as $roomTypeName => $roomGroup)
+    
     <div class="card mx-auto mb-4" style="max-width: 540px;">
         <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
         {{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_name }} <!-- แสดงชื่อประเภทห้อง -->
@@ -72,6 +79,7 @@
             </div>
         
     @endforeach <!-- ปิดลูปประเภทห้อง -->
+    @endif
 </div>
 @endsection
 

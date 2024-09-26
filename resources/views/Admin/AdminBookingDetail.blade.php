@@ -44,6 +44,8 @@
         <input type="date" name="new_end_date" required>
         <button type="submit" class="btn btn-primary" >ขยายเวลาการจอง</button>
     </form>
+
+    <a href=""></a>
 @endif
 </div>
 
