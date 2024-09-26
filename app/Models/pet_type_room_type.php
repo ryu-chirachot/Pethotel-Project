@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pet_Type_Room_Type extends Model
+class pet_type_room_type extends Model
 {
     use HasFactory, SoftDeletes;
 

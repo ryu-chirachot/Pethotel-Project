@@ -19,6 +19,8 @@ Route::get('/', function () {
     return redirect()->route('main', ['viewname' => 'homepage']);
 })->name('home');
 
+
+
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");

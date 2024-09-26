@@ -10,13 +10,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
-<nav class="navbar navbar-expand-lg  bg-warning">
+<nav class="navbar navbar-expand-lg " >
     <div class="container-fluid ms-2 me-2">
       <a class="navbar-brand" href="#">
       <i class="fa-solid fa-paw"> Paw some Hotel</i>
@@ -32,19 +34,18 @@
         </button>
       </div>
 
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('home')}}">
-            หน้าหลัก</a>
+      <div class="collapse navbar-collapse " id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <li class="nav-item ">
+            <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
+            <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
           </li>
+          
         </ul>
 
 
@@ -61,14 +62,25 @@
         @endguest
         <!-- ถ้า login มาแล้ว -->
         @auth
-        <li class="nav-item">
+            <!-- <div>
+            <i class="bi bi-person-circle"></i>
+            </div> -->
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
-                <button type="submit" class="btn btn-outline-primary ms-2" style="text-decoration: none;">
-                    ออกจากระบบ
-                </button>
+              
+
+                <div class="user-menu">
+                  <i class="bi bi-person-circle"></i>
+                  <div class="dropdown-content">
+                  <a href="/edit">แก้ไขข้อมูล</a>
+                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                      ออกจากระบบ
+                  </button>
+                  </div>
+                </div>
+                
             </form>
-        </li>
+        
         @endauth
         </ul>
     </div>
@@ -76,9 +88,33 @@
 </nav>
 
 
+<div class="banner">
+        <div class="d-none d-md-block">
+            <div class="circle-bg"></div>
+            <div class="content">
+                <h5 class="welcome">Welcome To</h5>
+                <h1 class="title">Pawsome<br>Stay</h1>
+            </div>
+        </div>
+        
+    
+        <div class="d-none d-md-block">
+            <div class="pet-image"> <img class="img-banner1" src="{{asset("images/cat.png")}}" alt=""></div>
+                <div class=""></div>
+            
+        </div>
+
+        <div class="d-none d-md-block">
+            <div class="pet-image"> <img class="img-banner2" src="{{asset("images/dog.png")}}" alt=""></div>
+                <div class=""></div>
+            
+        </div>
+    </div>
+    
+
 
     <div id="cen" class="container">
-    <form class="booking-form" action="/room/search" method="post">
+    <form class="form" action="/room/search" method="post">
         @csrf
         <div>
             <label for="petSelect">เลือกประเภทสัตว์เลี้ยง</label>
@@ -102,7 +138,7 @@
             <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}">
         </div>
 
-        <button type="submit">ค้นหาห้องพัก</button>
+        <button type="submit" class="btn btn-warning">ค้นหาห้องพัก</button>
     </form>
 </div>
 
