@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('Pet_breed', 45);
             $table->integer('Pet_weight');
             $table->char('Pet_Gender', 1);
-            $table->string('VaccinationRecord', 4);
+            $table->string('additional_info',255)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes();

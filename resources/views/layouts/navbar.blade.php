@@ -29,43 +29,45 @@
             </button>
         </div>
 
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="About.html">ประวัติการจอง</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
-                </li>
-            </ul>
-
-            <div class="ml-auto">
-                <ul class="navbar-nav p-auto">
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">แก้ไขข้อมูล</a></li>
-                                <li><a class="dropdown-item" href="#">ศูนย์ช่วยเหลือ</a></li>
-                                <li>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                    <a class="dropdown-item" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ออกจากระบบ</a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('home')}}">
+            หน้าหลัก</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
+          </li>
+        </ul>
+        <!-- ถ้ายังไม่ login  -->
+        @guest
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('register') }}" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+          </li>
+          
+        @endguest
+        <!-- ถ้า login มาแล้ว -->
+        @auth
+        <li class="nav-item">
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-outline-primary ms-2" style="text-decoration: none;">
+                    ออกจากระบบ
+                </button>
+            </form>
+        </li>
+        @endauth
+        </ul>
+        
+      </div>
     </div>
 </nav>
 

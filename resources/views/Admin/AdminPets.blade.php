@@ -16,6 +16,15 @@
     </script>
 @endif
 
+@if (session('checkout'))
+    <script>
+        Swal.fire({
+  title: "แจ้งให้เช็คเอาท์",
+  text: "{{ session('checkout') }}",
+  icon: "success"
+});
+    </script>
+@endif
 
 <div class="container">
     <div class="row">
@@ -47,51 +56,40 @@
                         <tbody id="tableBody">
                                 @foreach ($BooksRooms as $bk)
                                 <tr>
-                                    <td>{{ $bk->room->Rooms_id }}</td>
+                                <td>{{ $bk->BookingOrderID }}</td>
                                     <td>{{ $bk->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
                                     <td>
-                                        @if ($bk->user->name)
-                                            {{ $bk->user->name }}
-                                        @else
-                                            <span>ไม่มีผู้จอง</span>
-                                        @endif
+                                        {{ $bk->user->name ? $bk->user->name : 'ไม่มีผู้จอง' }}
                                     </td>
                                     <td>
-                                        @if ($bk->pet->Pet_name)
-                                            {{ $bk->pet->Pet_name }}
-                                        @else
-                                            <span>ไม่มีสัตว์เลี้ยง</span>
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                    @if ($bk->Start_date)
-                                            {{ $bk->Start_date }}
-                                    @else
-                                        <span>ไม่มีวันจอง</span>
-                                    @endif
+                                        {{ $bk->pet->Pet_name ? $bk->pet->Pet_name : 'ไม่มีสัตว์เลี้ยง' }}
                                     </td>
                                     <td>
-                                    @if ($bk->End_date)
-                                            {{ $bk->End_date }}
-                                    @else
-                                        <span>ไม่มีวันจอง</span>
-                                    @endif
+                                        {{ $bk->Start_date ? $bk->Start_date : 'ไม่มีวันจอง'}}
                                     </td>
-                                    @foreach($bk->pet_status as $petstatus)
+                                    <td>
+                                        {{ $bk->End_date ? $bk->End_date : 'ไม่มีวันจอง'}}
+                                    </td>
                                     <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                                        </svg>&nbsp;{{$petstatus->user->name}}</td>
-                                    <td>
-                                            @if($bk->Booking_status == 2)
-                                                <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
-                                            @elseif($petstatus->Report == NULL)
-                                                <span class="badge bg-danger">{{$petstatus->status}}</span>
-                                            @else
-                                                <span class="badge bg-success">รายงานแล้ว</span>
-                                            @endif
-                                        @endforeach
+                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                        </svg>&nbsp;{{Auth::user()->name}}
                                     </td>
+                                    <td>
+                                        @if($bk->pet_status)
+                                            @foreach($bk->pet_status as $pt)
+                                                @if($pt->status == 1)
+                                                    <span class="badge bg-success">รายงานแล้ว</span>
+                                                @elseif($bk->Booking_status == 2)
+                                                    <span class="badge bg-warning">ถึงเวลาเช็คเอาท์</span>
+                                                @else
+                                                    <span class="badge bg-danger">ยังไม่รายงาน</span>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <span class="badge bg-danger">ยังไม่รายงาน</span>
+                                        @endif
+                                    </td>
+                                    
                                     <td class="align-items-center">
                                         <a id="Edit" href="{{ route('Admin.editrooms', $bk->room->Rooms_id) }}" class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i>

@@ -10,92 +10,111 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
 </head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
-<nav class="navbar navbar-expand-lg bg-warning">
+<nav class="navbar navbar-expand-lg " >
     <div class="container-fluid ms-2 me-2">
-        <a class="navbar-brand" href="#">
-            <i class="fa-solid fa-paw"> Paw some Hotel</i>
-        </a>
-        <div class="d-flex d-lg-none ms-auto align-items-center">
-            <span class="d-flex me-3 iconphone">
-                <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-                <a class="nav-link" href="#">เข้าสู่ระบบ</a>
-            </span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
+      <a class="navbar-brand" href="#">
+      <i class="fa-solid fa-paw"> Paw some Hotel</i>
+      </a>
+      <div class="d-flex d-lg-none ms-auto align-items-center">
+      <span class="d-flex me-3 iconphone">
+          <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
+          <a class="nav-link" href="#">เข้าสู่ระบบ</a>
+        </span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
-        <div class="collapse navbar-collapse justify-content-between" id="navbarText"> <!-- ใช้ justify-content-between -->
-            <!-- เมนูด้านซ้าย -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
-                </li>
-            </ul>
+      <div class="collapse navbar-collapse " id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <li class="nav-item ">
+            <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
+          </li>
+          
+        </ul>
 
-            <!-- เมนูตรงกลาง -->
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-center" href="About.html">ประวัติการจอง</a>
-                </li>
-            </ul>
 
-            <!-- เมนูด้านขวา -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="Contact.html">ติดต่อเรา</a>
-                </li>
-            </ul>
-        </div>
+        <!-- ถ้ายังไม่ login  -->
+        @guest
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2">เข้าสู่ระบบ</a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('register') }}" class="btn btn-outline-primary ms-2">สมัครสมาชิก</a>
+          </li>
+          
+        @endguest
+        <!-- ถ้า login มาแล้ว -->
+        @auth
+            <!-- <div>
+            <i class="bi bi-person-circle"></i>
+            </div> -->
+            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                @csrf
+              
 
-            <div class="ml-auto">
-                <ul class="navbar-nav p-auto">
-                    @guest
-                        <li class="nav-item me-2">
-                            <a href="{{ route('login') }}" class="btn btn-success">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('register') }}" class="btn btn-outline-success">Register</a>
-                        </li>
-                    @endguest
-
-                    @auth
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">แก้ไขข้อมูล</a></li>
-                                <li><a class="dropdown-item" href="#">ศูนย์ช่วยเหลือ</a></li>
-                                <li>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                    <a class="dropdown-item" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ออกจากระบบ</a>
-                                </li>
-                            </ul>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
+                <div class="user-menu">
+                  <i class="bi bi-person-circle"></i>
+                  <div class="dropdown-content">
+                  <a href="/edit">แก้ไขข้อมูล</a>
+                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                      ออกจากระบบ
+                  </button>
+                  </div>
+                </div>
+                
+            </form>
+        
+        @endauth
+        </ul>
     </div>
+  </div>
 </nav>
 
 
+<div class="banner">
+        <div class="d-none d-md-block">
+            <div class="circle-bg"></div>
+            <div class="content">
+                <h5 class="welcome">Welcome To</h5>
+                <h1 class="title">Pawsome<br>Stay</h1>
+            </div>
+        </div>
+        
+    
+        <div class="d-none d-md-block">
+            <div class="pet-image"> <img class="img-banner1" src="{{asset("images/cat.png")}}" alt=""></div>
+                <div class=""></div>
+            
+        </div>
+
+        <div class="d-none d-md-block">
+            <div class="pet-image"> <img class="img-banner2" src="{{asset("images/dog.png")}}" alt=""></div>
+                <div class=""></div>
+            
+        </div>
+    </div>
+    
 
 
     <div id="cen" class="container">
-    <form class="booking-form" action="/room/search" method="post">
+    <form class="form" action="/room/search" method="post">
         @csrf
         <div>
             <label for="petSelect">เลือกประเภทสัตว์เลี้ยง</label>
@@ -119,7 +138,7 @@
             <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}} re">
         </div>
 
-        <button type="submit">ค้นหาห้องพัก</button>
+        <button type="submit" class="btn btn-warning">ค้นหาห้องพัก</button>
     </form>
 </div>
 

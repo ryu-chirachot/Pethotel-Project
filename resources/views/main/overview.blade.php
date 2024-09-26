@@ -74,6 +74,7 @@
         @csrf
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
+        <input type="hidden" name="room_id" value="{{ $room_id }}">
         <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
         <input type="hidden" name="room_type" value="{{$roomTypeId}}">
         <input type="hidden" name="roomTypename" value="{{$roomTypename}}">

@@ -60,11 +60,16 @@
                     </a>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('Admin/Settings') ? 'active' : '' }}" href="{{route('Admin.setting')}}">
-                        <i class="fas fa-cog me-2"></i>การตั้งค่า
+                @auth
+                <li class="nav-item mb-3">
+                    <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
+                        @csrf
+                    </form>
+                    <a class="nav-link" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ
                     </a>
                 </li>
+                @endauth
             </ul>
         </nav>
 
@@ -74,7 +79,8 @@
         </div>
     </div>
 
-    <!-- Bootstrap Bundle with Popper.js -->
+    <!-- Bootstrap Bundle with Popper.js และ Jquery-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/rooms.js') }}"></script>
 </body>

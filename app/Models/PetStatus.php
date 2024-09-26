@@ -19,8 +19,9 @@ class PetStatus extends Model
 
     public function booking()
     {
-        return $this->belongsTo(Bookings::class, 'PetStatusID');
+    return $this->belongsTo(Bookings::class, 'BookingOrderID', 'BookingOrderID');
     }
+
 
     public function user()
     {

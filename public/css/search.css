@@ -1,23 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Sen:wght@400..800&display=swap');
+
 /* จัดรูปแบบ container */
 .container {
     width: 60%;
     margin: 5% auto;
     padding: 20px;
 }
+nav{
+    background-color: #ffce72;
+
+}
 
 /* ส่วนฟอร์มแบบแนวนอน */
-form {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    font-family: "IBM Plex Sans Thai", sans-serif;
-    font-weight: 400;
-    padding: 2% 5%;
-    margin-top: 5%;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    gap: 20px; /* เพิ่มช่องว่างระหว่างฟิลด์ */
-}
+
+
 
 label {
     font-size: 1rem;
@@ -37,7 +33,7 @@ input[type="date"], select {
 }
 
 /* ปุ่ม submit */
-button[type="submit"] {
+button #submit-search{
     background: #ffce72;
     color: #ffffff;
     padding: 10px 20px;
@@ -50,11 +46,11 @@ button[type="submit"] {
     transition: background 0.3s;
 }
 
-button[type="submit"]:hover {
+/* button[type="submit"]:hover {
     background: #ffae4b;
-}
+} */
 
-/* ตั้งค่า flex ให้ตรงกลาง */
+
 #cen {
     display: flex;
     justify-content: center;
@@ -66,4 +62,55 @@ form > div {
     display: flex;
     align-items: center;
     gap: 10px; /* ระยะห่างระหว่าง label และ input */
+}
+
+/*ส่วนของheader ข้างบน*/
+.banner{
+    padding: 60px 0 0 100px;
+    display: flex;
+    width: 100%;
+    position: relative;
+    background-color: #FFF3E0;
+    height: 500px;
+    overflow: hidden;
+    z-index: 1; /* กำหนด z-index ให้ .banner เพื่อให้อยู่ใต้ .form */
+}
+.img-banner1{
+    width: 20em;
+    position: absolute;
+    background-color: #BAD6DA;
+    border-radius: 100em;
+    right: 100px;
+    bottom: 35px;
+
+}
+.img-banner2{
+    width: 15em;
+    position: absolute;
+    background-color: #FFE797;
+    border-radius: 100em;
+    right: 500px;
+    bottom: 35px;
+
+}
+.title{
+    font-size: 100px;
+    font-family: "Sen", sans-serif;
+
+}
+.form {
+    position: absolute;
+    bottom: 80px;
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-weight: 400;
+    padding: 2% 5%;
+    margin-top: 5%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+    z-index: 10; /* เพิ่ม z-index เพื่อให้ form อยู่ชั้นบนสุด */
+    background-color: #ffffff; /* เพิ่มสีพื้นหลังให้ form เพื่อให้มองเห็นได้ชัดเจน */
 }
