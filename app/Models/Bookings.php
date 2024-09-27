@@ -39,7 +39,7 @@ class Bookings extends Model
 
     public function review()
     {
-        return $this->hasOne(Reviews::class, 'BookingOrderID');
+        return $this->hasOne(Reviews::class, 'BookingOrderID', 'BookingOrderID');
     }
 
 

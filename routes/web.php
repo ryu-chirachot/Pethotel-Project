@@ -38,7 +38,7 @@ Route::post('/room/search',[SearchController::class,'search']
 
 Route::post('/success',[BookingController::class,'booked'])->name('success');
 Route::get('/review', function () {
-    return view('reviews');});
+    return view('reviews');})->name('review');
     Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
@@ -72,6 +72,7 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
 });
 
 //ห้อง

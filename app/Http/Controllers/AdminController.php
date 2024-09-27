@@ -187,16 +187,27 @@ class AdminController extends Controller
 
         //ส่งค่าจากหน้าสร้างห้องไป DB
         public function store(Request $request){
+
+            $request->validate([
+                'room_image.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validating multiple images
+                'room_status' => 'required',
+                'pet_type' => 'required',
+                'room_type' => 'required',
+                'room_price' => 'required|numeric',
+                'room_description' => 'required',
+            ]);
+
             $roomType = $request->room_type;
             $petType = $request->pet_type;
-
+            $_basename = '';
             $newImg = new Images(); //สร้าง obj รูปภาพ
             if ($request->hasFile('room_image')) { //เช็คว่ามีไฟล์ส่งมาไหม
                 $file = $request->file('room_image'); //ถ้ามีให้เก็บไว้ที่ตัวแปร file
-                $_basename = $this->checkFile($file); //เช็คว่าไฟล์เป็นนามสกุลรูปภาพไหม ถ้าเป็นจะส่งชื่อภาพพร้อมนาสกุลไฟล์
-                if (!is_string($_basename)) { //สำหรับค่าที่ส่งมาไม่ใช่ชื่อไฟล์ แต่เป็น redirect พร้อม error เพราะไม่ใช่นามสกุลรูปภาพ
-                    return $_basename;
+                foreach ($file as $img) {
+                    $path = $img->getClientOriginalName();
+                    $_basename .= basename($path);
                 }
+                
                 $newImg->ImagesPath = $_basename;
                 $newImg->ImagesName = 'รูป'.$petType.$roomType;
                 $newImg->save();
@@ -260,7 +271,7 @@ class AdminController extends Controller
          // ส่งค่าไปรายงาน
         public function submitReport(Request $request)
         {
-            // Store the report
+            
             $idReport = PetStatus::findOrFail($request->status_id);
             $idReport->status = 1;
             $idReport->Report = $request->report;
@@ -276,11 +287,11 @@ class AdminController extends Controller
         public function checkout(Request $request){
             Bookings::destroy($request->booking_id);
             
-
             PetStatus::destroy($request->status_id);
 
             return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
+
         //จัดการ การจองห้อง
 
         //โชว์รายการจอง
@@ -341,10 +352,18 @@ class AdminController extends Controller
         if ($newEndDate > $booking->End_date) {
             $booking->End_date = $newEndDate;
             $booking->save();
-            return redirect()->route('Admin.bookings.detail', $id)
-                            ->with('success', 'Booking extended successfully');
+            return redirect()->route('Admin.bookings')
+                            ->with('success', $booking->user->name);
         }
 
         return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
+    }
+
+    function checkoutManual($id){
+        Bookings::destroy($id);
+        PetStatus::destroy($id);
+
+        return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
+
     }
 }

@@ -1,4 +1,5 @@
-
+@extends ('layouts.navbar')
+@section('content')
 <div class="container">
     <h1>รายละเอียดการจอง #{{ $booking->BookingOrderID }}</h1>
 
@@ -25,7 +26,7 @@
                 </p><hr>
             </div>
             <div class="card-footer text-right">
-                <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
+                <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">กลับไปยังรายการจอง</a>
             </div>
             @else
                 <p><strong>สถานะ:</strong>
@@ -40,12 +41,13 @@
                 </span>
             </p><hr>
         </div>
-        
+            <div class="card-footer text-right">
+                <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">กลับไปยังรายการจอง</a>
+            </div>
         @endif
             </h2>
         </div>
     </div>
-
-    <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">กลับไปยังรายการจอง</a>
+    
 </div>
-
+@endsection

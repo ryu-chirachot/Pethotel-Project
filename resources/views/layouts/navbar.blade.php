@@ -17,9 +17,9 @@
 <!-- เรียกใช้ SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<nav class="navbar navbar-expand-lg bg-warning">
+<nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid ms-2 me-2">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <i class="fa-solid fa-paw"> Paw some Hotel</i>
         </a>
         <div class="d-flex d-lg-none ms-auto align-items-center">
@@ -68,7 +68,6 @@
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
               
-
                 <div class="user-menu">
                   <i class="bi bi-person-circle"></i>
                   <div class="dropdown-content">

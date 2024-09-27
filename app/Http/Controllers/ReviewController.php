@@ -15,7 +15,7 @@ class ReviewController extends Controller
         ]);
 
         // Redirect 
-        return redirect()->back()->with('เสร็จสิ้น', 'ขอบคุณสำหรับการรีวิวของคุณ');
+        return redirect()->route('bookings.index')->with('เสร็จสิ้น', 'ขอบคุณสำหรับการรีวิวของคุณ');
     }
 }
 

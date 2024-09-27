@@ -137,9 +137,10 @@
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>                      
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $rm->Rooms_id) }}">ดูรายละเอียดการจอง</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $rm->Rooms_id) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
-                                                
+                                                @foreach ($rm->bookings as $bk)
+                                                <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $bk->BookingOrderID) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </td>
