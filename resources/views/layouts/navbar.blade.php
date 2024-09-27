@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title','')</title>
     <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/search.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 </head>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
+
 <!-- เรียกใช้ SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -29,20 +33,22 @@
             </button>
         </div>
 
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('home')}}">
-            หน้าหลัก</a>
+
+      <div class="collapse navbar-collapse " id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <li class="nav-item ">
+            <a class="nav-link" href="{{route('home')}}">หน้าหลัก</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="Contack.html">ติดต่อเรา</a>
+            <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
           </li>
+          
         </ul>
+
+
         <!-- ถ้ายังไม่ login  -->
         @guest
         <ul class="navbar-nav ms-auto">
@@ -56,18 +62,27 @@
         @endguest
         <!-- ถ้า login มาแล้ว -->
         @auth
-        <li class="nav-item">
+            <!-- <div>
+            <i class="bi bi-person-circle"></i>
+            </div> -->
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
-                <button type="submit" class="btn btn-outline-primary ms-2" style="text-decoration: none;">
-                    ออกจากระบบ
-                </button>
+              
+
+                <div class="user-menu">
+                  <i class="bi bi-person-circle"></i>
+                  <div class="dropdown-content">
+                  <a href="/edit">แก้ไขข้อมูล</a>
+                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                      ออกจากระบบ
+                  </button>
+                  </div>
+                </div>
+                
             </form>
-        </li>
+        
         @endauth
         </ul>
-        
-      </div>
     </div>
 </nav>
 
@@ -106,7 +121,6 @@
         });
     });
 </script>
-
     <div>
   @yield('content')
   </div>

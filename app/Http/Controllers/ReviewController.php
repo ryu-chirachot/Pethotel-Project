@@ -10,8 +10,8 @@ class ReviewController extends Controller
     {
         Reviews::create([
             'BookingOrderID' => 1,
-            'Rating' => $request->rating,
-            'content' => $request->comment,
+            'rating' => $request->rating,
+            'content' => $request->content,
         ]);
 
         // Redirect 

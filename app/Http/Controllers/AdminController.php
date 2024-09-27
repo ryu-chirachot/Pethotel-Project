@@ -25,7 +25,7 @@ class AdminController extends Controller
         public function index(){
                 $Rooms = Rooms::all();
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
-                $Bookings = Bookings::all();
+                $Bookings = Bookings::withTrashed()->orderBy('BookingOrderID', 'desc')->get();
                 $Petbooking = Rooms::where('Rooms_status', "=", "0")->get();
                 $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
                 return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Petbooking"));
@@ -66,10 +66,7 @@ class AdminController extends Controller
             try {
                 $allRooms = Rooms::all();
                 $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
-                                    ->whereHas('bookings', function ($query) {
-                                        $query->where('End_date', '>=', Carbon::today())
-                                        ->where('Start_date','<=',Carbon::today());
-                                    })
+                                    ->whereHas('bookings')
                                     ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
                                     ->paginate(5);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
@@ -241,7 +238,7 @@ class AdminController extends Controller
                 }
         
                 // Fetch bookings with pet_status and paginate the results
-                $BooksRooms = Bookings::with('pet_status')->where('Booking_status',1)->paginate(5);
+                $BooksRooms = Bookings::with('pet_status')->where('Booking_status','!=',0)->paginate(5);
                 
                 
                 // Pass the variable to the view
@@ -274,9 +271,8 @@ class AdminController extends Controller
             
 
         public function checkout(Request $request){
-            $idCheckout = Bookings::findOrFail($request->booking_id);
-            $idCheckout->Booking_status = 2;
-            $idCheckout->save();
+            Bookings::destroy($request->booking_id);
+            
 
             PetStatus::destroy($request->status_id);
 
@@ -287,7 +283,7 @@ class AdminController extends Controller
         //โชว์รายการจอง
         public function showBookings(){
             $countDates = [];
-            $bookings = Bookings::with('room')->orderBy('BookingOrderID', 'desc')->paginate(5);
+            $bookings = Bookings::withTrashed()->with('room')->orderBy('BookingOrderID', 'desc')->paginate(5);
             foreach($bookings as $bk) {
                 $checkinDate = Carbon::parse($bk->Start_date);
                 $checkoutDate = Carbon::parse($bk->End_date);
@@ -300,7 +296,7 @@ class AdminController extends Controller
 
         //โชว์รายละเอียดการจองแต่ละอัน
         public function detail($id){
-            $bookings = Bookings::find($id);
+            $bookings = Bookings::withTrashed()->where('BookingOrderID', $id)->first();
             if(!$bookings){
                 return redirect()->route('Admin.rooms')->with('error','ขณะนี้ห้องนี้ไม่มีรายการจอง');
             }

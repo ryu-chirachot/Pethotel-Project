@@ -13,7 +13,7 @@ class Pets extends Model
 
     protected $table = 'pets';
     protected $primaryKey = 'Pet_id';
-    protected $fillable = ['User_id', 'Pet_name', 'Pet_type_id', 'Pet_age', 'Pet_breed', 'Pet_weight', 'Pet_Gender', 'VaccinationRecord','updated_at','deleted_at'];
+    protected $fillable = ['User_id', 'Pet_name', 'Pet_type_id', 'Pet_age', 'Pet_breed', 'Pet_weight', 'Pet_Gender', 'additional_info','updated_at','deleted_at'];
 
     public function user()
     {
