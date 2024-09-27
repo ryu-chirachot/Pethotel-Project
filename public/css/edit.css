@@ -1,0 +1,82 @@
+body {
+    background-color: #E7F2F4;
+    font-family: Kanit;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 100px auto 0;
+    padding: 10px 50px 50px;
+    background-color: #FEFCF4;
+    border-radius: 10px;
+}
+
+
+.paw {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding:20px 0;
+}
+.paw h4 {
+    margin-right: 10px;
+    font-weight: 400;
+
+}
+.info {
+    margin-bottom: 15px;
+}
+
+
+h1{
+    font-weight: bold;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+i {
+    color: rgba(0, 0, 0, 0.5);
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
+}
+.login-form{
+    flex: 4;
+}
+
+#editButton{
+    margin: 10px 0px 0px 115px;
+    padding: 10px 40px;
+    border: none;
+    background-color: #FFD700;
+    color: #6C620F;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+#cancelButton,#saveButton{
+    margin-left: 45px;
+    padding: 10px 40px;
+    
+}
+
+button {
+    margin: 10px 0px 0px 115px;
+    padding: 10px 40px;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+

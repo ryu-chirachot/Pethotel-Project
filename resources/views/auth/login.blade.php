@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawsome Stay Hotel</title>
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <style>
-   body {
+   /* body {
             background-color: #E7F2F4;
             font-family: Kanit;
         }
@@ -74,24 +75,21 @@
         .login-form{
             flex: 4;
         }
-        /* @media screen and (max-width: 576px) {
-            .container {
-                flex-direction: column;
-                padding: 10px 20px 20px;
-            }
-            .login-form, .grid-section {
-                max-width: 100%;
-            }
-            #email, #password {
-                width: calc(100% - 30px);
-            }
-            button {
-                margin-left: 0;
-                width: 100%;
-            }
-        } */
-    
-   
+
+    */
+    .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .grid-item {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+        .login-form{
+            flex: 4;
+        }
     
 
 </style>
@@ -115,8 +113,8 @@
                     <h1>เข้าสู่ระบบ</h1>
                     <p>ยังไม่มีบัญชี? <a href="register"><b>สร้างบัญชี</b></a></p>
                 </div>
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
+                <!-- <form method="POST" action="{{ route('login') }}">
+                    @csrf -->
                     <div class="info">
                         <label for="email">{{ __('Email') }}</label>
                         <input id="email" name="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" aria-label="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -163,7 +161,7 @@
                 <img class="img-dog" src="{{ asset('images/dog.png') }}" alt="Dog">
             </div>
             <div class="grid-item">
-                <img class="img-cat" src="{{ asset('images/cat (2).png') }}" alt="Cat">
+                <img class="img-cat" src="{{ asset('images/cat.png') }}" alt="Cat">
             </div>
             <div class="grid-item">
                 <img class="img-bird" src="{{ asset('images/birdd.png') }}" alt="Bird">
