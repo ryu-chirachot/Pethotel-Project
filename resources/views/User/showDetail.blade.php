@@ -43,11 +43,16 @@
         </div>
             <div class="card-footer text-right">
                 <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">กลับไปยังรายการจอง</a>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
             </div>
+
+            
         @endif
             </h2>
         </div>
     </div>
+
+    
     
 </div>
 @endsection

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title','')</title>
     <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="/css/search.css">
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid ms-2 me-2">
         <a class="navbar-brand" href="/">
-            <i class="fa-solid fa-paw"> Paw some Hotel</i>
+            <i class="fa-solid fa-paw"> Pawsome stay Hotel</i>
         </a>
         <div class="d-flex d-lg-none ms-auto align-items-center">
             <span class="d-flex me-3 iconphone">
@@ -71,10 +71,19 @@
                 <div class="user-menu">
                   <i class="bi bi-person-circle"></i>
                   <div class="dropdown-content">
-                  <a href="/edit">แก้ไขข้อมูล</a>
-                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
-                      ออกจากระบบ
-                  </button>
+                    @if(auth()->user()->role == 'admin')
+                    <a href="/Admin/Home">Admin Home</a>
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+
+                    @else
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+                    @endif
                   </div>
                 </div>
                 

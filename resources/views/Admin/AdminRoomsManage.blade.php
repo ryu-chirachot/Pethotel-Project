@@ -48,9 +48,7 @@
             <h3 class="mb-0"><b>ห้องพัก</b></h3>
             <div class="d-flex align-items-center">
                 <input type="text" class="form-control" style="width: 250px;" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
-                <a class="btn "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel ms-2" viewBox="0 0 16 16">
-                    <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
-                </svg></a>
+                
             </div>
         </div>
 
@@ -128,7 +126,7 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash "></i>
                                         </button>
                                     </td>
                                     <td>
@@ -137,10 +135,17 @@
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>                      
                                             <ul class="dropdown-menu">
-                                                @foreach ($rm->bookings as $bk)
-                                                <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $bk->BookingOrderID) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
-                                                @endforeach
+                                                @if($rm->bookings->isNotEmpty())
+                                                    @foreach ($rm->bookings as $bk)
+                                                        @if($bk->Booking_status != 2)
+                                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                            <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $bk->BookingOrderID) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลสัตว์เลี้ยง</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>

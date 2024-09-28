@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เพิ่มรายละเอียดสัตว์เลี้ยง</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+@extends('layouts.navbar')
+@section('titel','เพิ่มรายละเอียดสัตว์เลี้ยง')
+@section('content')
+<script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap');
         body {
             font-family: 'Kanit', sans-serif;
         }
     </style>
-</head>
 <body class="bg-[#e6f2f2] p-4">
     <div class="max-w-md mx-auto bg-white p-5 rounded-lg shadow">
         
@@ -62,4 +58,4 @@
     </div>
 </body>
 
-</html>
+@endsection

@@ -235,52 +235,54 @@ class AdminController extends Controller
             return redirect()->to(route('Admin.rooms'))->with('complete','ห้องหมายเลข #'.$roomID. ' เรียบร้อย!');
         }
         
-        //โชว์สถานะสัตว์เลี้ยง
-        public function petstatus(){
+        // //โชว์สถานะสัตว์เลี้ยง
+        // public function petstatus(){
             
-                $admin = Auth::user()->id;
-                $BooksID = Bookings::with('pet_status')->get();  // Retrieve bookings with pet_status relationship
+        //         $admin = Auth::user()->id;
+        //         $BooksID = Bookings::with('pet_status')->get();  // Retrieve bookings with pet_status relationship
                 
-                foreach ($BooksID as $bookRoom) {
-                    $report = PetStatus::where('BookingOrderID', '=', $bookRoom->BookingOrderID)->first();
-                    if ($report) {
-                        $report->Admin_id = $admin;
-                        $report->save();  // Update the report with the admin ID
-                    }
-                }
-        
-                // Fetch bookings with pet_status and paginate the results
-                $BooksRooms = Bookings::with('pet_status')->where('Booking_status','!=',0)->paginate(5);
+        //         foreach ($BooksID as $bookRoom) {
+        //             $report = PetStatus::where('BookingOrderID', '=', $bookRoom->BookingOrderID)->first();
+        //             if($report->Admin_id == NULL) {
+        //                 $report->Admin_id = $admin;
+        //                 $report->save();  // Update the report with the admin ID
+        //             }
+        //         }
+                
+        //         // Fetch bookings with pet_status and paginate the results
+        //         $BooksRooms = Bookings::with('pet_status')->where('Booking_status','!=',0)->paginate(5);
                 
                 
-                // Pass the variable to the view
-                return view("Admin.AdminPets", compact("BooksRooms"));
+        //         // Pass the variable to the view
+        //         return view("Admin.AdminPets", compact("BooksRooms"));
             
-        }
+        // }
         
 
-        public function petdetail($id){
-            $booking = Bookings::find($id);
-            if(!$booking){
-                return redirect()->route('Admin.rooms')->with('error','ขณะนี้ห้องนี้ไม่มีรายการจอง');
-            }
-            $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
-            return view('Admin.AdminReport', compact('booking','petstatus'));
-        }
+        // public function petdetail($id){
+        //     $booking = Bookings::find($id);
+        //     if(!$booking){
+        //         return redirect()->route('Admin.rooms')->with('error','ขณะนี้ห้องนี้ไม่มีรายการจอง');
+        //     }
+        //     $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
+        //     return view('Admin.AdminReport', compact('booking','petstatus'));
+        // }
 
          // ส่งค่าไปรายงาน
         public function submitReport(Request $request)
         {
-            
-            $idReport = PetStatus::findOrFail($request->status_id);
-            $idReport->status = 1;
-            $idReport->Report = $request->report;
-            $idReport->Admin_id = Auth::user()->id;
-            $idReport->save();
+             // ตรวจสอบว่า booking นี้มีอยู่จริง
+            $booking = Bookings::findOrFail($request->booking_id);
 
-            
+            $petStatus = new PetStatus();
+            $petStatus->BookingOrderID = $request->booking_id; // ใช้ค่า integer ที่ได้จาก parameter
+            $petStatus->status = $request->input('status', 1); // กำหนดค่าเริ่มต้นเป็น 1 ว่ารายงานแล้ว
+            $petStatus->Report = $request->input('pet_status');
+            $petStatus->Admin_id = Auth::id(); // สมมติว่าใช้ Auth เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
 
-            return redirect()->route('Admin.pets')->with('success', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
+            $petStatus->save();
+
+            return redirect()->back()->with('success', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
             
 
@@ -294,15 +296,17 @@ class AdminController extends Controller
 
         //จัดการ การจองห้อง
 
-        //โชว์รายการจอง
+        //โชว์รายการจองและรายงานสัตว์เลี้ยง
         public function showBookings(){
             $countDates = [];
-            $bookings = Bookings::withTrashed()->with('room')->orderBy('BookingOrderID', 'desc')->paginate(5);
+            $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(5);
             foreach($bookings as $bk) {
                 $checkinDate = Carbon::parse($bk->Start_date);
                 $checkoutDate = Carbon::parse($bk->End_date);
                 $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
             }
+            
+
             
             return view('Admin.AdminBookings', compact('bookings','countDates'));
 
