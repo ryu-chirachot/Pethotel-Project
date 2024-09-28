@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Rooms;
 use App\Models\Pet_Type_Room_Type;
 use App\Models\Bookings;
+use App\Models\Reviews;
 use App\Models\Rooms_type;
 
 
@@ -14,10 +15,23 @@ class SearchController extends Controller
 {
     public function showpet($viewname)
     {
-        $p_type = pet_type::all();
-        return view(('main/').$viewname,compact('p_type'));
+        session()->flush();
+        $p_type = pet_type::all();  
+        $reviews = Reviews::all();
+        
+        // dd($reviews);
+        return view(('main/homepage'),compact('p_type','reviews'));
     }
 
+    public function show($viewname)
+    {
+        
+        $p_type = pet_type::all();  
+        $reviews = Reviews::all();
+        
+        // dd($reviews);
+        return view(('main/homepage'),compact('p_type','reviews'));
+    }
 
 
     public function search(Request $request)
@@ -48,6 +62,8 @@ class SearchController extends Controller
         })
         ->with(['pet_Type_Room_Type.roomType'])
         ->get();
+    
+    $img = Pet_Type_Room_Type::with(['roomType', 'image'])->where('pet_type_id', $petTypeId)->get();
 
     // จัดกลุ่มห้องตาม Rooms_type_id
     $groupedRooms = $rooms->groupBy('pet_Type_Room_Type.roomType.Rooms_type_id');
@@ -58,17 +74,17 @@ class SearchController extends Controller
     });
 
     // ส่งข้อมูลไปยัง view
-    return view('main.result', compact('img','rooms', 'p_type', 'groupedRooms', 'roomCounts'));
+    return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts','img'));
 }
 
-    public function refresh()
-{
-    // ลบค่าทั้งหมดใน Session
-    session()->flush();
-
-    // แสดงหน้า Homepage
-    return redirect()->back();
-}
-
+    // public function refresh()
+    // {
+    // // ลบค่าทั้งหมดใน Session
+    // session()->flush();
+    // $p_type = pet_type::all();  
+    // $reviews = Reviews::all();
+    // // แสดงหน้า Homepage
+    // return view('main.homepage',compact('p_type','reviews'));
+    // }
 }
 

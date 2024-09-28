@@ -48,8 +48,6 @@
                                 <th>วันเช็คเอาท์</th>
                                 <th>พนักงานดูแล</th>
                                 <th>สถานะ</th>
-                                <th>แก้ไข</th>
-                                <th>ลบ</th>
                                 <th>รายงาน</th>
                             </tr>
                         </thead>
@@ -91,16 +89,6 @@
                                     </td>
                                     
                                     <td class="align-items-center">
-                                        <a id="Edit" href="{{ route('Admin.editrooms', $bk->room->Rooms_id) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td class="align-items-center">
-                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $bk->room->Rooms_id }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                    <td class="align-items-center">
                                         <a class="btn btn-primary btn-sm" href="{{route('Admin.pets.detail',$bk->BookingOrderID)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-heart" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l3.235 1.94a2.8 2.8 0 0 0-.233 1.027L1 5.384v5.721l3.453-2.124q.219.416.55.835l-3.97 2.443A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741l-3.968-2.442q.33-.421.55-.836L15 11.105V5.383l-3.002 1.801a2.8 2.8 0 0 0-.233-1.026L15 4.217V4a1 1 0 0 0-1-1zm6 2.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
@@ -118,6 +106,9 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
     function ConfirmDelete(id){
         const swalWithBootstrapButtons = Swal.mixin({

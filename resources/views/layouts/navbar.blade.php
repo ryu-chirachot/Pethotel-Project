@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title','')</title>
     <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="/css/nav.css">
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
@@ -17,24 +15,26 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <body>
+
 <!-- เรียกใช้ SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<nav class="navbar navbar-expand-lg sticky-top bg-warning">
+<nav class="navbar navbar-expand-lg sticky-top">
     <div class="container-fluid ms-2 me-2">
-      <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-paw"> Paw some Hotel</i>
-      </a>
-      <div class="d-flex d-lg-none ms-auto align-items-center">
-      <span class="d-flex me-3 iconphone">
-          <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-          <a class="nav-link" href="#">เข้าสู่ระบบ</a>
-        </span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
+        <a class="navbar-brand" href="/">
+            <i class="fa-solid fa-paw"> Pawsome stay Hotel</i>
+        </a>
+        <div class="d-flex d-lg-none ms-auto align-items-center">
+            <span class="d-flex me-3 iconphone">
+                <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
+                <a class="nav-link" href="#">เข้าสู่ระบบ</a>
+            </span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
 
       <div class="collapse navbar-collapse " id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
@@ -70,14 +70,22 @@
             <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                 @csrf
               
-
                 <div class="user-menu">
                   <i class="bi bi-person-circle"></i>
                   <div class="dropdown-content">
-                  <a href="/edit">แก้ไขข้อมูล</a>
-                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
-                      ออกจากระบบ
-                  </button>
+                    @if(auth()->user()->role == 'admin')
+                    <a href="/Admin/Home">Admin Home</a>
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+
+                    @else
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+                    @endif
                   </div>
                 </div>
                 
@@ -86,7 +94,6 @@
         @endauth
         </ul>
     </div>
-  </div>
 </nav>
 
 <script>
@@ -124,7 +131,6 @@
         });
     });
 </script>
-
     <div>
   @yield('content')
   </div>

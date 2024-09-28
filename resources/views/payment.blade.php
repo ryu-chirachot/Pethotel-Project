@@ -6,15 +6,15 @@
      body {
             font-family: 'Kanit', sans-serif;
             background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            
             height: 100vh;
             margin: 0;
         }
+    
         .container {
             max-width: 800px; /* ปรับขนาด container ให้แคบลง */
             padding: 0; 
+            margin-top: 20px;
         }
         .row {
             margin: 0 -5px; /* ลดระยะห่างระหว่างคอลัมน์ */
@@ -35,6 +35,7 @@
             border: none;
             box-shadow: 0 5px 5px rgba(0,0,0,0.1);
             padding: 20px;
+            padding-top: 0;
             width: 300px;
             margin-left: auto;
             margin-right:auto ;
@@ -160,7 +161,7 @@
         <div class="total-wrapper">
             <div class="total">
                 <span>ยอดรวม</span>
-                <span>THB 300.00</span>
+                <span>THB {{$price * \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}}</span>
             </div>
         </div>
         <h2>ช่องทางการชำระเงิน</h2>

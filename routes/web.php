@@ -16,7 +16,7 @@ use App\Http\Controllers\ReviewController;
 
 // โซน user
 Route::get('/', function () {
-    return redirect()->route('main', ['viewname' => 'homepage']);
+    return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
 
 
@@ -31,26 +31,27 @@ Route::post('/info', [BookingController::class, 'send'])->middleware('auth')->na
 Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
+Route::get('/home/{viewname}',[SearchController::class,'show'])->name('mains'); 
 Route::post('/room/search',[SearchController::class,'search']
 )->name('search.result');
 
 
 
 Route::post('/success',[BookingController::class,'booked'])->name('success');
-Route::get('/review', function () {
-    return view('reviews');});
-    Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
+
+Route::get('/review/{id}',[ReviewController::class, 'index'])->name('review');
+Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:admin',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/Admin', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -72,6 +73,9 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
+    Route::post('/การจองวันนี้', [AdminController::class,''])->name('bookings.today');
+    Route::post('/การจองที่เลยกำหนด', [AdminController::class,''])->name('booking.deadline');
 });
 
 //ห้อง
@@ -88,11 +92,9 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 //รายงานสถานะสัตว์เลี้ยง
 Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->middleware('admin')->name('Admin.pets');
 Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
-Route::post('/Admin/Pets/report',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
+Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
 Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
-Route::get('/Admin/Setting', function () {
-    return view('Admin.AdminSetting');
-})->name('Admin.setting');
+
 
 
 

@@ -44,10 +44,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="mb-0"><b>ห้องพัก</b></h3>
-                <input type="text" class="form-control w-25" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0"><b>ห้องพัก</b></h3>
+            <div class="d-flex align-items-center">
+                <input type="text" class="form-control" style="width: 250px;" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+                
             </div>
+        </div>
+
+
 
             <!-- Room Filters -->
             <div class="d-flex justify-content-between mb-3">
@@ -121,7 +126,7 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash "></i>
                                         </button>
                                     </td>
                                     <td>
@@ -130,9 +135,17 @@
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>                      
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $rm->Rooms_id) }}">ดูรายละเอียดการจอง</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $rm->Rooms_id) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
-                                                
+                                                @if($rm->bookings->isNotEmpty())
+                                                    @foreach ($rm->bookings as $bk)
+                                                        @if($bk->Booking_status != 2)
+                                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                            <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $bk->BookingOrderID) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลสัตว์เลี้ยง</a></li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>
