@@ -147,7 +147,7 @@
 
         <div>
             <label for="check_out">สิ้นสุด</label>
-            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}} required">
+            <input type="date" id="check_out" name="check_out" value="{{ session('check_out') }}" placeholder="วัน-เดือน-ปี" min="{{ \Carbon\Carbon::now()->addDay(1)->format('Y-m-d')}}" required>
         </div>
 
         <button type="submit" class="btn btn-warning">ค้นหาห้องพัก</button>

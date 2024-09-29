@@ -322,7 +322,7 @@ class AdminController extends Controller
             
             PetStatus::destroy($request->status_id);
 
-            return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
+            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
 
         //จัดการ การจองห้อง
