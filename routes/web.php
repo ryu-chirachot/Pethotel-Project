@@ -85,12 +85,15 @@ Route::get('/Admin/Rooms/ห้องที่ไม่ว่าง',[AdminContr
 Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->middleware('admin')->name('rooms.update'); //route สำหรับ ไปหน้าแก้ไขห้อง
 Route::get('/Admin/Rooms/Edit/{id}',[AdminController::class,'editrooms'])->middleware('admin')->name('Admin.editrooms'); //route สำหรับส่งค่าไปแก้ไขห้องใน DB
 
+Route::get('/Admin/Rooms/selecttype',[AdminController::class,'selectRoomType'])->middleware('admin')->name('Admin.rooms.type'); //route สำหรับไปที่หน้าสร้างห้อง
+Route::post('/Admin/Pet-types', [AdminController::class,'storePetType'])->name('Admin.petTypes.store');
+Route::post('/Admin/Room-types', [AdminController::class,'storeRoomType'])->name('Admin.roomTypes.store');
 Route::get('/Admin/Rooms/create',[AdminController::class,'createRooms'])->middleware('admin')->name('Admin.rooms.create'); //route สำหรับไปที่หน้าสร้างห้อง
 Route::post('/Admin/Rooms/create/success',[AdminController::class,'store'])->middleware('admin')->name('Admin.rooms.store');
 Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middleware('admin')->name('Admin.rooms.delete'); //route สำหรับลบข้อมูลห้องใน Admin 
 
 //รายงานสถานะสัตว์เลี้ยง
-Route::get('/Admin/Pets',[AdminController::class,'petstatus'])->middleware('admin')->name('Admin.pets');
+Route::get('/Admin/user',[AdminController::class,'users'])->middleware('admin')->name('Admin.user');
 Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
 Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
 Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');

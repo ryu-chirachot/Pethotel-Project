@@ -53,14 +53,14 @@
                             <a class="nav-link {{ Request::is('Admin/Rooms') ? 'active' : '' }}" href="{{route('Admin.rooms')}}">แก้ไขห้องพัก</a>
                         </li>
                         <li class="nav-item mb-1">
-                            <a class="nav-link {{ Request::is('Admin/Rooms/create') ? 'active' : '' }}" href="{{route('Admin.rooms.create')}}">เพิ่มห้องพัก</a>
+                            <a class="nav-link {{ Request::is('Admin/Rooms/selecttype') ? 'active' : '' }}" href="{{route('Admin.rooms.type')}}">เพิ่มห้องพัก</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item mb-3">
-                    <a class="nav-link {{ Request::is('Admin/Pets') ? 'active' : '' }}" href="{{route('Admin.pets')}} " data-toggle="tooltip" data-placement="right" title="รายงานสถานะ">
-                        <i class="fas fa-paw me-2"></i>สัตว์เลี้ยง
+                    <a class="nav-link {{ Request::is('Admin/user') ? 'active' : '' }}" href="{{route('Admin.user')}} " data-toggle="tooltip" data-placement="right" title="ดูผู้ใช้ทั้งหมด">
+                    <i class="fas fa-users fa text-gray me-2"></i>ผู้ใช้ทั้งหมด
                     </a>
                 </li>
                 

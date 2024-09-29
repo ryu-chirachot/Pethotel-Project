@@ -47,30 +47,30 @@
             </div>
         </div>
 
-        <!-- Pets Staying Card -->
+        <!-- ผู้ใช้ทั้งหมด -->
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">สัตว์เลี้ยง</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">ทั้งหมด: {{count($Petbooking)}}</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">ผู้ใช้ทั้งหมด</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">ทั้งหมด: {{count($Users)}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-paw fa-2x text-gray-300"></i>
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href="{{ route('Admin.pets') }}" class="btn btn-warning btn-sm">ดูรายละเอียด</a>
+                    <a href="{{ route('Admin.user') }}" class="btn btn-warning btn-sm">ดูรายละเอียด</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recent Bookings -->
-    <div class="row justify-content-center">
-        <div class="col-lg-8 mb-4">
+    <!--รายการจองล่าสุด -->
+    <div class="row">
+        <div class="col-lg-12 mb-4">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white py-3">
                     <h6 class="m-0 font-weight-bold">การจองล่าสุด</h6>
@@ -91,8 +91,8 @@
                                 <tr>
                                     <td><strong>#{{$booking->BookingOrderID}}</strong></td>
                                     <td>{{$booking->user->name}}</td>
-                                    <td>{{$booking->created_at->format('d/m/Y')}}</td>
-                                    <td><span class="badge badge-success">ยืนยันแล้ว</span></td>
+                                    <td>{{$booking->PaymentDate}}</td>
+                                    <td><span class="badge badge-success text-dark">ยืนยันแล้ว</span></td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -111,11 +111,10 @@
     .border-left-primary { border-left: .25rem solid #4e73df; }
     .border-left-success { border-left: .25rem solid #1cc88a; }
     .border-left-warning { border-left: .25rem solid #f6c23e; }
-    .table-hover tbody tr:hover {
-        background-color: rgba(0,0,0,.075);
-        cursor: pointer;
+    
+    .badge-success {
+        background-color: #1cc88a;
+        color: #000 !important;
     }
 </style>
 @endsection
-
-

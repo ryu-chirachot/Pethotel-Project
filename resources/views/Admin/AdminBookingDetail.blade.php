@@ -4,7 +4,7 @@
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
 
-    <!-- {{-- Booking Details Card --}} -->
+    <!-- รายละเอียดการจอง-->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="card-title fw-bold mb-3">ข้อมูลการจอง</h5>

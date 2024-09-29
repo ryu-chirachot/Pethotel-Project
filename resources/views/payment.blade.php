@@ -78,7 +78,6 @@
             margin: 5px 0;
             font-size: 14px;
             
-          
         }
         p{
             text-align: left;
@@ -87,10 +86,7 @@
             background-color: #FEFCF4;
             border-radius: 10px;
             padding: 20px ;
-            width: 340px;
-       
-            
-            
+            width: 340px;   
         }
         .total-wrapper {
             margin: 15px -20px;
@@ -102,11 +98,7 @@
             display: flex;
             justify-content: space-between;
         }
-        .card{
-            
-            
-            
-        }
+        
         .review-score{
             width: 35px;
             height: 35px;
@@ -129,10 +121,9 @@
             background-color: #FFD700;
             color: #6C620F;
             border-radius: 5px;
-        }
-       
-       
-       
+        }       
+
+    
 </style>
 <body>
 
