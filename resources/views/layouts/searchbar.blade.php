@@ -20,13 +20,11 @@
 <body>
 <nav class="navbar navbar-expand-lg sticky-top" >
     <div class="container-fluid ms-2 me-2">
-      <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-paw"> Paw some Hotel</i>
+      <a class="navbar-brand" href="/">
+      <i class="fa-solid fa-paw"> Pawsome stay Hotel</i>
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
       <span class="d-flex me-3 iconphone">
-          <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-          <a class="nav-link" href="#">เข้าสู่ระบบ</a>
         </span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
           aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,10 +40,6 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
-          </li>
-          
         </ul>
 
 
@@ -72,10 +66,19 @@
                 <div class="user-menu">
                   <i class="bi bi-person-circle"></i>
                   <div class="dropdown-content">
-                  <a href="/edit">แก้ไขข้อมูล</a>
-                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
-                      ออกจากระบบ
-                  </button>
+                    @if(auth()->user()->role == 'admin')
+                    <a href="/Admin/Home">Admin Home</a>
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+
+                    @else
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+                    @endif
                   </div>
                 </div>
                 
@@ -113,8 +116,8 @@
     
 
 
-    <div id="cen" class="container">
-    <form class="form" action="/room/search" method="post">
+    <div id="cen" class="container sticky-top">
+    <form id="searchForm" class="form" action="/room/search" method="post">
         @csrf
         <div>
             <label for="petSelect">เลือกประเภทสัตว์เลี้ยง</label>

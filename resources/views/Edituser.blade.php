@@ -95,7 +95,7 @@
 
 
 
-        <!-- <form id="edit-form" method="POST" action="{{ route('user.edit_update') }}">
+         {{-- <form id="edit-form" method="POST" action="{{ route('user.edit_update') }}">
             @csrf
             <div class="paw">
                     <img width="30" height="30" src="https://img.icons8.com/forma-bold-filled/24/cat-footprint.png" alt="cat-footprint"/>
@@ -151,10 +151,10 @@
                     {{ __('บันทึกข้อมูล') }}
                 </button>
             </div>
+        </form>  --}}
 
-         
-    
-        </form> -->
+
+
 <div class="col-7">
         <div class="grid">
             <div class="grid-item">
@@ -180,8 +180,8 @@
 
 
 
-{{-- 
-<script>
+
+{{-- <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('userForm');
     const editButton = document.getElementById('editButton');

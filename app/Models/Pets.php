@@ -24,4 +24,6 @@ class Pets extends Model
     {
         return $this->belongsTo(Pet_Type::class, 'Pet_type_id');
     }
+
+
 }

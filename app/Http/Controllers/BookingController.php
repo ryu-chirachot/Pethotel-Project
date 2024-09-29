@@ -20,8 +20,9 @@ class BookingController extends Controller
     $petTypeId = $request->pet_type_id;
     $checkIn = $request->check_in;
     $checkOut = $request->check_out;
-    $roomTypeId = $request->room_type;
+    $roomTypeId = $request->room_type_id;
     $roomTypeName = $request->room_type_name;
+    
     return view('main.petinfo', compact('room_id','roomTypeName','petTypeId', 'checkIn', 'checkOut', 'roomTypeId'));
 }
     function petInfo(Request $request){
@@ -38,7 +39,7 @@ class BookingController extends Controller
         $p_weight=$request->weight;
         $p_gender=$request->gender;
         $p_description=$request->comment;
-        
+       
         return view(('main.overview'),compact('room_id','roomTypename','roomTypeId','checkIn','checkOut','p_name','p_breed','p_age','p_weight','p_gender','p_description','petTypeId'));
 }
     function book(Request $request){
@@ -58,7 +59,7 @@ class BookingController extends Controller
     $price = pet_type_room_type::where('Rooms_type_id', $roomTypeId)
     ->where('Pet_type_id', $petTypeId)
     ->value('Room_price');
-
+ 
     // ส่งค่าทั้งหมดไป view 'payment'
     return view('payment', compact(
         'room_id','roomTypeId', 'petTypeId','roomTypeName', 'checkIn', 'checkOut', 
@@ -151,12 +152,13 @@ class BookingController extends Controller
     {
         // ดึงข้อมูลสัตว์เลี้ยงที่เกี่ยวข้องกับการจอง
         $usID = Auth::user()->id;
-        $pet = Pets::where('BookingOrderID', $id)
-                ->where('User_id', $usID)
-                ->firstOrFail();
-                
-        return view('User.Petstatus', compact('pet'));
+        $booking = bookings::withTrashed()->find($id);// Use get() for multiple bookings
+        $status = PetStatus::withTrashed()->where('BookingOrderID', $id)->get();
+
+        // dd($booking);
+        return view('User.Petstatus', compact('booking', 'status'));
     }
+
 
     //show picture
     public function showRoomsPets()

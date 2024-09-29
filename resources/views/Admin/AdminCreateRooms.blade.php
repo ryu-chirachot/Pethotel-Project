@@ -8,18 +8,23 @@
             <h2 class="my-4">เพิ่มห้องพักใหม่</h2>
             <form action="{{ route('Admin.rooms.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Room Images -->
-                <div class="form-group mb-3">
-                    <label>รูปภาพ ห้องพัก *</label>
-                    <div class="room-image-upload empty">
-                        <input type="file" name="room_image" id="roomImageInput" accept="image/*" onchange="previewImage(this)" required>
-                    </div>
+                <!-- Room Images --> 
+                <label>รูปภาพ ห้องพัก *</label>
+                <div class="form-group mb-3" id="form">
+                
+                    @for ($i = 1; $i <= 6; $i++)
+                        <div class="room-image-upload empty">
+                            <img id="previewImage{{ $i }}" class="img-fluid rounded">
+                            <input type="file" name="room_image[]" id="roomImageInput{{ $i }}" accept="image/*" onchange="previewImage(this, '{{ $i }}')" required>
+                        </div>
+                    @endfor
+
                 </div>
 
                 <!-- Room Details -->
                 <div class="form-group mb-3">
                     @if ($latestRoom)
-                        <label>หมายเลขห้อง {{ $latestRoom->Rooms_id+1}}</label>
+                        <label>หมายเลขห้อง {{ $latestRoom->Rooms_id+1 }}</label>
                         <input type="text" name="room_number" class="form-control" value="{{ $latestRoom->Rooms_id+1 }}" disabled>
                     @else
                         <label>หมายเลขห้อง 1</label>
@@ -35,11 +40,11 @@
                     </select>
                 </div>
 
-                    <div class="form-group mb-3">
+                <div class="form-group mb-3">
                     <label>ประเภทสัตว์เลี้ยง *</label>
                     <select name="pet_type" class="form-control" required>
                         @foreach ($Pet_types as $pt)
-                        <option value="{{$pt->Pet_nametype}}">{{$pt->Pet_nametype}}</option>
+                        <option value="{{ $pt->Pet_nametype }}">{{ $pt->Pet_nametype }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -48,7 +53,7 @@
                     <label>ประเภทห้อง *</label>
                     <select name="room_type" class="form-control" required>
                         @foreach ($Room_types as $room_type)
-                        <option value="{{$room_type->Rooms_type_name}}"> {{$room_type->Rooms_type_name}}</option>
+                        <option value="{{ $room_type->Rooms_type_name }}"> {{ $room_type->Rooms_type_name }}</option>
                         @endforeach
                     </select>
                 </div>

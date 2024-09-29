@@ -23,7 +23,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route("main",["viewname"=>"homepage"])->with('success','แก้ไขสำเร็จ');
+        return redirect()->route("mains",["viewname"=>"homepage"])->with('success','แก้ไขสำเร็จ');
     }
 
 }

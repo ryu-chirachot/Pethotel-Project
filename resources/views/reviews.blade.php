@@ -49,9 +49,10 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h3 class="text-center">รีวิวห้องพัก</h3>
+            <h3 class="text-center">รีวิวห้องพัก</h3> <select name="" id=""> <option value="">ok</option> <option value="">oksd</option></select>
             <form id="reviewForm" method="POST" action="{{ route('submit.review') }}">
                 @csrf
+                <input type="hidden" name="booking_id" value="{{$id}}">
                 <div class="form-group">
                     <label for="rating">ระดับความพึงพอใจ</label>
                     <div class="rating">

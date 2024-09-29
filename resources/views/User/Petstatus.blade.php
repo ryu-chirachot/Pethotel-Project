@@ -1,19 +1,47 @@
+@extends('layouts.navbar')
 
-<div class="container">
-    <h1>สถานะของ {{ $pet->name }}</h1>
-
+@section('content')
+<div class="container mt-4">
     <div class="card">
         <div class="card-header">
-            สถานะสุขภาพ
+            <h4>สถานะสัตว์เลี้ยง </h4>
+            <h4>หมายเลขการจอง #{{$booking->BookingOrderID}}</h4>
         </div>
         <div class="card-body">
-            <p><strong>อุณหภูมิร่างกาย:</strong> {{ $pet->temperature }} °C</p>
-            <p><strong>สุขภาพทั่วไป:</strong> {{ $pet->health_status }}</p>
-            <p><strong>อาหาร:</strong> {{ $pet->meal }}</p>
-            <p><strong>กิจกรรม:</strong> {{ $pet->activities }}</p>
+            @if($booking)
+                @if($booking->pet)
+                    <h5>ชื่อสัตว์เลี้ยง : {{ $booking->pet->Pet_name }}</h5>
+                @else
+                    <div class="alert alert-warning" role="alert">
+                        ไม่มีสัตว์เลี้ยงสำหรับการจองนี้
+                    </div>
+                @endif
+            @else
+                <div class="alert alert-danger" role="alert">
+                    ไม่พบข้อมูลการจอง
+                </div>
+            @endif
+
+            <hr>
+
+            
+            @if(isset($status) && $status->isNotEmpty())
+                @foreach ($status as $st)
+                    <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at }} น.</h5>
+                    <div class="status-item mb-3">
+                        <h6><b>รายงาน :</b>{{ $st->Report }}</h6>
+                        
+                    </div>
+                @endforeach
+            @else
+                <div class="alert alert-info" role="alert">
+                    ไม่พบการรายงาน
+                </div>
+            @endif
+        </div>
+        <div class="card-footer text-center">
+            <a href="{{ route('bookings.index') }}" class="btn btn-primary">กลับไปยังรายการจอง</a>
         </div>
     </div>
-
-    <a href="{{ route('bookings.index') }}" class="btn btn-secondary mt-3">กลับไปยังรายการจอง</a>
 </div>
-
+@endsection
