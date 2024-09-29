@@ -143,13 +143,10 @@
                                                     @foreach ($rm->bookings as $bk)
                                                         @if($bk->Booking_status != 2)
                                                             <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
-                                                            <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $bk->BookingOrderID) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
                                                         @endif
                                                     @endforeach
                                                 @else
-                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>
-                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลสัตว์เลี้ยง</a></li>
-                                                @endif
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                @endif
                                             </ul>
                                         </div>
                                     </td>

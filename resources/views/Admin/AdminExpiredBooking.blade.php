@@ -31,7 +31,7 @@
             </div>
             @if($bookings->isEmpty())
                 <div class="alert alert-warning" role="alert">
-                    ยังไม่มีการจองในเข้ามาในขณะนี้
+                    ยังไม่มีการจองที่เลยกำหนด
                 </div>
             @else
                 <div class="card shadow-sm">

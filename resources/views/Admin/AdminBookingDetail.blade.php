@@ -165,7 +165,7 @@
     }
 </style>
 
-{{-- Confirmation Script --}}
+
 <script>
     function Confirmcancel(id) {
         return Swal.fire({

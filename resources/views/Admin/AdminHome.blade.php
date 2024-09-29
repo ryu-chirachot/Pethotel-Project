@@ -91,8 +91,26 @@
                                 <tr>
                                     <td><strong>#{{$booking->BookingOrderID}}</strong></td>
                                     <td>{{$booking->user->name}}</td>
-                                    <td>{{$booking->PaymentDate->is_null ? 'ยังไ':''}}</td>
-                                    <td><span class="badge badge-success text-dark">ยืนยันแล้ว</span></td>
+
+                                    <td>
+                                        @if($booking->Booking_status == 3)
+                                            <span class="badge bg-danger">คืนเงินแล้ว</span>
+                                        @else
+                                            {{$booking->PaymentDate == NULL ? 'ยังไม่จ่ายเงิน':'จ่ายเงินแล้ว'}}
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        @if($booking->deleted_at != NULL)
+                                            <span class="badge bg-danger">เช็คเอาท์</span>
+                                        @elseif($booking->Booking_status == 3)
+                                            <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                        @else
+                                            <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                                {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
+                                            </span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

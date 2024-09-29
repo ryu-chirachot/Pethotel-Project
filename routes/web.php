@@ -60,6 +60,8 @@ Route::get('/Admin/Home', [AdminController::class, 'index'])->middleware('admin'
 Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(function () {
     
     Route::get('/', [AdminController::class, 'showBookings'])->name('bookings');
+    Route::get('/TodayBook', [AdminController::class, 'Todaybooking'])->name('bookings.today');
+    Route::get('/Expiredbooking', [AdminController::class, 'expiredbooking'])->name('bookings.expired');
     Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
     Route::post('detail/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
@@ -85,9 +87,10 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 
 //รายงานสถานะสัตว์เลี้ยง
 Route::get('/Admin/user',[AdminController::class,'users'])->middleware('admin')->name('Admin.user');
-Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
-Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
-Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
+Route::get('/Admin/user/{id}',[AdminController::class,'userdetail'])->middleware('admin')->name('Admin.user.detail');
+// Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
+// Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
+// Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
 
 
 

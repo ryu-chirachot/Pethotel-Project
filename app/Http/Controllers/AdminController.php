@@ -71,7 +71,7 @@ class AdminController extends Controller
                 $Rooms = Rooms::with(['bookings.user'])
                                     ->whereHas('bookings')
                                     ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
-                                    ->paginate(5);
+                                    ->paginate(10);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -80,7 +80,7 @@ class AdminController extends Controller
 
         public function Available(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "1")->paginate(5);
+                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "1")->paginate(10);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.AvailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -88,7 +88,7 @@ class AdminController extends Controller
         
         public function Unavailable(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "0")->paginate(5);
+                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "0")->paginate(10);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.UnavailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -214,6 +214,7 @@ class AdminController extends Controller
         public function store(Request $request){
             $request->validate([
                 'room_image.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'room_count' => 'required|integer|min:1',
                 'room_status' => 'required',
                 'pet_type_hidden' => 'required',
                 'room_type_hidden' => 'required',
@@ -241,20 +242,28 @@ class AdminController extends Controller
             $idroomType = Rooms_type::where('Rooms_type_name', $roomType)->firstOrFail();
             $idpetType = Pet_type::where('Pet_nametype', $petType)->firstOrFail();
         
-            $newPetRoomtype = Pet_Type_Room_Type::create([
-                'Rooms_type_id' => $idroomType->Rooms_type_id,
-                'Pet_type_id' => $idpetType->Pet_type_id,
-                'Rooms_type_description' => $request->room_description,
-                'Room_price' => $request->room_price,
-                'ImagesID' => $newImg->ImagesID
-            ]);
+            $petRoomType = Pet_Type_Room_Type::firstOrCreate(
+                [
+                    'Rooms_type_id' => $idroomType->Rooms_type_id,
+                    'Pet_type_id' => $idpetType->Pet_type_id,
+                ],
+                [
+                    'Rooms_type_description' => $request->room_description,
+                    'Room_price' => $request->room_price,
+                    'ImagesID' => $newImg->ImagesID
+                ]
+            );
         
-            $newRoom = Rooms::create([
-                'Pet_Room_typeID' => $newPetRoomtype->Pet_Room_typeID,
-                'Rooms_status' => $request->room_status
-            ]);
+            $createdRooms = [];
+            for ($i = 0; $i < $request->room_count; $i++) {
+                $newRoom = Rooms::create([
+                    'Pet_Room_typeID' => $petRoomType->Pet_Room_typeID,
+                    'Rooms_status' => $request->room_status
+                ]);
+                $createdRooms[] = $newRoom->Rooms_id;
+            }
         
-            return redirect()->route('Admin.rooms')->with('complete', 'ห้องหมายเลข #'.$newRoom->Rooms_id. ' เพิ่มเรียบร้อย!');
+            return redirect()->route('Admin.rooms')->with('complete', 'ทั้งหมด (' .count($createdRooms). ') ห้องเรียบร้อย!');
         }
         
         
@@ -270,7 +279,7 @@ class AdminController extends Controller
             $petStatus->status = $request->input('status', 1); // กำหนดค่าเริ่มต้นเป็น 1 ว่ารายงานแล้ว
             $petStatus->Report = $request->input('pet_status');
             $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
-            
+
             $petStatus->save();
 
             return redirect()->back()->with('success', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
@@ -290,6 +299,11 @@ class AdminController extends Controller
 
         //โชว์รายการจองและรายงานสัตว์เลี้ยง
         public function showBookings(){
+            $allBook = Bookings::all();
+            $today = Bookings::with(['room','pet_status'])
+                    ->whereDate('created_at',Carbon::today());
+            $expired = Bookings::with(['room','pet_status'])
+                    ->where('End_date','<',Carbon::today());
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(5);
             foreach($bookings as $bk) {
@@ -298,8 +312,48 @@ class AdminController extends Controller
                 $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
             }
             
-            return view('Admin.AdminBookings', compact('bookings','countDates'));
+            return view('Admin.AdminBookings', compact('bookings','countDates','allBook','today','expired'));
 
+        }
+        
+        //การจองวันนี้
+        public function Todaybooking(){
+            $allBook = Bookings::all();
+            $today = Bookings::with(['room','pet_status'])
+                    ->whereDate('created_at',Carbon::today())->get();
+
+            $expired = Bookings::with(['room','pet_status'])
+                    ->where('End_date','<',Carbon::today())->get();
+            $countDates = [];
+            $bookings = Bookings::withTrashed()->with(['room','pet_status'])
+                        ->whereDate('created_at',Carbon::today())->orderBy('BookingOrderID', 'desc')
+                        ->paginate(5);
+            foreach($bookings as $bk) {
+                $checkinDate = Carbon::parse($bk->Start_date);
+                $checkoutDate = Carbon::parse($bk->End_date);
+                $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
+            }
+            return view('Admin.AdminTodayBooking', compact('bookings','countDates','allBook','today','expired'));
+        }
+
+        //การจองเลยกำหนด
+        public function expiredbooking(){
+            $allBook = Bookings::all();
+            $today = Bookings::with(['room','pet_status'])
+                    ->whereDate('created_at',Carbon::today())->get();
+
+            $expired = Bookings::with(['room','pet_status'])
+                    ->where('End_date','<',Carbon::today())->get();
+            $countDates = [];
+            $bookings = Bookings::withTrashed()->with(['room','pet_status'])
+                        ->whereDate('End_date','<',Carbon::today())->orderBy('BookingOrderID', 'desc')
+                        ->paginate(5);
+            foreach($bookings as $bk) {
+                $checkinDate = Carbon::parse($bk->Start_date);
+                $checkoutDate = Carbon::parse($bk->End_date);
+                $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
+            }
+            return view('Admin.AdminExpiredBooking', compact('bookings','countDates','allBook','today','expired'));
         }
 
         //โชว์รายละเอียดการจองแต่ละอัน
@@ -312,63 +366,67 @@ class AdminController extends Controller
         }
 
         // Confirm payment
-    public function confirmPayment($id)
-    {
-        $booking = Bookings::findOrFail($id);
-        $booking->Booking_status = 1;
-        $booking->PaymentDate = now(); 
-        $booking->save();
-
-        
-
-        return redirect()->route('Admin.bookings.detail', $id)
-                        ->with('success', 'ยืนยันการชำระเงินหมายเลขการจอง'.$id."สำเร็จ");
-    }
-
-    // Cancel booking
-    public function cancelBooking($id)
-    {
-        $booking = Bookings::findOrFail($id);
-        $booking->Booking_status = 3;
-        $booking->save();
-
-        return redirect()->route('Admin.bookings')
-                        ->with('cancel', 'Booking cancelled successfully');
-    }
-
-    // Extend booking
-    public function extendBooking(Request $request, $id)
-    {
-        $booking = Bookings::findOrFail($id);
-        $newEndDate = $request->input('new_end_date');
-
-        
-        if ($newEndDate > $booking->End_date) {
-            $booking->End_date = $newEndDate;
+        public function confirmPayment($id)
+        {
+            $booking = Bookings::findOrFail($id);
+            $booking->Booking_status = 1;
+            $booking->PaymentDate = now(); 
             $booking->save();
-            return redirect()->route('Admin.bookings')
-                            ->with('success', $booking->user->name);
+
+            
+
+            return redirect()->route('Admin.bookings.detail', $id)
+                            ->with('success', 'ยืนยันการชำระเงินหมายเลขการจอง'.$id."สำเร็จ");
         }
 
-        return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
-    }
+        // Cancel booking
+        public function cancelBooking($id)
+        {
+            $booking = Bookings::findOrFail($id);
+            $booking->Booking_status = 3;
+            $booking->save();
 
-    function checkoutManual($id){
-        Bookings::destroy($id);
-        PetStatus::destroy($id);
+            return redirect()->route('Admin.bookings')
+                            ->with('cancel', 'Booking cancelled successfully');
+        }
 
-        return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
+        // Extend booking
+        public function extendBooking(Request $request, $id)
+        {
+            $booking = Bookings::findOrFail($id);
+            $newEndDate = $request->input('new_end_date');
 
-    }
+            
+            if ($newEndDate > $booking->End_date) {
+                $booking->End_date = $newEndDate;
+                $booking->save();
+                return redirect()->route('Admin.bookings')
+                                ->with('success', $booking->user->name);
+            }
 
-    public function users()
-    {
-        $users = User::where('role', 'user')
-            ->with(['pets', 'bookings' => function ($query) {
-                $query->withTrashed();
-            }])
-            ->get();
-        
-        return view("Admin.AdminUsers", compact("users"));
-    }
+            return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
+        }
+
+        function checkoutManual($id){
+            Bookings::destroy($id);
+            PetStatus::destroy($id);
+
+            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
+
+        }
+
+        public function users()
+        {
+            $users = User::where('role', 'user')
+                ->with(['pets', 'bookings' => function ($query) {
+                    $query->withTrashed();
+                }])
+                ->get();
+            return view("Admin.AdminUsers", compact("users"));
+        }
+
+        public function userdetail($id){
+            $users = User::where('role', 'user')->with('pets', 'bookings')->get(); 
+            return view("Admin.AdminUserDetail", compact("users"));
+        }
 }

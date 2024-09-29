@@ -1,14 +1,19 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- นำเข้า jQuery ก่อน -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
 
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="mb-0"><b>รายการผู้ใช้ทั้งหมด</b></h3>
-            <div class="d-flex align-items-center">
-                <input type="text" class="form-control" style="width: 250px;" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
-            </div>
+        <h3 class="mb-0"><b>รายการผู้ใช้ทั้งหมด</b></h3>
+        <div class="d-flex align-items-center">
+            <input type="text" class="form-control" style="width: 250px;" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+        </div>
     </div>
+    
     @if($users->count() === 0)
         <div class="alert alert-warning" role="alert">
             ยังไม่พบผู้ใช้
@@ -33,89 +38,37 @@
                         </thead>
                         <tbody>
                             @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
-                                    {{ count($user->pets)}}
-                                </td>
-                                <td>{{ count($user->bookings)}}</td>
-                                <td>
-                                    @if($user->trashed())
-                                        <span class="text-danger">ถูกลบ</span>
-                                    @else
-                                        <span class="text-success">ใช้งาน</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#userDetailsModal{{ $user->id }}">
-                                        ดูรายละเอียด
-                                    </button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ count($user->pets) }}</td>
+                                    <td>{{ $user->bookings->count() }}</td>
+                                    <td>
+                                        @if($user->trashed())
+                                            <span class="text-danger">ถูกลบ</span>
+                                        @else
+                                            <span class="text-success">ใช้งาน</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info btn-sm" href="{{ route('Admin.user.detail', $user->id) }}">
+                                            ดูรายละเอียด
+                                        </a>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
+</div>
 
-    @foreach($users as $user)
-    <!-- Modal สำหรับแสดงรายละเอียดผู้ใช้ -->
-    <div class="modal fade" id="userDetailsModal{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="userDetailsModalLabel{{ $user->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userDetailsModalLabel{{ $user->id }}">รายละเอียดผู้ใช้: {{ $user->name }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6 class="font-weight-bold">ข้อมูลสัตว์เลี้ยง</h6>
-                    <ul class="list-group mb-3">
-                        @forelse($user->pets as $pet)
-                        <li class="list-group-item">
-                            <strong>ชื่อ:</strong> {{ $pet->name }}, 
-                            <strong>ประเภท:</strong> {{ $pet->type }}, 
-                            <strong>สายพันธุ์:</strong> {{ $pet->breed }}
-                        </li>
-                        @empty
-                        <li class="list-group-item">ไม่มีข้อมูลสัตว์เลี้ยง</li>
-                        @endforelse
-                    </ul>
-
-                    <h6 class="font-weight-bold">ประวัติการจอง</h6>
-                    <ul class="list-group">
-                        @forelse($user->bookings as $booking)
-                        <li class="list-group-item">
-                            <strong>หมายเลขการจอง:</strong> #{{ $booking->BookingOrderID }}, 
-                            <strong>วันที่จอง:</strong> {{ $booking->PaymentDate }}, 
-                            <strong>สถานะ:</strong> 
-                            @if($booking->trashed())
-                                <span class="badge badge-danger">ยกเลิก</span>
-                            @else
-                                <span class="badge badge-success">ยืนยันแล้ว</span>
-                            @endif
-                        </li>
-                        @empty
-                        <li class="list-group-item">ไม่มีประวัติการจอง</li>
-                        @endforelse
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-@endif
 <script>
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();
-        var rows = document.querySelectorAll("#table tbody tr");
+        var rows = document.querySelectorAll("#usersTable tbody tr");
         rows.forEach(function(row) {
             var rowData = row.innerText.toLowerCase();
             if (rowData.includes(input)) {
@@ -138,6 +91,3 @@ $(document).ready(function() {
 </script>
 
 @endsection
-
-
-

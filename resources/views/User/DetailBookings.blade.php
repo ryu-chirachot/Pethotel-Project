@@ -31,9 +31,13 @@
                     </span>
                     </p><hr>
                     <p><strong>สถานะการชำระเงิน:</strong>
-                        <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
-                            {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
-                        </span>
+                        @if($booking->Booking_status == 3)
+                            <span class="badge bg-danger">คืนเงินแล้ว</span>
+                        @else
+                            <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
+                            </span>
+                        @endif
                     </p><hr>
                     </div>
 
