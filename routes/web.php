@@ -18,7 +18,7 @@ use App\Http\Controllers\ReviewController;
 Route::get('/', function () {
     return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
-
+Route::post('/update-pet', [BookingController::class, 'petUpdate'])->name('pet.update');
 
 Route::get('/home/mypets',[BookingController::class, 'mypets'])->name('mypets');
 Route::middleware('checkLogin')->group(function(){

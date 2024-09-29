@@ -172,4 +172,25 @@ class BookingController extends Controller
 
         return view('main.mypet',compact('pets'));
     }
+    // BookingController.php
+    public function petUpdate(Request $request)
+    {
+       
+        
+        // ค้นหาสัตว์เลี้ยงตาม id
+        $pet = Pets::where('Pet_id',$request->petid)->first();
+        
+        // อัปเดตข้อมูลสัตว์เลี้ยง
+        $pet->Pet_name = $request->input('pet_name');
+        $pet->Pet_breed = $request->input('pet_breed');
+        $pet->Pet_gender = $request->input('pet_gender');
+        $pet->Pet_age = $request->input('pet_age');
+        $pet->Pet_weight = $request->input('pet_weight');
+        $pet->additional_info = $request->input('comment');
+        $pet->save();
+    
+        // ส่งกลับไปยังหน้าเดิมพร้อมข้อความยืนยัน
+        return redirect()->back()->with('success', 'ข้อมูลสัตว์เลี้ยงถูกอัปเดตแล้ว');
+    }
+
 }
