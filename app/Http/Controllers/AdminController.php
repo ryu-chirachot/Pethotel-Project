@@ -222,7 +222,7 @@ class AdminController extends Controller
         //ส่งค่าจากหน้าสร้างห้องไป DB
         public function store(Request $request){
             $request->validate([
-                'room_image.*' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'room_image.*' => 'required|image|mimes:jpeg,png,jpg',
                 'room_status' => 'required',
                 'pet_type_hidden' => 'required',
                 'room_type_hidden' => 'required',

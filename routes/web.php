@@ -19,14 +19,13 @@ Route::get('/', function () {
     return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
 Route::post('/update-pet', [BookingController::class, 'petUpdate'])->name('pet.update');
-
 Route::get('/home/mypets',[BookingController::class, 'mypets'])->name('mypets');
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
 Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
-Route::post('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
+Route::get('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
 
 Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
