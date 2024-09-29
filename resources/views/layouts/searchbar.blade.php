@@ -25,8 +25,7 @@
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
       <span class="d-flex me-3 iconphone">
-          <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-          <a class="nav-link" href="#">เข้าสู่ระบบ</a>
+       
         </span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
           aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,10 +41,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
-          </li>
-          
+         
         </ul>
 
 

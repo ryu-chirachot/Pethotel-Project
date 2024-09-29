@@ -1,11 +1,14 @@
 @extends('layouts.navbar')
-
 @section('content')
+<link rel="stylesheet" href="{{asset("/css/petstatus.css")}}">
+
 <div class="container mt-4">
     <div class="card">
         <div class="card-header">
-            <h4>สถานะสัตว์เลี้ยง </h4>
-            <h4>หมายเลขการจอง #{{$booking->BookingOrderID}}</h4>
+            <h4 class="status">สถานะสัตว์เลี้ยง </h4>
+            <div class="num">
+                <h4>หมายเลขการจอง #{{$booking->BookingOrderID}}</h4>
+            </div>
         </div>
         <div class="card-body">
             @if($booking)

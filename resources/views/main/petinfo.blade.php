@@ -5,24 +5,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<style>
-    .center-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    .pet-table-container {
-        width: 80%;
-        margin: 10px auto;
-    }
-    table th, table td {
-        padding: 15px;
-        text-align: center;
-        font-size: 16px;
-    }
-</style>
+<link rel="stylesheet" href="{{asset("/css/petinfo.css")}}">
 
 <body class="bg-[#e6f2f2] p-4">
     <div class="container center-content">
@@ -78,7 +61,7 @@
             @endif
 
             <!-- ปุ่มเปิด modal -->
-            <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addPetModal">
+            <button type="button" class="btn btn-warning  mt-4" data-bs-toggle="modal" data-bs-target="#addPetModal">
                 เพิ่มสัตว์เลี้ยง
             </button>
 

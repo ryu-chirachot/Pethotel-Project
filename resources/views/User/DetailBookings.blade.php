@@ -1,6 +1,14 @@
 @extends ('layouts.navbar')
 @section('content')
 
+
+<link rel="stylesheet" href="{{asset("/css/detailbooking.css")}}">
+
+
+
+<style>
+  
+</style>
 <div class="container">
     <h1 class="text-center mb-3">รายการจองห้องพักสัตว์เลี้ยงของคุณ</h1>
 
@@ -16,7 +24,7 @@
             </div>
             <div class="card-body">
                 <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p><hr>
-                <p><strong>ชื่อสัตว์เลี้ยง:</strong> 
+                <p><strong >ชื่อสัตว์เลี้ยง:</strong> 
                 @foreach($booking->user->pets as $pet)
                 {{$pet->Pet_name}}
                 @endforeach
@@ -58,90 +66,16 @@
                     <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
                         {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
                     </span>
-                </p><hr>
+                </p>
             </div>
-            <div class="card-footer text-right">
+            <div class="card-footer text-center">
                 <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
             </div>
             @endif
         </div>
         @endforeach
     @endif
+    
 </div>
-<style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            padding-top: 0;
-        }
 
-        .container {
-            padding-top: 10px;
-            max-width: 900px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #343a40;
-            color: white;
-            font-size: 18px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            font-size: 16px;
-        }
-
-        .badge {
-            background-color: #ffc107;
-            color: #333;
-            font-weight: bold;
-            padding: 0.5em 0.75em;
-        }
-
-        /* .btn-custom {
-            background-color: #007bff;
-            color: white;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-        } */
-
-        .card-footer {
-            background-color: #f8f9fa;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .card-footer .btn {
-            margin-left: 10px; /* เว้นระยะระหว่างปุ่ม */
-        }
-
-        .status-check {
-            font-weight: bold;
-            color: #28a745;
-        }
-
-        .status-checkout {
-            font-weight: bold;
-            color: #dc3545;
-        }
-
-        .payment-pending {
-            font-weight: bold;
-            color: #ffc107;
-        }
-    </style>
 @endsection

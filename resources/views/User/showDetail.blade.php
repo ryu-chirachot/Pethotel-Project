@@ -1,5 +1,6 @@
 @extends ('layouts.navbar')
 @section('content')
+<link rel="stylesheet" href="{{asset("/css/showdetail.css")}}">
 <div class="container">
     <h1>รายละเอียดการจอง #{{ $booking->BookingOrderID }}</h1>
 
@@ -9,14 +10,18 @@
         </div>
         <div class="card-body">
             <h2>
-                <p><strong>ชื่อสัตว์เลี้ยง:</strong> 
+                <p class="underline"><strong>ชื่อสัตว์เลี้ยง:</strong> 
                     @foreach($booking->user->pets as $pet)
-                    {{ $pet->Pet_name}}
+                    {{ $pet->Pet_name}} 
                     @endforeach
                 </p>
-                <p><strong>ประเภทห้อง:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
-                <p><strong>วันที่เช็คอิน:</strong> {{ $booking->Start_date }}</p>
-                <p><strong>วันที่เช็คเอาท์:</strong> {{ $booking->End_date }}</p>
+                <p class="underline"><strong>ประเภทห้อง:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
+
+
+              <div class="check-in">
+                <div><p  class="underline"><strong>วันที่เช็คอิน:</strong> <br><br> {{ $booking->Start_date }}</p></div>
+                <div><p  class="underline"><strong>วันที่เช็คเอาท์:</strong> <br><br>{{ $booking->End_date }}</p></div>
+              </div>
                 @if($booking->deleted_at)
                 <p><strong>สถานะ:</strong></p>
                 <span class="status-checkout">
@@ -56,7 +61,9 @@
         </div>
     </div>
 
-    
+
     
 </div>
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
