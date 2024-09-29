@@ -42,6 +42,9 @@
             <a class="nav-link" href="{{route('bookings.index')}}">ประวัติการจอง</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link " href="{{route('mypets')}}">สัตว์เลี้ยงของฉัน</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link " href="Contack.html">ติดต่อเรา</a>
           </li>
           

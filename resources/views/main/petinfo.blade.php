@@ -7,73 +7,102 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+    body {
+        background: linear-gradient(to right, #f8fafc, #f1f5f9);
+        font-family: 'Kanit', sans-serif;
+    }
     .center-content {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh;
     }
     .pet-table-container {
-        width: 80%;
-        margin: 10px auto;
+        width: 100%;
+        max-width: 900px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 20px;
     }
     table th, table td {
-        padding: 15px;
+        padding: 20px;
         text-align: center;
         font-size: 16px;
+    }
+    .btn-primary, .btn-success {
+        background-color: #ff9800;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover, .btn-success:hover {
+        background-color: #e68900;
+    }
+    .modal-content {
+        border-radius: 15px;
+        background-color: #f9fafb;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .modal-header {
+        background-color: #ff9800;
+        color: white;
+        border-bottom: none;
+        padding: 20px;
+    }
+    .form-label {
+        font-weight: bold;
+    }
+    .btn-close {
+        color: white;
     }
 </style>
 
 <body class="bg-[#e6f2f2] p-4">
     <div class="container center-content">
-        <div class="text-center">
-            <h2 class="text-2xl font-bold mb-4">สัตว์เลี้ยงของคุณ</h2>
+        <div class="text-center pet-table-container">
+            <h2 class="text-3xl font-bold mb-4">สัตว์เลี้ยงของคุณ</h2>
 
             <!-- เงื่อนไขตรวจสอบว่ามีสัตว์เลี้ยงหรือไม่ -->
             @if($pets->isEmpty())
                 <p class="text-danger">ไม่มีประวัติสัตว์เลี้ยงของคุณ</p>
             @else
-            
-                <div class="pet-table-container">
-                    <div class="table-responsive">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th class="hidden"></th>
-            <th>ชื่อสัตว์เลี้ยง</th>
-            <th>สายพันธุ์</th>
-            <th>อายุ</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($pets as $pet)
-        <tr>
-            <form action="/overview" method="post">
-                @csrf
-                <input type="hidden" name="room_id" value="{{ $room_id }}">
-                <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
-                <input type="hidden" name="checkIn" value="{{ $checkIn }}">
-                <input type="hidden" name="checkOut" value="{{ $checkOut }}">
-                <input type="hidden" name="roomTypeId" value="{{ $roomTypeId }}">
-                <input type="hidden" name="roomTypename" value="{{ $roomTypeName }}">
-                <input type="hidden" name="name" value="{{ $pet->Pet_name }}">
-                <input type="hidden" name="breed" value="{{ $pet->Pet_breed }}">
-                <input type="hidden" name="age" value="{{ $pet->Pet_age }}">
-                <input type="hidden" name="weight" value="{{$pet->Pet_weight}}">
-                <input type="hidden" name="comment" value="{{$pet->Pet_info}}">
-                <input type="hidden" name="gender" value="{{$pet->Pet_Gender}}">
-                <td>{{ $pet->Pet_name }}</td>
-                <td>{{ $pet->Pet_breed }}</td>
-                <td>{{ $pet->Pet_age }} ปี</td>
-                <td><button class="btn btn-primary" type="submit" name="select">เลือก</button></td>
-            </form>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-                    </div>
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ชื่อสัตว์เลี้ยง</th>
+                                <th>สายพันธุ์</th>
+                                <th>อายุ</th>
+                                <th>เลือก</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($pets as $pet)
+                            <tr>
+                                <form action="/overview" method="post">
+                                    @csrf
+                                    <input type="hidden" name="room_id" value="{{ $room_id }}">
+                                    <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
+                                    <input type="hidden" name="checkIn" value="{{ $checkIn }}">
+                                    <input type="hidden" name="checkOut" value="{{ $checkOut }}">
+                                    <input type="hidden" name="roomTypeId" value="{{ $roomTypeId }}">
+                                    <input type="hidden" name="roomTypename" value="{{ $roomTypeName }}">
+                                    <input type="hidden" name="name" value="{{ $pet->Pet_name }}">
+                                    <input type="hidden" name="breed" value="{{ $pet->Pet_breed }}">
+                                    <input type="hidden" name="age" value="{{ $pet->Pet_age }}">
+                                    <input type="hidden" name="weight" value="{{ $pet->Pet_weight }}">
+                                    <input type="hidden" name="comment" value="{{ $pet->Pet_info }}">
+                                    <input type="hidden" name="gender" value="{{ $pet->Pet_Gender }}">
+                                    <td>{{ $pet->Pet_name }}</td>
+                                    <td>{{ $pet->Pet_breed }}</td>
+                                    <td>{{ $pet->Pet_age }} ปี</td>
+                                    <td><button class="btn btn-primary" type="submit" name="select">เลือก</button></td>
+                                </form>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             @endif
 
@@ -93,13 +122,12 @@
                         <div class="modal-body">
                             <form action="/overview" method="post">
                                 @csrf
-                                <!-- ค่าเดิมจากหน้าก่อนหน้า -->
                                 <input type="hidden" name="room_id" value="{{ $room_id }}">
                                 <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
                                 <input type="hidden" name="checkIn" value="{{ $checkIn }}">
                                 <input type="hidden" name="checkOut" value="{{ $checkOut }}">
-                                <input type="hidden" name="roomTypeId"  value="{{ $roomTypeId }}">
-                                <input type="hidden" name="roomTypename"  value="{{ $roomTypeName }}">
+                                <input type="hidden" name="roomTypeId" value="{{ $roomTypeId }}">
+                                <input type="hidden" name="roomTypename" value="{{ $roomTypeName }}">
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label">ชื่อของสัตว์เลี้ยง</label>
@@ -112,7 +140,6 @@
                                         <option value="M">ชาย</option>
                                         <option value="F">หญิง</option>
                                     </select>
-                                    
                                 </div>
                                 <div class="mb-3">
                                     <label for="breed" class="form-label">สายพันธุ์</label>

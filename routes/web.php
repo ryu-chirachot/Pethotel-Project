@@ -20,7 +20,7 @@ Route::get('/', function () {
 })->name('home');
 
 
-
+Route::get('/home/mypets',[BookingController::class, 'mypets'])->name('mypets');
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
