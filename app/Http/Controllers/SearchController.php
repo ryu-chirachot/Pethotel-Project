@@ -29,7 +29,7 @@ class SearchController extends Controller
         $p_type = pet_type::all();  
         $reviews = Reviews::all();
         
-        // dd($reviews);
+        
         return view(('main/homepage'),compact('p_type','reviews'));
     }
 

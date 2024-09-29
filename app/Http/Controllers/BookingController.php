@@ -11,6 +11,7 @@ use App\Models\bookings;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PetStatus; 
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -67,60 +68,55 @@ class BookingController extends Controller
         'additional_info','price','payment'));
     }
 
-    function booked(Request $request){
-        $room_id = $request->room_id;
-        $roomTypeId = $request->room_type;
-        $roomTypeName = $request->roomTypename;
-        $petTypeId = $request->petTypeId;
-        $checkIn = $request->checkIn;
-        $checkOut = $request->checkOut;
-        $pet_name = $request->pet_name;
-        $pet_breed = $request->pet_breed;
-        $pet_age = $request->pet_age;
-        $pet_weight = $request->pet_weight;
-        $pet_gender = $request->pet_gender;
-        $price=$request->price;
-        $PaymentMethodID=$request->payment;
-        $additional_info = $request->additional_info;
-
-    // insert
-        $pet = new Pets();
-        $pet->User_id = Auth::user()->id;
-        $pet->Pet_name = $pet_name;
-        $pet->Pet_type_id = $petTypeId;
-        $pet->Pet_age = $pet_age;
-        $pet->Pet_breed = $pet_breed;
-        $pet->Pet_weight = $pet_weight;
-        $pet->Pet_Gender = $pet_gender;
-        $pet->additional_info = $additional_info;
-        $pet->save();
-
-        $room = Rooms::findOrFail($room_id);
-        $room->Rooms_status = 0;
-        $room->save();
-
-        $book= new bookings();
-        $book->User_id = Auth::user()->id;
-        $book->Pet_id = Pets::latest('Pet_id')->first()->Pet_id;
-        $book->Rooms_id = $room_id;
-        $book->Start_date=$checkIn;
-        $book->End_date=$checkOut;
-        $book->Booking_date=Now();
-        $book->Booking_status=0;
-        $book->price=$price;
-        $book->PaymentMethodID=$PaymentMethodID;
-        $book->PaymentDate=NULL;
-        $book->save();
-
-        $petstatus = new PetStatus();
-        $petstatus->BookingOrderID = bookings::latest('BookingOrderID')->first()->BookingOrderID;
-        $petstatus->Report = NULL;
-        $petstatus->status = 0;
-        $petstatus->Admin_id = NULL;
-        $petstatus->save();
-
-        // dd($pet);
-        return redirect()->route('home');
+    public function booked(Request $request) {
+        DB::transaction(function () use ($request) {
+            $room_id = $request->room_id;
+            $roomTypeId = $request->room_type;
+            $roomTypeName = $request->roomTypename;
+            $petTypeId = $request->petTypeId;
+            $checkIn = $request->checkIn;
+            $checkOut = $request->checkOut;
+            $pet_name = $request->pet_name;
+            $pet_breed = $request->pet_breed;
+            $pet_age = $request->pet_age;
+            $pet_weight = $request->pet_weight;
+            $pet_gender = $request->pet_gender;
+            $price = $request->price;
+            $PaymentMethodID = $request->payment;
+            $additional_info = $request->additional_info;
+    
+            // เพิ่มข้อมูลสัตว์
+            $pet = new Pets();
+            $pet->User_id = Auth::user()->id;
+            $pet->Pet_name = $pet_name;
+            $pet->Pet_type_id = $petTypeId;
+            $pet->Pet_age = $pet_age;
+            $pet->Pet_breed = $pet_breed;
+            $pet->Pet_weight = $pet_weight;
+            $pet->Pet_Gender = $pet_gender;
+            $pet->additional_info = $additional_info;
+            $pet->save();
+    
+            // ทำให้ห้องเป็นไม่ว่าง
+            $room = Rooms::findOrFail($room_id);
+            $room->Rooms_status = 0;
+            $room->save();
+    
+            // เพิ่มข้อมูลการจอง
+            $book = new bookings();
+            $book->User_id = Auth::user()->id;
+            $book->Pet_id = $pet->Pet_id; // Store the pet id in the booking
+            $book->Rooms_id = $room_id;
+            $book->Start_date = $checkIn;
+            $book->End_date = $checkOut;
+            $book->Booking_date = now();
+            $book->Booking_status = 0;
+            $book->price = $price;
+            $book->PaymentMethodID = $PaymentMethodID;
+            $book->save();
+        });
+    
+        return redirect()->route('home')->with('success', "ห้องหมายเลข ".$request->room_id."\nสามารถดูรายละเอียดได้ที่ประวัติการจอง");
     }
 
 

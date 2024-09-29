@@ -16,7 +16,11 @@
             </div>
             <div class="card-body">
                 <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p><hr>
-                <p><strong>ชื่อสัตว์เลี้ยง:</strong> {{ $booking->pet->Pet_name }}</p><hr>
+                <p><strong>ชื่อสัตว์เลี้ยง:</strong> 
+                @foreach($booking->user->pets as $pet)
+                {{ $pet->Pet_name}}
+                @endforeach
+                </p><hr>
                 <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
                 <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
                 <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>

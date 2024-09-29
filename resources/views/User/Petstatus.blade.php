@@ -9,8 +9,10 @@
         </div>
         <div class="card-body">
             @if($booking)
-                @if($booking->pet)
-                    <h5>ชื่อสัตว์เลี้ยง : {{ $booking->pet->Pet_name }}</h5>
+                @if($booking->user->pets)
+                    @foreach($booking->user->pets as $pet)
+                    <h5>ชื่อสัตว์เลี้ยง : {{ $pet->Pet_name }}</h5>
+                    @endforeach
                 @else
                     <div class="alert alert-warning" role="alert">
                         ไม่มีสัตว์เลี้ยงสำหรับการจองนี้

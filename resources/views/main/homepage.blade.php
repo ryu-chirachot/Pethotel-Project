@@ -1,6 +1,15 @@
 @extends('layouts.searchbar')
 @section('title','pawsome')
 @section('content')
+@if (session('success'))
+    <script>
+        Swal.fire({
+  title: "จองห้องสำเร็จ รอการยืนยัน",
+  text: "{{ session('success') }}",
+  icon: "success"
+});
+    </script>
+@endif
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Display</title>
