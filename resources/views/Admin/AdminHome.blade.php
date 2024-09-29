@@ -91,7 +91,7 @@
                                 <tr>
                                     <td><strong>#{{$booking->BookingOrderID}}</strong></td>
                                     <td>{{$booking->user->name}}</td>
-                                    <td>{{$booking->PaymentDate}}</td>
+                                    <td>{{$booking->PaymentDate->is_null ? 'ยังไ':''}}</td>
                                     <td><span class="badge badge-success text-dark">ยืนยันแล้ว</span></td>
                                 </tr>
                                 @endforeach

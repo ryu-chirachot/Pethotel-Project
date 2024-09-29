@@ -1,7 +1,6 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -32,31 +31,27 @@
 
                 <!-- Room Details -->
                 <div class="form-group mb-3">
-                    @if ($latestRoom)
-                        <label>หมายเลขห้อง {{ $latestRoom->Rooms_id+1 }}</label>
-                        <input type="text" name="room_number" class="form-control" value="{{ $latestRoom->Rooms_id+1 }}" disabled>
-                    @else
-                        <label>หมายเลขห้อง 1</label>
-                        <input type="text" name="room_number" class="form-control" value="1" disabled>
-                    @endif
+                    <label>จำนวนห้องที่ต้องการเพิ่ม *</label>
+                    <input type="number" name="room_count" class="form-control" min="1" value="1" required>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>สถานะห้อง *</label>
-                    <select name="room_status" class="form-control" required>
+                    <select name="room_status" class="form-control">
                         <option value="1">ว่าง</option>
+                        <option value="0">ไม่ว่าง</option>
                     </select>
                 </div>
 
                 <div class="form-group mb-3">
                     <label>ประเภทสัตว์เลี้ยง *</label>
-                    <input type="text" name="pet_type" class="form-control" value="{{ $selectedPetType }}" disabled>
+                    <input type="text" name="pet_type" class="form-control" value="{{ $selectedPetType }}" readonly>
                     <input type="hidden" name="pet_type_hidden" value="{{ $selectedPetType }}">
                 </div>
 
                 <div class="form-group mb-3">
                     <label>ประเภทห้อง *</label>
-                    <input type="text" name="room_type" class="form-control" value="{{ $selectedRoomType }}" disabled>
+                    <input type="text" name="room_type" class="form-control" value="{{ $selectedRoomType }}" readonly>
                     <input type="hidden" name="room_type_hidden" value="{{ $selectedRoomType }}">
                 </div>
 
@@ -75,12 +70,10 @@
                     <button type="submit" class="btn btn-primary">เพิ่มห้องพัก</button>
                     <a href="{{ route('Admin.rooms.type') }}" class="btn btn-secondary">ยกเลิก</a>
                 </div>
-                
             </form>
         </div>
     </div>
 </div>
 
 <script src="{{ asset('js/Addimg.js') }}"></script>
-
 @endsection

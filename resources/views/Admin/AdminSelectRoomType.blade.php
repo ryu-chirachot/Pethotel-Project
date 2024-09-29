@@ -1,6 +1,15 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
+@if (session('success'))
+    <script>
+        Swal.fire({
+  title: "ทำรายการสำเร็จ",
+  text: "{{ session('success') }}",
+  icon: "success"
+});
+    </script>
+@endif
 <div class="container">
     <div class="row">
         <div class="col-12">

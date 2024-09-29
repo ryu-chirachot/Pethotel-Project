@@ -43,12 +43,12 @@ class AdminController extends Controller
                 
                 $expiredBookingIds = $expiredBookings->pluck('BookingOrderID');
                 $updatedBookings = Bookings::whereIn('BookingOrderID', $expiredBookingIds)->update(['Booking_status' => 2]);
-                                        
+                
+
                 $roomIds = $expiredBookings->pluck('Rooms_id');
                 $updatedRooms = Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
                 
-
-
+                
                 Log::info("Updated {$updatedBookings} bookings and {$updatedRooms} rooms.");
                 
                 return [
@@ -99,26 +99,17 @@ class AdminController extends Controller
                 $RoomID = Rooms::find($id);
                 $petType = Pet_type::select('Pet_nametype')->distinct()->get();
                 $roomType = Rooms_type::select('Rooms_type_name')->distinct()->get();
-                return view("Admin.AdminRoomEdit", compact("RoomID",'petType','roomType'));
+                
+                $imgpaths = $RoomID->pet_Type_Room_Type->image->ImagesPath;
+                // ใช้ explode แยก path เป็น array
+                $images = explode(',', $imgpaths);
+                
+                return view("Admin.AdminRoomEdit", compact("RoomID",'petType','roomType','images'));
             } catch (\Exception $e) {
                 return view('error')->with('message', $e->getMessage());
             }
         }
 
-        //ฟังก์ชันเช็ครูปภาพ
-        public function checkFile($img){
-                    $imageFileType = strtolower($img->getClientOriginalExtension());
-                    
-                    if (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-                        return redirect()->back()->with('error', 'รองรับเฉพาะไฟล์นามสกุล jpg, jpeg และ png เท่านั้น!');
-                    } else {
-                        $path = $img->getClientOriginalName();
-                        $_basename = basename($path);
-                        return $_basename;
-                    }
-            }
-        
-        
         //ส่งค่าที่จะแก้ไขห้องไป DB
         public function updateRoom(Request $request){
 
@@ -150,13 +141,13 @@ class AdminController extends Controller
                     $pet_Type_Room_Type->Rooms_type_description = $request->room_description;
                     $pet_Type_Room_Type->save();
                     
-                    if ($request->hasFile('imgchange')) {
-                        $file = $request->file('imgchange');
-                        $_basename = $this->checkFile($file);
-                        if (!is_string($_basename)) {
-                            return $_basename;
+                    if($request->hasFile('room_image')) {
+                        foreach($request->file('room_image') as $file) {
+                            $fileName = time() . '_' . $file->getClientOriginalName();
+                            $file->move(public_path('images'), $fileName);
+                            $imageNames[] = $fileName;
                         }
-                        $pet_Type_Room_Type->image->ImagesPath = $_basename;
+                        $pet_Type_Room_Type->image->ImagesPath = implode(',', $imageNames);
                         $pet_Type_Room_Type->image->save();
                     }
                 } else {
@@ -204,7 +195,7 @@ class AdminController extends Controller
 
             Pet_type::create(['Pet_nametype' => $validated['new_pet_type']]);
 
-            return redirect()->back()->with('success', 'New pet type added successfully.');
+            return redirect()->back()->with('success', 'เพิ่มประเภทสัตว์เลี้ยงสำเร็จ');
         }
 
         //เก็บประเภทห้อง
@@ -216,7 +207,7 @@ class AdminController extends Controller
 
             Rooms_type::create(['Rooms_type_name' => $validated['new_room_type']]);
 
-            return redirect()->back()->with('success', 'New room type added successfully.');
+            return redirect()->back()->with('success', 'เพิ่มประเภทห้องใหม่สำเร็จ');
         }
 
         //ส่งค่าจากหน้าสร้างห้องไป DB
@@ -266,38 +257,7 @@ class AdminController extends Controller
             return redirect()->route('Admin.rooms')->with('complete', 'ห้องหมายเลข #'.$newRoom->Rooms_id. ' เพิ่มเรียบร้อย!');
         }
         
-        // //โชว์สถานะสัตว์เลี้ยง
-        // public function petstatus(){
-            
-        //         $admin = Auth::user()->id;
-        //         $BooksID = Bookings::with('pet_status')->get();  // Retrieve bookings with pet_status relationship
-                
-        //         foreach ($BooksID as $bookRoom) {
-        //             $report = PetStatus::where('BookingOrderID', '=', $bookRoom->BookingOrderID)->first();
-        //             if($report->Admin_id == NULL) {
-        //                 $report->Admin_id = $admin;
-        //                 $report->save();  // Update the report with the admin ID
-        //             }
-        //         }
-                
-        //         // Fetch bookings with pet_status and paginate the results
-        //         $BooksRooms = Bookings::with('pet_status')->where('Booking_status','!=',0)->paginate(5);
-                
-                
-        //         // Pass the variable to the view
-        //         return view("Admin.AdminPets", compact("BooksRooms"));
-            
-        // }
         
-
-        // public function petdetail($id){
-        //     $booking = Bookings::find($id);
-        //     if(!$booking){
-        //         return redirect()->route('Admin.rooms')->with('error','ขณะนี้ห้องนี้ไม่มีรายการจอง');
-        //     }
-        //     $petstatus = PetStatus::where('BookingOrderID','=', $id)->get();
-        //     return view('Admin.AdminReport', compact('booking','petstatus'));
-        // }
 
          // ส่งค่าไปรายงาน
         public function submitReport(Request $request)
@@ -309,8 +269,8 @@ class AdminController extends Controller
             $petStatus->BookingOrderID = $request->booking_id; // ใช้ค่า integer ที่ได้จาก parameter
             $petStatus->status = $request->input('status', 1); // กำหนดค่าเริ่มต้นเป็น 1 ว่ารายงานแล้ว
             $petStatus->Report = $request->input('pet_status');
-            $petStatus->Admin_id = Auth::id(); // สมมติว่าใช้ Auth เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
-
+            $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
+            
             $petStatus->save();
 
             return redirect()->back()->with('success', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
@@ -318,10 +278,11 @@ class AdminController extends Controller
             
 
         public function checkout(Request $request){
+            $room = Rooms::findOrFail($request->booking_id);
+            $room->Rooms_status = 1;
             Bookings::destroy($request->booking_id);
             
             PetStatus::destroy($request->status_id);
-
             return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
         }
 
@@ -336,8 +297,6 @@ class AdminController extends Controller
                 $checkoutDate = Carbon::parse($bk->End_date);
                 $countDates[$bk->BookingOrderID] = $checkinDate->diffInDays($checkoutDate);
             }
-            
-
             
             return view('Admin.AdminBookings', compact('bookings','countDates'));
 
@@ -383,7 +342,7 @@ class AdminController extends Controller
         $booking = Bookings::findOrFail($id);
         $newEndDate = $request->input('new_end_date');
 
-        // Ensure the new end date is valid (after current end date)
+        
         if ($newEndDate > $booking->End_date) {
             $booking->End_date = $newEndDate;
             $booking->save();

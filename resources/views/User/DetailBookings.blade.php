@@ -29,45 +29,49 @@
                     <span class="status-checkout">
                         เช็คเอาท์
                     </span>
-                </p><hr>
-                <p><strong>สถานะการชำระเงิน:</strong>
-                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
-                        {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
+                    </p><hr>
+                    <p><strong>สถานะการชำระเงิน:</strong>
+                        <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                            {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
+                        </span>
+                    </p><hr>
+                    </div>
+
+                <div class="card-footer text-right">
+                @if($booking->review)
+                    <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-secondary" style="pointer-events: none; ">รีวิว</a>
+                    <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+                @else
+                    <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-success">รีวิว</a>
+                    <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+                @endif
+
+                </div>
+                @elseif($booking->Booking_status == 3)
+                <span class="status-checkout">
+                        ยกเลิกการจองแล้ว
                     </span>
-                </p><hr>
-            </div>
-
-            <div class="card-footer text-right">
-            @if($booking->review)
-                <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-secondary" style="pointer-events: none; ">รีวิว</a>
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
-            @else
-                <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-success">รีวิว</a>
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
-            @endif
-
-            </div>
-
-            @else
-                <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
-                    {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
-                </span>
-                </p><hr>
-                
-                <p><strong>สถานะการชำระเงิน:</strong>
-                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
-                        {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
+                    </p><hr>
+                @else
+                    <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
+                        {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
                     </span>
-                </p><hr>
+                    </p><hr>
+                    
+                    <p><strong>สถานะการชำระเงิน:</strong>
+                        <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                            {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
+                        </span>
+                    </p><hr>
+                </div>
+                <div class="card-footer text-right">
+                    <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+                </div>
+                @endif
             </div>
-            <div class="card-footer text-right">
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
-            </div>
-            @endif
-        </div>
-        @endforeach
-    @endif
-</div>
+            @endforeach
+        @endif
+    </div>
 <style>
         body {
             font-family: 'Arial', sans-serif;

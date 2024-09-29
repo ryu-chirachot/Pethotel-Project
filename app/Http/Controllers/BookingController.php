@@ -29,9 +29,12 @@ class BookingController extends Controller
 }
     function petInfo(Request $request){
         $p=rooms::all();
+        $pettype ='';
         $room_id = $request->room_id;
         $p_name=$request->name;
         $petTypeId = $request->petTypeId;
+        $petTypeName = pet_type::find($petTypeId);
+        
         $checkIn = $request->checkIn;
         $checkOut = $request->checkOut;
         $roomTypeId = $request->roomTypeId;
@@ -45,6 +48,7 @@ class BookingController extends Controller
         return view(('main.overview'),compact('room_id','roomTypename','roomTypeId','checkIn','checkOut','p_name','p_breed','p_age','p_weight','p_gender','p_description','petTypeId'));
 }
     function book(Request $request){
+    $pettype ='';
     $payment = PaymentMethod::all();
     $room_id = $request->room_id;
     $roomTypeId = $request->room_type;

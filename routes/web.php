@@ -36,22 +36,13 @@ Route::post('/room/search',[SearchController::class,'search']
 )->name('search.result');
 
 
-
+//รีวิว
 Route::post('/success',[BookingController::class,'booked'])->name('success');
-
 Route::get('/review/{id}',[ReviewController::class, 'index'])->name('review');
 Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
-// Route::middleware([
-//     'auth:admin',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::get('/Admin', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
+
 
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -70,10 +61,10 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     
     Route::get('/', [AdminController::class, 'showBookings'])->name('bookings');
     Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
-    Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
-    Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
-    Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
-    Route::post('/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
+    Route::post('detail/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
+    Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
+    Route::post('detail/cancel/{id}', [AdminController::class, 'cancelBooking'])->name('bookings.cancel');
+    Route::post('detail/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
     Route::post('/การจองวันนี้', [AdminController::class,''])->name('bookings.today');
     Route::post('/การจองที่เลยกำหนด', [AdminController::class,''])->name('booking.deadline');
 });
@@ -106,3 +97,12 @@ Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->
 
 
 
+// Route::middleware([
+//     'auth:admin',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/Admin', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
