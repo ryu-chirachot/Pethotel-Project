@@ -23,8 +23,9 @@ class BookingController extends Controller
     $checkOut = $request->check_out;
     $roomTypeId = $request->room_type_id;
     $roomTypeName = $request->room_type_name;
-    
-    return view('main.petinfo', compact('room_id','roomTypeName','petTypeId', 'checkIn', 'checkOut', 'roomTypeId'));
+    $user=Auth::user();
+    $pets=$user->pets->where('Pet_type_id',$petTypeId);
+    return view('main.petinfo', compact('room_id','roomTypeName','petTypeId', 'checkIn', 'checkOut', 'roomTypeId','pets','user'));
 }
     function petInfo(Request $request){
         $p=rooms::all();
@@ -105,7 +106,6 @@ class BookingController extends Controller
             // เพิ่มข้อมูลการจอง
             $book = new bookings();
             $book->User_id = Auth::user()->id;
-            $book->Pet_id = $pet->Pet_id; // Store the pet id in the booking
             $book->Rooms_id = $room_id;
             $book->Start_date = $checkIn;
             $book->End_date = $checkOut;

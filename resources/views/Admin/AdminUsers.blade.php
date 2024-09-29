@@ -36,13 +36,15 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->pets->count() }}</td>
-                                <td>{{ $user->bookings->count() }}</td>
+                                <td>
+                                    {{ count($user->pets)}}
+                                </td>
+                                <td>{{ count($user->bookings)}}</td>
                                 <td>
                                     @if($user->trashed())
-                                        <span class="badge badge-danger">ถูกลบ</span>
+                                        <span class="text-danger">ถูกลบ</span>
                                     @else
-                                        <span class="badge badge-success">ใช้งาน</span>
+                                        <span class="text-success">ใช้งาน</span>
                                     @endif
                                 </td>
                                 <td>

@@ -16,12 +16,19 @@
             <span class="badge bg-success">ว่าง {{ $roomCounts[$roomTypeName] }} ห้อง</span>
         </div>
         <div class="card-body">
-            {{-- ลูปแสดงรูปภาพจากตัวแปร $img เฉพาะที่มี Rooms_type_id ตรงกับห้องปัจจุบัน --}}
+        {{-- ลูปแสดงรูปภาพจากตัวแปร $img เฉพาะที่มี Rooms_type_id ตรงกับห้องปัจจุบัน --}}
             <div class="row g-1">
                 @foreach ($img->where('Rooms_type_id', $roomGroup->first()->pet_Type_Room_Type->Rooms_type_id) as $item)
-                    <div class="col-md-4">
-                        <img src="{{ asset('/images/' . $item->image->ImagesPath) }}" class="img-fluid" alt="Room Image">
-                    </div>
+                    @php
+                        // แยกชื่อไฟล์รูปภาพที่คั่นด้วย comma
+                        $images = explode(',', $item->image->ImagesPath);
+                    @endphp
+
+                    @foreach ($images as $image)
+                        <div class="col-md-4">
+                            <img src="{{ asset('/images/' . trim($image)) }}" class="img-fluid" alt="Room Image">
+                        </div>
+                    @endforeach
                 @endforeach
             </div>
         </div>

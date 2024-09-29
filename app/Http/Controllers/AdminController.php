@@ -66,23 +66,21 @@ class AdminController extends Controller
 
         //หน้าแสดงห้องทั้งหมด
         public function rooms(){
-            try {
+            
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])
+                $Rooms = Rooms::with(['bookings.user'])
                                     ->whereHas('bookings')
                                     ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
                                     ->paginate(5);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view("Admin.AdminRoomsManage", compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
-            } catch (\Exception $e) {
-                return view('error')->with('message', $e->getMessage());
-            }
+            
         }
 
         public function Available(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->where('Rooms_status', "=", "1")->paginate(5);
+                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "1")->paginate(5);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.AvailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -90,7 +88,7 @@ class AdminController extends Controller
         
         public function Unavailable(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user', 'bookings.pet'])->where('Rooms_status', "=", "0")->paginate(5);
+                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "0")->paginate(5);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.UnavailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -365,14 +363,14 @@ class AdminController extends Controller
         
 
         return redirect()->route('Admin.bookings.detail', $id)
-                        ->with('success', 'Payment confirmed successfully');
+                        ->with('success', 'ยืนยันการชำระเงินหมายเลขการจอง'.$id."สำเร็จ");
     }
 
     // Cancel booking
     public function cancelBooking($id)
     {
         $booking = Bookings::findOrFail($id);
-        $booking->status = 'cancelled'; // or any status logic you have
+        $booking->Booking_status = 3;
         $booking->save();
 
         return redirect()->route('Admin.bookings')
@@ -404,15 +402,14 @@ class AdminController extends Controller
 
     }
 
-    function users(){
-        $users = Bookings::withTrashed() // ดึงข้อมูล bookings ที่ถูก soft delete
-                ->with(['user' => function ($query) {
-                    $query->where('role','user'); // ดึงเฉพาะ user ที่ไม่ได้ถูกลบ
-                }, 'pets' => function ($query) {
-                    $query->whereNull('deleted_at'); // ดึงเฉพาะ pets ที่ไม่ได้ถูกลบ
-                }])
-                ->get();
+    public function users()
+    {
+        $users = User::where('role', 'user')
+            ->with(['pets', 'bookings' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->get();
+        
         return view("Admin.AdminUsers", compact("users"));
-
     }
 }

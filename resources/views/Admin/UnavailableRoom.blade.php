@@ -64,17 +64,21 @@
 
                                     <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
                                     <td>
-                                        @if ($rm->bookings->isNotEmpty())
+                                        @if($rm->bookings->isNotEmpty())
                                             {{ $rm->bookings->first()->user->name }}
                                         @else
                                             <span>ไม่มีผู้จอง</span>
                                         @endif
                                     </td>
-
+                                        @foreach($rm->bookings as $bk)
+                                                @foreach($bk->user->pets as $pet)
+                                                    <td>{{$pet->Pet_name }}</td>
+                                                @endforeach
+                                        @endforeach
                                     <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
                                     <td>
-                                        @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->pet->Pet_name }}
+                                        @if($rm->bookings->isNotEmpty())
+                                            
                                         @else
                                             <span>ไม่มีสัตว์เลี้ยง</span>
                                         @endif
@@ -103,8 +107,6 @@
                                         </button>                      
                                             <ul class="dropdown-menu">
                                                 <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $rm->Rooms_id) }}">ดูรายละเอียดการจอง</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('Admin.pets.detail', $rm->Rooms_id) }}">ดูรายงานสถานะสัตว์เลี้ยง</a></li>
-                                                
                                             </ul>
                                         </div>
                                     </td>

@@ -1,6 +1,17 @@
 @extends('layouts.AdminSidebar')
-
 @section('content')
+
+@if (session('success'))
+    <script>
+        Swal.fire({
+    title: "ทำรายการสำเร็จ",
+    text: "{{ session('success') }}",
+    icon: "success"
+});
+    </script>
+@endif
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -45,7 +56,9 @@
                                     <tr>
                                         <td>{{ $booking->BookingOrderID }}</td>
                                         <td>{{ $booking->user->name }}</td>
-                                        <td>{{ $booking->pet->Pet_name }}</td>
+                                        <td>@foreach($booking->user->pets as $pet)
+                                                        {{$pet->Pet_name }}
+                                                    @endforeach</td>
                                         <td>{{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
                                         <td>{{ $booking->Booking_date }}</td>
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>

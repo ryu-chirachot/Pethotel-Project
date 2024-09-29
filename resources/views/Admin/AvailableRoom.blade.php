@@ -74,7 +74,10 @@
                                     <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
                                     <td>
                                         @if ($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->pet->Pet_name }}
+                                            
+                                            @foreach($rm->bookings->user->pets as $pet)
+                                                        {{$pet->Pet_name }}
+                                            @endforeach
                                         @else
                                             <span>ไม่มีสัตว์เลี้ยง</span>
                                         @endif

@@ -94,7 +94,11 @@
                                         @foreach($rm->bookings as $bk)
                                             @if ($bk->Booking_status != 2)
                                                 <td>{{ $bk->user->name }}</td>
-                                                <td>{{ $bk->pet->Pet_name }}</td>  
+                                                <td>
+                                                    @foreach($bk->user->pets as $pet)
+                                                        {{$pet->Pet_name }}
+                                                    @endforeach
+                                                </td>  
                                             @else
                                                 <td>
                                                     <span>ไม่มีผู้จอง</span>
