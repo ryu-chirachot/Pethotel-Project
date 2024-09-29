@@ -184,7 +184,7 @@
             <label for="promptpay">พร้อมเพย์</label> 
             <input type="radio" id="promptpay" name="payment" value="promptpay"> 
         </div>
-        <button><b>ยืนยัน</b></button>
+        <input<b>ยืนยัน</b></button>
  
        
     </div>
