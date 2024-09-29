@@ -20,8 +20,8 @@
 <body>
 <nav class="navbar navbar-expand-lg sticky-top" >
     <div class="container-fluid ms-2 me-2">
-      <a class="navbar-brand" href="#">
-      <i class="fa-solid fa-paw"> Paw some Hotel</i>
+      <a class="navbar-brand" href="/">
+      <i class="fa-solid fa-paw"> Pawsome stay Hotel</i>
       </a>
       <div class="d-flex d-lg-none ms-auto align-items-center">
       <span class="d-flex me-3 iconphone">
@@ -72,10 +72,19 @@
                 <div class="user-menu">
                   <i class="bi bi-person-circle"></i>
                   <div class="dropdown-content">
-                  <a href="/edit">แก้ไขข้อมูล</a>
-                  <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
-                      ออกจากระบบ
-                  </button>
+                    @if(auth()->user()->role == 'admin')
+                    <a href="/Admin/Home">Admin Home</a>
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+
+                    @else
+                    <a href="/edit">แก้ไขข้อมูล</a>
+                    <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
+                        ออกจากระบบ
+                    </button>
+                    @endif
                   </div>
                 </div>
                 
@@ -113,8 +122,8 @@
     
 
 
-    <div id="cen" class="container">
-    <form class="form" action="/room/search" method="post">
+    <div id="cen" class="container sticky-top">
+    <form id="searchForm" class="form" action="/room/search" method="post">
         @csrf
         <div>
             <label for="petSelect">เลือกประเภทสัตว์เลี้ยง</label>

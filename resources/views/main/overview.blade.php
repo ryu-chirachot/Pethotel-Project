@@ -7,7 +7,7 @@
             font-family: 'Kanit', sans-serif;
             background-color: #f4f4f4;
             margin: 0px; ;
-            padding: 20px;
+           
         }
         .booking-summary {
             background-color: white;

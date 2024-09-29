@@ -6,16 +6,21 @@ use App\Models\Reviews;
 
 class ReviewController extends Controller
 {
+
+    function index($id){
+        return view('reviews',compact('id'));
+    }
+
     public function submitReview(Request $request)
     {
         Reviews::create([
-            'BookingOrderID' => 1,
+            'BookingOrderID' => $request->booking_id,
             'rating' => $request->rating,
             'content' => $request->content,
         ]);
 
         // Redirect 
-        return redirect()->back()->with('เสร็จสิ้น', 'ขอบคุณสำหรับการรีวิวของคุณ');
+        return redirect()->route('bookings.index')->with('เสร็จสิ้น', 'ขอบคุณสำหรับการรีวิวของคุณ');
     }
 }
 

@@ -19,7 +19,7 @@ class UpdateExpiredBookingsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Update expired bookings and related room statuses';
+    protected $description = 'อัพเดต booking_status และอัพเดตห้องให้ว่าง ทุกเที่ยงวัน';
 
     /**
      * Execute the console command.

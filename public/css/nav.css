@@ -1,7 +1,7 @@
 
 .navbar{
-   position: relative;
-   z-index: 1000;
+    background-color: #ffce72;
+    z-index: 1000;
  }
     .logo {
       width: 4em;

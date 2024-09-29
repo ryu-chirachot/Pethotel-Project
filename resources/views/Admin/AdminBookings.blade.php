@@ -1,165 +1,135 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-<head>
-    <style>
-        /* สไตล์เพิ่มเติมสำหรับหน้า Admin จอง */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .container {
-            max-width: 900px;
-            margin-top: 20px;
-        }
-
-        .card {
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-header {
-            background-color: #343a40;
-            color: white;
-            font-size: 18px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            font-size: 16px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: flex-end;
-            background-color: #f8f9fa;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .badge-booking-code {
-            background-color: #ffc107;
-            color: #333;
-            font-weight: bold;
-            padding: 0.5em 0.75em;
-            font-size: 14px;
-            border-radius: 5px;
-        }
-
-        .btn-custom {
-            background-color: #007bff;
-            color: white;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-custom:hover {
-            background-color: #0056b3;
-        }
-
-        .card-footer {
-            background-color: #f8f9fa;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .status-check {
-            font-weight: bold;
-            color: #28a745;
-        }
-
-        .status-checkout {
-            font-weight: bold;
-            color: #dc3545;
-        }
-
-        .payment-pending {
-            font-weight: bold;
-            color: #ffc107;
-        }
-    </style>
-</head>
-
 <div class="container">
-<div class="row">
+    <div class="row">
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0"><b>รายการจองทั้งหมด</b></h3>
-                <input type="text" class="form-control w-25" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+                <div class="d-flex align-items-center">
+                    <input type="text" class="form-control" style="width: 250px;" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+                </div>
             </div>
-    
-
-    @if($bookings->isEmpty())
-        <div class="alert alert-warning" role="alert">
-            ยังไม่มีการจองในเข้ามาในขณะนี้
-        </div>
-    @else
-    @foreach ($bookings as $booking)
-    <div class="card">
-        <div class="card-header">
-            หมายเลขการจอง: <span class="badge-booking-code">{{ $booking->BookingOrderID }}</span>
-        </div>
-        <div class="card-body">
-            <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p><hr>
-            <p><strong>ชื่อสัตว์เลี้ยง:</strong> {{ $booking->pet->Pet_name }}</p><hr>
-            <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
-            <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
-            <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>
-            <p><strong>สถานะการจอง:</strong> 
-            @if($booking->deleted_at)
-            <span class="status-checkout">
-                    เช็คเอาท์
-                </span>
-            </p><hr>
-                <p><strong>สถานะการชำระเงิน:</strong>
-                    <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
-                    {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
-                    </span>
-                </p><hr>
+            <!-- การจอง Filters -->
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <a class="btn btn-outline-secondary me-2" href="#">การจองทั้งหมด </a>
+                    <a class="btn btn-outline-success me-2" href="#">การจองของวันนี้ </a>
+                    <a class="btn btn-outline-danger" href="#">การจองที่พักเลยกำหนด </a>
+                </div>
             </div>
-            <div class="card-footer text-right">
-                <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom" disabled>ดูรายละเอียด</a>
-            </div>
+            @if($bookings->isEmpty())
+                <div class="alert alert-warning" role="alert">
+                    ยังไม่มีการจองในเข้ามาในขณะนี้
+                </div>
             @else
-                <span class="{{ $booking->Booking_status == 1 ? 'status-check' : 'status-checkout' }}">
-                    {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'ถึงเวลาเช็คเอาท์' }}
-                </span>
-            </p><hr>
-            
-            <p><strong>สถานะการชำระเงิน:</strong>
-                <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
-                    {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
-                </span>
-            </p><hr>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>หมายเลขการจอง</th>
+                                    <th>ชื่อผู้จอง</th>
+                                    <th>ชื่อสัตว์เลี้ยง</th>
+                                    <th>ห้องพัก</th>
+                                    <th>วันที่จอง</th>
+                                    <th>วันที่เข้าพัก</th>
+                                    <th>สถานะการจอง</th>
+                                    <th>สถานะการชำระเงิน</th>
+                                    <th>พนักงานดูแล</th>
+                                    <th>การดำเนินการ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($bookings as $booking)
+                                    <tr>
+                                        <td>{{ $booking->BookingOrderID }}</td>
+                                        <td>{{ $booking->user->name }}</td>
+                                        <td>{{ $booking->pet->Pet_name }}</td>
+                                        <td>{{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                        <td>{{ $booking->Booking_date }}</td>
+                                        <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>
+                                        <td>
+                                            @if($booking->deleted_at)
+                                                <span class="badge bg-danger">เช็คเอาท์</span>
+                                            @else
+                                                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                                    {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                                {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                </svg>&nbsp;{{Auth::user()->name}}
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-eye"></i> ดูรายละเอียด
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            @endif
         </div>
-        <div class="card-footer text-right">
-            <a href="{{ route('Admin.bookings.detail', $booking->BookingOrderID) }}" class="btn btn-custom">ดูรายละเอียด</a>
-        </div>
-        @endif
     </div>
-    @endforeach
-    @endif
 </div>
+
+<style>
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .container {
+        padding: 0;
+        margin: auto;
+    }
+</style>
+
+
 <script>
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();
-        var cards = document.querySelectorAll(".card"); // เลือกทุกการ์ด
-        
-        cards.forEach(function(card) {
-            var cardText = card.innerText.toLowerCase(); // นำข้อความทั้งหมดในการ์ดมาใช้ในการค้นหา
-            if (cardText.includes(input)) {
-                card.style.display = ""; // แสดงการ์ด
+        var rows = document.querySelectorAll("#table tbody tr");
+        rows.forEach(function(row) {
+            var rowData = row.innerText.toLowerCase();
+            if (rowData.includes(input)) {
+                row.style.display = "";
             } else {
-                card.style.display = "none"; // ซ่อนการ์ด
+                row.style.display = "none";
             }
         });
     }
 </script>
+
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: "ขยายระยะเวลาการจอง",
+            text: "ของคุณ {{ session('success') }} สำเร็จ",
+            icon: "success"
+        });
+    </script>
+@endif
+
+@if(session('checkout'))
+    <script>
+        Swal.fire({
+            title: "เช็คเอาท์สำเร็จ",
+            text: "ของคุณ {{ session('checkout') }} สำเร็จ",
+            icon: "success"
+        });
+    </script>
+@endif
 
 @endsection
