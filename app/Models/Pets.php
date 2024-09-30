@@ -25,5 +25,9 @@ class Pets extends Model
         return $this->belongsTo(Pet_Type::class, 'Pet_type_id');
     }
 
+    public function bookings(){
+        return $this->hasMany(Bookings::class,'Pet_id','Pet_id');
+    }
+
 
 }

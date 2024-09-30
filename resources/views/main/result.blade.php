@@ -36,7 +36,7 @@
         <p class="card-text small mb-3 m-3">
             คำอธิบายห้อง: {{ $roomGroup->first()->pet_Type_Room_Type->Rooms_type_description }}
         </p>
-        <form action="{{ route('info') }}" method="POST" class="booking-form">
+        <form action="{{ route('info') }}" method="GET" class="booking-form">
             @csrf
             @foreach ($roomGroup as $room)
                 <input type="hidden" name="room_id" value="{{ $room->Rooms_id }}">

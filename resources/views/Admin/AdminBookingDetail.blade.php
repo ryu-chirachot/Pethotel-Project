@@ -1,7 +1,5 @@
 @extends('layouts.AdminSidebar')
 
-
-
 @section('content')
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
@@ -82,10 +80,10 @@
                     </form>
                 </div>
                 <div class="col-md-6 col-lg-4 mb-3">
-                    <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="POST" onsubmit="return ConfirmCheckout('{{ $bookings->BookingOrderID }}')">
+                    <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
                         @csrf
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-warning">
+                            <button type="button" class="btn btn-warning" onclick="ConfirmCheckout('{{ $bookings->BookingOrderID }}')">
                                 <i class="fas fa-sign-out-alt me-2"></i>เช็คเอาท์
                             </button>
                         </div>
@@ -181,7 +179,7 @@
                 Swal.fire("ยกเลิกการจองสำเร็จ", "การจองได้ถูกยกเลิกแล้ว", "success");
                 setTimeout(() => {
                     window.location.href = `/Admin/booking/cancel/${id}`;
-                }, 1500);
+                }, 3000);
             }
             return false;
         });
@@ -198,10 +196,9 @@
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
+                this.submit();
+                window.location.href = `/Admin/booking/detail/checkout/${id}`
                 Swal.fire("เช็คเอาท์สำเร็จ", "การเช็คเอาท์ได้ถูกดำเนินการแล้ว", "success");
-                setTimeout(() => {
-                    window.location.href = `/Admin/booking/checkout/${id}`;
-                }, 1500);
             }
             return false;
         });

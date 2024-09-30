@@ -276,7 +276,6 @@ class AdminController extends Controller
 
             $petStatus = new PetStatus();
             $petStatus->BookingOrderID = $request->booking_id; // ใช้ค่า integer ที่ได้จาก parameter
-            $petStatus->status = $request->input('status', 1); // กำหนดค่าเริ่มต้นเป็น 1 ว่ารายงานแล้ว
             $petStatus->Report = $request->input('pet_status');
             $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
 
@@ -286,13 +285,13 @@ class AdminController extends Controller
         }
             
 
-        public function checkout(Request $request){
-            $room = Rooms::findOrFail($request->booking_id);
+        public function checkout($id){
+            $room = Rooms::findOrFail($id);
             $room->Rooms_status = 1;
-            Bookings::destroy($request->booking_id);
+            Bookings::destroy($id);
             
-            PetStatus::destroy($request->status_id);
-            return redirect()->route('Admin.pets')->with('checkout', "หมายเลขการจอง #".$request->input('booking_id')." เรียบร้อย!");
+            // PetStatus::destroy($request->status_id);
+            return redirect()->back()->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
         }
 
         //จัดการ การจองห้อง

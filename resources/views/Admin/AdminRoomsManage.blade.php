@@ -173,7 +173,7 @@
                     });
                     swalWithBootstrapButtons.fire({
                     title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
-                    text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+                    text: "แน่ใจแล้วใช่ไหม หายไปเลยนะ!",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "ยืนยัน",

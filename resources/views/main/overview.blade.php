@@ -70,7 +70,7 @@
     </style>
 
 <body>
-    <form action="{{route('payment')}}" method="post">
+    <form action="{{route('payment')}}" method="POST">
         @csrf
     <div class="booking-summary">
         <h1>รายละเอียดการจอง</h1>
@@ -86,6 +86,7 @@
         <input type="hidden" name="pet_weight" value="{{ $p_weight }}">
         <input type="hidden" name="pet_gender" value="{{ $p_gender }}">
         <input type="hidden" name="additional_info" value="{{ $p_description }}">
+        <input type="hidden" name="pet_id" value="{{$pet_id}}">
         <div class="detail-row">
             <span class="detail-label">ประเภทห้อง:</span>
             <span class="detail-value">{{$roomTypename}}</span>
@@ -104,7 +105,7 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">ประเภทสัตว์เลี้ยง:</span>
-            <span class="detail-value">{{$petTypeId}}</span>
+            <span class="detail-value">{{$petTypeName->Pet_nametype}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">สายพันธุ์:</span>
@@ -120,7 +121,7 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">เพศ:</span>
-            <span class="detail-value">{{$p_gender == 'M' ? 'ผู้':'เมีย'}}</span>
+            <span class="detail-value">{{$p_gender == 'M' ? 'ชาย':'หญิง'}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">คำแนะนำเพิ่มเติม:</span>

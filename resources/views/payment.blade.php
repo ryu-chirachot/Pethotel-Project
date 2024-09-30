@@ -61,6 +61,7 @@
                     <input type="hidden" name="pet_gender" value="{{ $pet_gender }}">
                     <input type="hidden" name="additional_info" value="{{ $additional_info }}">
                     <input type="hidden" name="price" value="{{$price * \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}}">
+                    <input type="hidden" name="pet_id" value="{{$pet_id}}">
                     <h2>ช่องทางการชำระเงิน</h2>
                     @foreach($payment as $pay)
                     @if($pay->PaymentMethodID == 1)

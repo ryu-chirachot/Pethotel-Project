@@ -1,7 +1,8 @@
 @extends('layouts.navbar')
 
 @section('content')
-<div class="container mt-4">
+<link rel="stylesheet" href="{{asset("/css/petstatus.css")}}">
+<div id="container">
     <div class="card">
         <div class="card-header">
             <h4>สถานะสัตว์เลี้ยง </h4>

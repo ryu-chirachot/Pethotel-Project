@@ -56,7 +56,7 @@
     </div>
 </div>
 
-<!-- Modal for adding new pet type -->
+<!-- Modal ประเภทสัตว์ -->
 <div class="modal fade" id="addPetTypeModal" tabindex="-1" aria-labelledby="addPetTypeModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -111,6 +111,7 @@
     $('#addPetTypeModal, #addRoomTypeModal').on('hidden.bs.modal', function () {
         location.reload();
     });
+    
 </script>
 
 @endsection

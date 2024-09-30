@@ -18,21 +18,22 @@ use App\Http\Controllers\ReviewController;
 Route::get('/', function () {
     return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
-
-
+Route::post('/update-pet', [BookingController::class, 'petUpdate'])->name('pet.update');
+Route::get('/home/mypets',[BookingController::class, 'mypets'])->name('mypets');
+Route::get('/home/mypets/{id}',[BookingController::class, 'deletePet'])->name('deletepet');
 
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
 });
-Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
-Route::post('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
 
+Route::get('/info', [BookingController::class, 'send'])->middleware('auth')->name('info');
+Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
 Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
 Route::get('/home/{viewname}',[SearchController::class,'show'])->name('mains'); 
-Route::post('/room/search',[SearchController::class,'search']
+Route::get('/room/search',[SearchController::class,'search']
 )->name('search.result');
 
 
@@ -66,7 +67,7 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::post('detail/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::post('detail/cancel/{id}', [AdminController::class, 'cancelBooking'])->name('bookings.cancel');
-    Route::post('detail/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
+    Route::get('detail/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
     Route::post('/การจองวันนี้', [AdminController::class,''])->name('bookings.today');
     Route::post('/การจองที่เลยกำหนด', [AdminController::class,''])->name('booking.deadline');
 });
@@ -89,8 +90,8 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 Route::get('/Admin/user',[AdminController::class,'users'])->middleware('admin')->name('Admin.user');
 Route::get('/Admin/user/{id}',[AdminController::class,'userdetail'])->middleware('admin')->name('Admin.user.detail');
 // Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
-// Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
-// Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
+Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
+Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
 
 
 

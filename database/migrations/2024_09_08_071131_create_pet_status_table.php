@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
             $table->text('Report')->nullable();
-            $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('Admin_id')->nullable();
             $table->foreign('Admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();

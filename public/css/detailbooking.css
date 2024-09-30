@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+    font-family: kanit;
+    background-color: #f8f9fa;
+}
+
+#container {
+    padding: 20px ;
+    max-width: 900px;
+
+}
+
+.card {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #343a40;
+    color: white;
+    font-size: 18px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-body {
+    font-size: 16px;
+}
+
+.badge {
+    background-color: #ffc107;
+    color: #333;
+    font-weight: bold;
+    padding: 0.5em 0.75em;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.card-footer .btn {
+    margin-left: 10px; 
+}
+
+.status-check {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.status-checkout {
+    font-weight: bold;
+    color: #dc3545;
+}
+.payment-pending {
+    background-color: #F59E0B;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+}
