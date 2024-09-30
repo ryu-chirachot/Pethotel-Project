@@ -46,7 +46,7 @@
                 <input type="hidden" name="room_type_name" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_name }}">
                 <input type="hidden" name="room_type_id" value="{{ $roomGroup->first()->pet_Type_Room_Type->roomType->Rooms_type_id }}">
             @endforeach
-            <button type="submit" class="btn btn-success float-end">จองเลย</button>  
+            <button type="submit" class="btn btn-success float-end bookings-btn">จองเลย</button>  
         </form>
     </div>
     @endforeach
