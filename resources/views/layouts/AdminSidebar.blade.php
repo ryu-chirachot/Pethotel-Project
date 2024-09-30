@@ -18,8 +18,9 @@
 
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
         *{
-            font-family: "Mitr", sans-serif;
+            font-family: "kanit", sans-serif;
         }
     </style>
 </head>

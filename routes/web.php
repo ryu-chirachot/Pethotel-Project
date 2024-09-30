@@ -19,7 +19,8 @@ Route::get('/', function () {
     return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
 
-
+// Route::get('/edit', [EditUserController::class, 'edit'])->name('user.edit');
+// Route::put('/user/update', [EditUserController::class, 'update'])->name('user.update');
 
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
@@ -72,7 +73,7 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
     Route::post('/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
     Route::post('/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
-    Route::get('/cancel/{id}', [AdminController::class, 'cancel'])->name('bookings.cancel');
+    Route::post('/cancel/{id}', [AdminController::class, 'cancelBooking'])->name('bookings.cancel');
     Route::post('/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
     Route::post('/การจองวันนี้', [AdminController::class,''])->name('bookings.today');
     Route::post('/การจองที่เลยกำหนด', [AdminController::class,''])->name('booking.deadline');

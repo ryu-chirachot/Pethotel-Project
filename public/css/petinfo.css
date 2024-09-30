@@ -3,6 +3,14 @@
 
 body{
     font-family: kanit;
-    background-color: #f3f4f6;
+    background-color: whitesmoke !important;
+
+}
+.center-content{
+    border-radius: 10px;
+    width: 50%;
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
 
 }

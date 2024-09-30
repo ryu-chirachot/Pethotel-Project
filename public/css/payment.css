@@ -8,63 +8,22 @@ body {
     height: 100vh;
     margin: 0;
 }
-.navbar-nav {
-    margin-left: auto;
-    margin-right: auto;
-    }
-    .navbar-brand{
-    margin-left: 10px;
-    font-family: "Fredoka", sans-serif;    
-    font-weight: bold;
-    left: 10px;
-    font-size: 22px; 
-    
-
-    }
-    .navbar {
-    background-color: #FFE797;
-    padding: 30px 0 30px 0;
-}
-    .navbar-nav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-.nav-item{
-    font-family: "Fredoka", sans-serif;   
-    font-size: 22px; 
-
-}
-.room-sections-wrapper {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 30px;
-    }
-
-
-
-#section {
-    max-width: 1700px; /* ปรับขนาด container ให้แคบลง */
-    height: 100%;
-    background-color: white;
-    margin-right: auto;
-    margin-left: auto;
-    padding: 0 0 50px 0px;
-    
-    
-}
 .room-section {
     background-color: #FEFCF4;
-    margin-top: 50px;
+    margin-top: 20px;
     border-radius: 10px;
     padding: 20px ;
     width: 700px;
     
-   
     
 }
+#section{
+    display: flex;
+    padding: 50px;
+    background-color: #fefcf9;
+    padding-bottom: 100px;
 
+}
 .card {
     background-color: #FEFCF4;
     border-radius: 8px;
@@ -74,9 +33,12 @@ body {
     width: 650px;
     margin-left: auto;
     margin-right:auto ;
+    padding-top: 0;
     
-    
+
 }
+
+
 
 h2 {
     margin-top: 0;
@@ -92,10 +54,7 @@ h2 {
 .date {
     text-align: center;
 }
-.date-label {
-    font-size: 12px;
-    color: #666;
-}
+
 .date-value {
     font-size: 16px;
     font-weight: bold;
@@ -117,7 +76,6 @@ h2 {
 p{
     text-align: left;
 }
-
 .total-wrapper {
     margin: 15px -20px;
     background-color: #FFE797;
@@ -129,46 +87,39 @@ p{
     justify-content: space-between;
 }
 
-.radio-button {
-    margin: 10px;
-  }
-  
-  .radio-button input[type="radio"] {
-    opacity: 0;
-    position: fixed;
-    width: 0;
-  }
-  
-  .radio-button label {
-    display: inline-block;
-    background-color: #ddd;
-    padding: 10px 20px;
-    font-family: sans-serif, Arial;
-    font-size: 16px;
-    border: 2px solid #444;
-    border-radius: 4px;
-  }
-  
-  .radio-button label:hover {
-    background-color: #dfd;
-  }
-  
-  .radio-button input[type="radio"]:focus+label {
-    border: 2px dashed #444;
-  }
-  
-  .radio-button input[type="radio"]:checked+label {
-    background-color: #bfb;
-    border-color: #4c4;
-  }
 button{
     margin-top: 50px;
     width: 100px;
-    margin-left: auto;
-    margin-right: auto;
     padding: 5px;
     border: none;
     background-color: #FFD700;
     color: #6C620F;
     border-radius: 5px;
 }
+
+
+.room-sections-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.room-section {
+    background-color: #FEFCF4;
+    border-radius: 10px;
+    padding: 20px;
+    width: 48%; 
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #FEFCF4;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+

@@ -7,7 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{{asset("/css/petinfo.css")}}">
 
-<body class="bg-[#e6f2f2] p-4">
+<body class="bg-[#e6f2f2]">
     <div class="container center-content">
         <div class="text-center">
             <h2 class="text-2xl font-bold mb-4">สัตว์เลี้ยงของคุณ</h2>

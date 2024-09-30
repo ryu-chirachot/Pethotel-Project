@@ -24,7 +24,7 @@
             <!-- การจอง Filters -->
             <div class="d-flex justify-content-between mb-3">
                 <div>
-                    <a class="btn btn-outline-secondary me-2" href="#">การจองทั้งหมด </a>
+                    <a class="btn btn-outline-secondary me-2" href="/Admin/Bookings">การจองทั้งหมด </a>
                     <a class="btn btn-outline-success me-2" href="#">การจองของวันนี้ </a>
                     <a class="btn btn-outline-danger" href="#">การจองที่พักเลยกำหนด </a>
                 </div>
@@ -63,8 +63,10 @@
                                         <td>{{ $booking->Booking_date }}</td>
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>
                                         <td>
-                                            @if($booking->deleted_at)
+                                            @if($booking->deleted_at != NULL)
                                                 <span class="badge bg-danger">เช็คเอาท์</span>
+                                            @elseif($booking->Booking_status == 3)
+                                                <span class="badge bg-danger">ยกเลิกการจอง</span>
                                             @else
                                                 <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}

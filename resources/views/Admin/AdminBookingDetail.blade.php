@@ -1,7 +1,4 @@
 @extends('layouts.AdminSidebar')
-
-
-
 @section('content')
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
@@ -85,7 +82,7 @@
                     <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="POST" onsubmit="return ConfirmCheckout('{{ $bookings->BookingOrderID }}')">
                         @csrf
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-warning">
+                            <button type="submit" class="btn btn-secondary">
                                 <i class="fas fa-sign-out-alt me-2"></i>เช็คเอาท์
                             </button>
                         </div>

@@ -92,12 +92,12 @@
                     <p>มีบัญชีอยู่แล้ว <a href="login"><b>เข้าสู่ระบบ</b></a></p>
                 </div>
 
-            <div class="name">
+            <!-- <div class="name"> -->
             <div class="info">
                 <label for="name" value="{{ __('Name') }}" />
                 <input id="email" class="form-control" type="text" placeholder="ชื่อ"  name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
-            </div>
+            <!-- </div> -->
 
             <div class="info">
                 <label for="email" value="{{ __('Email') }}" />

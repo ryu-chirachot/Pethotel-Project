@@ -11,7 +11,7 @@
             <div class="room-section">
                 <div class="card">ห้อง
                     <h2>{{$roomTypeName}}</h2>
-                    <br>
+                  
                     เครื่องปรับอากาศ <br>
                     น้ำดื่ม <br>
                     เบาะนอน <br>

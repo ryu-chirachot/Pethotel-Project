@@ -24,6 +24,7 @@
         <div class="d-flex d-lg-none ms-auto align-items-center">
             <span class="d-flex me-3 iconphone">
                
+            <span class="d-flex me-3">
             </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">

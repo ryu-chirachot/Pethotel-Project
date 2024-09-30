@@ -55,7 +55,11 @@
             @endif
 
             </div>
-
+            @elseif($booking->Booking_status == 3)
+                <span class="status-checkout">
+                        ยกเลิกการจองแล้ว
+                    </span>
+                    </p><hr>
             @else
                 <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
                     {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
@@ -75,6 +79,7 @@
         </div>
         @endforeach
     @endif
+
     
 </div>
 
