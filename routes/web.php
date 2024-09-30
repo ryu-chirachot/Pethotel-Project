@@ -19,7 +19,7 @@ Route::get('/', function () {
     return redirect()->route('mains', ['viewname' => 'homepage']);
 })->name('home');
 Route::post('/update-pet', [BookingController::class, 'petUpdate'])->name('pet.update');
-Route::get('/home/mypets',[BookingController::class, 'mypets'])->name('mypets');
+Route::get('/home/mypets',[BookingController::class, 'mypets'])->middleware('auth')->name('mypets');
 Route::middleware('checkLogin')->group(function(){
     Route::get('/edit', [UserController::class, 'edit']);
     Route::post("/edit/update",[UserController::class,'EditUpdate'])->name("user.edit_update");
@@ -31,7 +31,7 @@ Route::post('/payment',[BookingController::class,'book'])->name('payment');
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
 Route::get('/home/{viewname}',[SearchController::class,'show'])->name('mains'); 
-Route::post('/room/search',[SearchController::class,'search']
+Route::get('/room/search',[SearchController::class,'search']
 )->name('search.result');
 
 

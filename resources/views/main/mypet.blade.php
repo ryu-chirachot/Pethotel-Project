@@ -8,8 +8,17 @@
 body {
     font-family: Kanit;
 }
+.pet-table-container {
+        width: 100%;
+        max-width: 720px00px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
 </style>
-<div class="container mt-4">
+<div class="container mt-4 pet-table-container">
     <h2 class="text-center mb-4">สัตว์เลี้ยงของฉัน</h2>
 
     @if($pets->isEmpty())

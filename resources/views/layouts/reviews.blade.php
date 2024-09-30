@@ -1,64 +1,50 @@
 @extends('layouts.searchbar')
 @section('review')
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review Display</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
     <style>
-        .reviews-container {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-            width: 100%;
-            height: 200px; /* ความสูงของรีวิวแต่ละบล็อก */
-        }
-
-        .reviews-content {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
-        }
-
         .review-box {
-            display: inline-block;
-            width: 300px;
-            margin: 10px;
-            padding: 15px;
-            background-color: #f7f7f7;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
             border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-bottom: 20px;
         }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
+        .review-box h5 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #343a40;
         }
-
-        /* หยุดเมื่อวางเมาส์ */
-        .reviews-container:hover .reviews-content {
-            animation-play-state: paused;
+        .star-rating {
+            color: #e0e0e0;
+            font-size: 1.2em;
+        }
+        .star-rating .fas {
+            color: #ffc107;
+        }
+        .review-comment {
+            margin-top: 10px;
+            color: #495057;
         }
     </style>
 </head>
-<body>
 
-<div class="container mt-5">
-    <h2 class="text-center">รีวิวจากลูกค้า</h2>
-    <div class="reviews-container">
-        <div class="reviews-content">
-            <!-- เริ่มลูปรีวิวที่นี่ -->
-            @foreach($reviews as $review)
-                <div class="review-box">
-                    <h5>Anonymous</h5>
-                    <p>{{ $review->comment }}</p>
-                </div>
-            @endforeach
+    @foreach($reviews as $review)
+        <div class="review-box">
+            <h5>ผู้ใช้</h5> 
+            <div class="star-rating">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $review->rating)
+                        <i class="fas fa-star"></i>
+                    @else
+                        <i class="far fa-star"></i>
+                    @endif
+                @endfor
+            </div>
+            <p class="review-comment">{{ $review->comment }}</p>
         </div>
-    </div>
-</div>
+    @endforeach
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

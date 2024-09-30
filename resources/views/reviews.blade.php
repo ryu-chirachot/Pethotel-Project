@@ -76,9 +76,9 @@
 
 <script>
     document.getElementById('reviewForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // ป้องกันไม่ให้รีเฟรชหน้า
+        event.preventDefault(); 
 
-        // ส่งฟอร์มด้วย AJAX (ถ้าต้องการ) หรือส่งข้อมูลไปที่ Laravel
+      
         Swal.fire({
             title: 'สำเร็จ!',
             text: 'ขอบคุณสำหรับความคิดเห็นของคุณ',

@@ -1,10 +1,6 @@
 @extends('layouts.navbar')
-@section('titel','เพิ่มรายละเอียดสัตว์เลี้ยง')
 @section('content')
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
     body {
@@ -19,7 +15,7 @@
     }
     .pet-table-container {
         width: 100%;
-        max-width: 900px;
+        max-width: 720px;
         margin: 20px auto;
         background-color: #ffffff;
         border-radius: 15px;
@@ -58,7 +54,7 @@
     }
 </style>
 
-<body class="bg-[#e6f2f2] p-4">
+
     <div class="container center-content">
         <div class="text-center pet-table-container">
             <h2 class="text-3xl font-bold mb-4">สัตว์เลี้ยงของคุณ</h2>
@@ -235,9 +231,9 @@
                     </div>
                 </div>
             </div>
-
+</div>
         </div>
     </div>
-</body>
+
 
 @endsection

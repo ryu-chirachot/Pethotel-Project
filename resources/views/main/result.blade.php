@@ -7,8 +7,14 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-
+    
+    
     <div class="container mt-4">
+    @if($groupedRooms->isEmpty())
+    <div class="alert alert-warning text-center" role="alert">
+  ไม่พบห้องว่าง
+</div>
+    @else
     @foreach ($groupedRooms as $roomTypeName => $roomGroup)
     <div class="card mx-auto mb-4" style="max-width: 720px;">
         <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
@@ -51,4 +57,5 @@
     </div>
     @endforeach
 </div>
+@endif
 @endsection

@@ -17,9 +17,7 @@
             <div class="card-body">
                 <p><strong>ชื่อผู้จอง:</strong> {{$booking->user->name}}</p><hr>
                 <p><strong>ชื่อสัตว์เลี้ยง:</strong> 
-                @foreach($booking->user->pets as $pet)
-                {{$pet->Pet_name}}
-                @endforeach
+                {{$booking->user->pets}}
                 </p><hr>
                 <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
                 <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
@@ -69,16 +67,7 @@
     @endif
 </div>
 <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            padding-top: 0;
-        }
-
-        .container {
-            padding-top: 10px;
-            max-width: 900px;
-        }
+        
 
         .card {
             margin-bottom: 20px;

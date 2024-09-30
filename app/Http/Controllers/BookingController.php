@@ -130,9 +130,9 @@ class BookingController extends Controller
     {
         // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
         $usID = Auth::user()->id;
-        $bookings = bookings::withTrashed()->where('User_id', $usID)
-        ->orderBy('BookingOrderID', 'desc')
+        $bookings = bookings::with('user')->withTrashed()->where('User_id', $usID)
         ->get();
+     
         return view('User.DetailBookings', compact('bookings'));
     }
 
