@@ -1,6 +1,14 @@
 @extends('layouts.navbar')
 @section('title','สัตว์เลี้ยงของฉัน')
 @section('content')
+<style>
+*{
+    font-family: "Kanit", sans-serif;
+}
+body {
+    font-family: Kanit;
+}
+</style>
 <div class="container mt-4">
     <h2 class="text-center mb-4">สัตว์เลี้ยงของฉัน</h2>
 
