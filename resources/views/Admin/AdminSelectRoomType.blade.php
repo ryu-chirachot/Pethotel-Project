@@ -20,7 +20,7 @@
                     <div class="input-group">
                         <select name="pet_type" class="form-control" required>
                             @foreach ($Pet_types as $pt)
-                            <option value="{{ $pt->Pet_nametype }}">{{ $pt->Pet_nametype }}</option>
+                            <option value="{{ $pt->Pet_type_id }}">{{ $pt->Pet_nametype }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">
@@ -36,7 +36,7 @@
                     <div class="input-group">
                         <select name="room_type" class="form-control" required>
                             @foreach ($Room_types as $room_type)
-                            <option value="{{ $room_type->Rooms_type_name }}">{{ $room_type->Rooms_type_name }}</option>
+                            <option value="{{ $room_type->Rooms_type_id }}">{{ $room_type->Rooms_type_name }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">

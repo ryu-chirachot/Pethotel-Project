@@ -173,9 +173,23 @@ class AdminController extends Controller
             $Pet_types = Pet_type::all();
             $Room_types = Rooms_type::all();
             $latestRoom = Rooms::latest('Rooms_id')->first();
-            $selectedPetType = $request->query('pet_type');
-            $selectedRoomType = $request->query('room_type');
-            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType'));       
+            $selectedPetType = $request->pet_type;
+            $selectedRoomType = $request->room_type;
+            
+            if ($selectedPetType && $selectedRoomType) {
+                
+                $petRoomType = Pet_Type_Room_Type::where('Pet_type_id', $selectedPetType)
+                    ->where('Rooms_type_id', $selectedRoomType)
+                    ->with('image')
+                    ->first();
+                $imgpaths = $petRoomType->image->ImagesPath;
+                $images = explode(',', $imgpaths);
+            } else {
+                $petRoomType = null;
+                $images = null; 
+            }
+
+            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType', 'images','petRoomType'));
         }
         
         //เลือกประเภทห้องที่จะสร้าง
@@ -420,7 +434,9 @@ class AdminController extends Controller
         }
 
         public function userdetail($id){
-            $users = User::where('role', 'user')->with('pets', 'bookings')->get(); 
+            $users = User::where('role', 'user')
+                    ->where('id', $id)
+                    ->with('pets', 'bookings')->get(); 
             return view("Admin.AdminUserDetail", compact("users"));
         }
 }

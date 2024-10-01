@@ -89,9 +89,7 @@ Route::get('/Admin/Rooms/delete/{id}',[AdminController::class,'delete'])->middle
 //รายงานสถานะสัตว์เลี้ยง
 Route::get('/Admin/user',[AdminController::class,'users'])->middleware('admin')->name('Admin.user');
 Route::get('/Admin/user/{id}',[AdminController::class,'userdetail'])->middleware('admin')->name('Admin.user.detail');
-// Route::get('/Admin/Pets/{id}',[AdminController::class,'petdetail'])->middleware('admin')->name('Admin.pets.detail');
 Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->middleware('admin')->name('Admin.report');
-Route::post('/Admin/Pets/report/checkout',[AdminController::class,'checkout'])->middleware('admin')->name('Admin.checkout');
 
 
 

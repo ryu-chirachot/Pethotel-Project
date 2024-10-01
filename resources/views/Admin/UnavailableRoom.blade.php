@@ -47,7 +47,7 @@
                                     <th>ประเภทของสัตว์เลี้ยง</th>
                                     <th>ชื่อผู้จอง</th>
                                     <th>ชื่อสัตว์เลี้ยง</th>
-                                    <th>สถานะ</th>
+                                    <th>สถานะห้อง</th>
                                     <th>แก้ไข</th>
                                     <th>ลบ</th>
                                     <th>อื่นๆ</th>
@@ -105,8 +105,16 @@
                                         <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fas fa-ellipsis-h"></i>
                                         </button>                      
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $rm->Rooms_id) }}">ดูรายละเอียดการจอง</a></li>
+                                        <ul class="dropdown-menu">
+                                                @if($rm->bookings->isNotEmpty())
+                                                    @foreach ($rm->bookings as $bk)
+                                                        @if($bk->Booking_status != 2)
+                                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                
+                                                @endif
                                             </ul>
                                         </div>
                                     </td>
