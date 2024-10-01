@@ -14,21 +14,21 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id('BookingOrderID');
 
-            $table->unsignedBigInteger('User_id');
+            $table->unsignedInteger('User_id',7);
             $table->foreign('User_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('Pet_id');
+            $table->unsignedInteger('Pet_id',7);
             $table->foreign('Pet_id')->references('Pet_id')->on('pets')->onDelete('cascade');
 
-            $table->unsignedBigInteger('Rooms_id');
+            $table->unsignedInteger('Rooms_id',3);
             $table->foreign('Rooms_id')->references('Rooms_id')->on('rooms')->onDelete('cascade');
 
             $table->date('Start_date');
             $table->date('End_date');
             $table->dateTime('Booking_date');
-            $table->boolean('Booking_status');
+            $table->tinyInteger('Booking_status');
             $table->integer('Price');
 
-            $table->unsignedBigInteger('PaymentMethodID');
+            $table->unsignedInteger('PaymentMethodID',1);
             $table->foreign('PaymentMethodID')->references('PaymentMethodID')->on('payment_methods')->onDelete('cascade');            
             $table->dateTime('PaymentDate')->nullable();
             $table->timestamp('created_at')->useCurrent();

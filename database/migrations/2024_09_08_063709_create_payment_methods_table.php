@@ -12,8 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payment_methods', function (Blueprint $table) {
-            $table->id('PaymentMethodID');
-            $table->string('MethodName', 100);
+            $table->integer('PaymentMethodID',1)->autoIncrement();
+            $table->string('MethodName', 150);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes();

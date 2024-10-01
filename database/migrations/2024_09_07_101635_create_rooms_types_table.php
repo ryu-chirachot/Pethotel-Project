@@ -9,11 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rooms_type', function (Blueprint $table) {
-            $table->unsignedBigInteger('Rooms_type_id')->autoIncrement(); // Ensure it is an unsignedBigInteger
-            $table->string('Rooms_type_name', 60); // Room type name
+            $table->integer('Rooms_type_id',2)->autoIncrement(); 
+            $table->string('Rooms_type_name', 60); 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
-            $table->softDeletes(); // Adds deleted_at column for soft deletes
+            $table->softDeletes(); 
         });
     }
 

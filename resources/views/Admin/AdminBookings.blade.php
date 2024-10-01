@@ -11,6 +11,15 @@
     </script>
 @endif
 
+@if(session('checkout'))
+    <script>
+        Swal.fire({
+            title: "เช็คเอาท์สำเร็จ",
+            text: "ของคุณ {{ session('checkout') }} สำเร็จ",
+            icon: "success"
+        });
+    </script>
+@endif
 
 <div class="container">
     <div class="row">
@@ -131,24 +140,6 @@
     }
 </script>
 
-@if(session('success'))
-    <script>
-        Swal.fire({
-            title: "ขยายระยะเวลาการจอง",
-            text: "ของคุณ {{ session('success') }} สำเร็จ",
-            icon: "success"
-        });
-    </script>
-@endif
 
-@if(session('checkout'))
-    <script>
-        Swal.fire({
-            title: "เช็คเอาท์สำเร็จ",
-            text: "ของคุณ {{ session('checkout') }} สำเร็จ",
-            icon: "success"
-        });
-    </script>
-@endif
 
 @endsection

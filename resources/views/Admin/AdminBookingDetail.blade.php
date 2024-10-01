@@ -177,9 +177,9 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire("ยกเลิกการจองสำเร็จ", "การจองได้ถูกยกเลิกแล้ว", "success");
-                setTimeout(() => {
-                    window.location.href = `/Admin/booking/cancel/${id}`;
-                }, 3000);
+                
+                window.location.href = `/Admin/Bookings/cancel/${id}`;
+                
             }
             return false;
         });
@@ -197,7 +197,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire("เช็คเอาท์สำเร็จ", "การเช็คเอาท์ได้ถูกดำเนินการแล้ว", "success");
-                window.location.href = `/Admin/booking/detail/checkout/${id}`
+                window.location.href = `/Admin/Bookings/detail/checkout/${id}`
                 
             }
             return false;

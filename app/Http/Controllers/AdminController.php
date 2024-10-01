@@ -286,12 +286,12 @@ class AdminController extends Controller
             
 
         public function checkout($id){
-            $room = Rooms::findOrFail($id);
+            $room = Bookings::findOrFail($id);
             $room->Rooms_status = 1;
             Bookings::destroy($id);
             
             // PetStatus::destroy($request->status_id);
-            return redirect()->back()->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
+            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");       
         }
 
         //จัดการ การจองห้อง
@@ -407,13 +407,7 @@ class AdminController extends Controller
             return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
         }
 
-        function checkoutManual($id){
-            Bookings::destroy($id);
-            PetStatus::destroy($id);
-
-            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");
-
-        }
+        
 
         public function users()
         {
