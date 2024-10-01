@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id('BookingOrderID');
+            $table->integer('BookingOrderID',5)->autoIncrement();
 
-            $table->unsignedInteger('User_id',7);
+            $table->Integer('User_id');
             $table->foreign('User_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedInteger('Pet_id',7);
+            $table->Integer('Pet_id');
             $table->foreign('Pet_id')->references('Pet_id')->on('pets')->onDelete('cascade');
 
-            $table->unsignedInteger('Rooms_id',3);
+            $table->Integer('Rooms_id');
             $table->foreign('Rooms_id')->references('Rooms_id')->on('rooms')->onDelete('cascade');
 
             $table->date('Start_date');
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->tinyInteger('Booking_status');
             $table->integer('Price');
 
-            $table->unsignedInteger('PaymentMethodID',1);
+            $table->Integer('PaymentMethodID');
             $table->foreign('PaymentMethodID')->references('PaymentMethodID')->on('payment_methods')->onDelete('cascade');            
             $table->dateTime('PaymentDate')->nullable();
             $table->timestamp('created_at')->useCurrent();

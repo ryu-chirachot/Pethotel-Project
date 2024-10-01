@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pet_status', function (Blueprint $table) {
-            $table->integer('PetStatusID',5);
-            $table->unsignedInteger('BookingOrderID',5);
+            $table->integer('PetStatusID',5)->autoIncrement();
+            $table->Integer('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
             $table->text('Report');
-            $table->unsignedInteger('Admin_id',7)->nullable();
+            $table->Integer('Admin_id');
             $table->foreign('Admin_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->integer('Pet_id',7)->autoIncrement();
-            $table->unsignedInteger('User_id',7);
+            $table->Integer('User_id');
             $table->foreign('User_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedInteger('Pet_type_id',2);
+            $table->Integer('Pet_type_id');
             $table->foreign('Pet_type_id')->references('Pet_type_id')->on('Pet_type')->onDelete('cascade');
             $table->string('Pet_name', 60);
             $table->integer('Pet_age');

@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::create('pet_type_room_type', function (Blueprint $table) {
             $table->integer('Pet_Room_typeID',5)->autoIncrement(); 
-            $table->unsignedInteger('Rooms_type_id',2);
+            $table->Integer('Rooms_type_id');
             $table->foreign('Rooms_type_id')->references('Rooms_type_id')->on('rooms_type')->onDelete('cascade');
             
-            $table->unsignedInteger('Pet_type_id',2);
+            $table->Integer('Pet_type_id');
             $table->foreign('Pet_type_id')->references('Pet_type_id')->on('pet_type')->onDelete('cascade');
             $table->text('Rooms_type_description'); 
             $table->integer('Room_price'); 
-            $table->unsignedBigInteger('ImagesID'); 
+            $table->Integer('ImagesID'); 
             $table->foreign('ImagesID')->references('ImagesID')->on('images')->onDelete('cascade');
             
             $table->timestamp('created_at')->useCurrent();
