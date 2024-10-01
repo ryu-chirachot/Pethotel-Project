@@ -438,7 +438,6 @@ class AdminController extends Controller
             }])
             ->where('role','user') 
             ->get();
-            
             return view("Admin.AdminUsers", compact("users"));
         }
         //หน้ารายละเอียดผู้ใช้
