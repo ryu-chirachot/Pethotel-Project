@@ -59,7 +59,7 @@ body {
     แก้ไข
 </button>
 </td>
-<td> <button class="btn btn-danger" onclick="ConfirmDelete('$pet->Pet_id')">ลบ</button></td>
+<td> <button class="btn btn-danger" onclick="ConfirmDelete('{{$pet->Pet_id}}')">ลบ</button></td>
 </tr>
 
 <!-- Modal สำหรับแก้ไขสัตว์เลี้ยง -->

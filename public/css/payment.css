@@ -8,7 +8,7 @@ body {
     height: 100vh;
     margin: 0;
 }
-.navbar-nav {
+/* .navbar-nav {
     margin-left: auto;
     margin-right: auto;
     }
@@ -34,7 +34,7 @@ body {
     font-family: "Fredoka", sans-serif;   
     font-size: 22px; 
 
-}
+} */
 .room-sections-wrapper {
         display: flex;
         justify-content: center;

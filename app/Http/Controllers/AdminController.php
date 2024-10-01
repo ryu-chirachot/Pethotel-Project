@@ -10,6 +10,7 @@ use App\Models\Images;
 use App\Models\Bookings;
 use App\Models\Pet_type;
 use App\Models\pet_type_room_type;
+use App\Models\Pets;
 use App\Models\PetStatus;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -68,7 +69,7 @@ class AdminController extends Controller
         public function rooms(){
             
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user'])
+                $Rooms = Rooms::with(['bookings.user','bookings.pet'])
                                     ->whereHas('bookings')
                                     ->orWhereDoesntHave('bookings') // ดึงห้องที่ไม่มีการจอง
                                     ->paginate(10);
@@ -80,7 +81,7 @@ class AdminController extends Controller
 
         public function Available(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "1")->paginate(10);
+                $Rooms = Rooms::with(['bookings.user','bookings.pet'])->where('Rooms_status', "=", "1")->paginate(10);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.AvailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -88,7 +89,7 @@ class AdminController extends Controller
         
         public function Unavailable(){
                 $allRooms = Rooms::all();
-                $Rooms = Rooms::with(['bookings.user'])->where('Rooms_status', "=", "0")->paginate(10);
+                $Rooms = Rooms::with(['bookings.user','bookings.pet'])->where('Rooms_status', "=", "0")->paginate(10);
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $UnAvailableRooms = Rooms::where('Rooms_status', "=", "0")->get();
                 return view('Admin.UnavailableRoom', compact("allRooms","Rooms","AvailableRooms","UnAvailableRooms"));
@@ -175,13 +176,14 @@ class AdminController extends Controller
             $latestRoom = Rooms::latest('Rooms_id')->first();
             $selectedPetType = $request->pet_type;
             $selectedRoomType = $request->room_type;
+            $pettypename = Pet_type::find($selectedPetType)->Pet_nametype;
+            $roomtypename = Rooms_type::find($selectedRoomType)->Rooms_type_name;
             
-            if ($selectedPetType && $selectedRoomType) {
-                
-                $petRoomType = Pet_Type_Room_Type::where('Pet_type_id', $selectedPetType)
+            $petRoomType = Pet_Type_Room_Type::where('Pet_type_id', $selectedPetType)
                     ->where('Rooms_type_id', $selectedRoomType)
                     ->with('image')
                     ->first();
+            if ($petRoomType && $petRoomType->image) {
                 $imgpaths = $petRoomType->image->ImagesPath;
                 $images = explode(',', $imgpaths);
             } else {
@@ -189,7 +191,7 @@ class AdminController extends Controller
                 $images = null; 
             }
 
-            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType', 'images','petRoomType'));
+            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType', 'images','petRoomType','pettypename','roomtypename'));
         }
         
         //เลือกประเภทห้องที่จะสร้าง
@@ -253,8 +255,8 @@ class AdminController extends Controller
                 'ImagesName' => 'รูป'.$petType.$roomType
             ]);
         
-            $idroomType = Rooms_type::where('Rooms_type_name', $roomType)->firstOrFail();
-            $idpetType = Pet_type::where('Pet_nametype', $petType)->firstOrFail();
+            $idroomType = Rooms_type::where('Rooms_type_id', $roomType)->firstOrFail();
+            $idpetType = Pet_type::where('Pet_type_id', $petType)->firstOrFail();
         
             $petRoomType = Pet_Type_Room_Type::firstOrCreate(
                 [
@@ -294,17 +296,18 @@ class AdminController extends Controller
             $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
 
             $petStatus->save();
-
-            return redirect()->back()->with('success', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
+            return redirect()->back()->with('report', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
             
 
         public function checkout($id){
-            $room = Bookings::findOrFail($id);
+            $booking = Bookings::findOrFail($id);
+            $room = $booking->room;
             $room->Rooms_status = 1;
+            $room->save();
             Bookings::destroy($id);
             
-            // PetStatus::destroy($request->status_id);
+            
             return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");       
         }
 
@@ -397,9 +400,12 @@ class AdminController extends Controller
         {
             $booking = Bookings::findOrFail($id);
             $booking->Booking_status = 3;
-            $booking->room->Rooms_status = 1;
             $booking->save();
+            $room = $booking->room;
+            $room->Rooms_status = 1;
+            $room->save();
 
+            Bookings::destroy($id);
             return redirect()->route('Admin.bookings')
                             ->with('cancel', 'Booking cancelled successfully');
         }
@@ -422,21 +428,28 @@ class AdminController extends Controller
         }
 
         
-
+        //หน้าผู้ใช้
         public function users()
         {
-            $users = User::where('role', 'user')
-                ->with(['pets', 'bookings' => function ($query) {
-                    $query->withTrashed();
-                }])
-                ->get();
+            
+            
+            $users = User::with(['pets', 'bookings' => function($query) {
+                $query->withTrashed(); // รวมการจองที่ถูกลบ
+            }])
+            ->where('role','user') 
+            ->get();
+            
             return view("Admin.AdminUsers", compact("users"));
         }
-
-        public function userdetail($id){
-            $users = User::where('role', 'user')
-                    ->where('id', $id)
-                    ->with('pets', 'bookings')->get(); 
-            return view("Admin.AdminUserDetail", compact("users"));
+        //หน้ารายละเอียดผู้ใช้
+        public function userdetail($id)
+        {
+            // ดึงข้อมูลการจองพร้อมผู้ใช้และสัตว์เลี้ยง
+            $bookings = Bookings::where('User_id', $id)
+                ->with(['user', 'pet.petType'])
+                ->withTrashed() // รวมการจองที่ถูกลบด้วย
+                ->get();
+            
+            return view("Admin.AdminUserDetail", compact("bookings"));
         }
 }

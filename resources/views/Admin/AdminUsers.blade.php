@@ -2,7 +2,7 @@
 
 @section('content')
 <head>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- นำเข้า jQuery ก่อน -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ count($user->pets) }}</td>
+                                    <td>{{ $user->pets->count() }}</td> <!-- แก้ไขให้ถูกต้องในการนับจำนวนสัตว์เลี้ยง -->
                                     <td>{{ $user->bookings->count() }}</td>
                                     <td>
                                         @if($user->trashed())

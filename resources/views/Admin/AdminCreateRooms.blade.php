@@ -5,15 +5,15 @@
     <div class="row">
         <div class="col-12">
             <h2 class="my-4">เพิ่มห้องพักใหม่</h2>
-        
-            <form action="{{ route('Admin.rooms.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                @if($images)
+
+                @if(isset($images) && count($images) > 0)
+                <form action="{{ route('Admin.rooms.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <!-- Room Images --> 
                     <label>รูปภาพ ห้องพัก *</label>
                     <div class="form-group mb-3" id="form">
                         @for ($i = 0; $i <= 5; $i++)
-                            <div class="room-image-upload empty">
+                            <div class="room-image-upload">
                                 <img id="previewImage{{ $i }}" class="img-fluid rounded" src="{{ asset('images/'.$images[$i]) }}">
                                 <input type="file" name="room_image[]" id="roomImageInput{{ $i }}" accept="image/*" onchange="previewImage(this, '{{ $i }}')" disabled>
                             </div>
@@ -34,13 +34,13 @@
 
                         <div class="form-group mb-3">
                             <label>ประเภทสัตว์เลี้ยง *</label>
-                            <input type="text" name="pet_type" class="form-control" value="{{ $selectedPetType }}" readonly>
+                            <input type="text" name="pet_type" class="form-control" value="{{ $pettypename }}" readonly>
                             <input type="hidden" name="pet_type_hidden" value="{{ $selectedPetType }}">
                         </div>
 
                         <div class="form-group mb-3">
                             <label>ประเภทห้อง *</label>
-                            <input type="text" name="room_type" class="form-control" value="{{ $selectedRoomType }}" readonly>
+                            <input type="text" name="room_type" class="form-control" value="{{ $roomtypename }}" readonly>
                             <input type="hidden" name="room_type_hidden" value="{{ $selectedRoomType }}">
                         </div>
 
@@ -59,7 +59,10 @@
                             <button type="submit" class="btn btn-primary">เพิ่มห้องพัก</button>
                             <a href="{{ route('Admin.rooms.type') }}" class="btn btn-secondary">ยกเลิก</a>
                         </div>
+                    </form>
                 @else
+                    <form action="{{ route('Admin.rooms.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
                     <!-- Room Images --> 
                     <label>รูปภาพ ห้องพัก *</label>
                     <div class="form-group mb-3" id="form">
@@ -87,13 +90,13 @@
 
                     <div class="form-group mb-3">
                         <label>ประเภทสัตว์เลี้ยง *</label>
-                        <input type="text" name="pet_type" class="form-control" value="{{ $selectedPetType }}" readonly>
+                        <input type="text" name="pet_type" class="form-control" value="{{ $pettypename }}" readonly>
                         <input type="hidden" name="pet_type_hidden" value="{{ $selectedPetType }}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label>ประเภทห้อง *</label>
-                        <input type="text" name="room_type" class="form-control" value="{{ $selectedRoomType }}" readonly>
+                        <input type="text" name="room_type" class="form-control" value="{{ $roomtypename }}" readonly>
                         <input type="hidden" name="room_type_hidden" value="{{ $selectedRoomType }}">
                     </div>
 
@@ -112,8 +115,8 @@
                         <button type="submit" class="btn btn-primary">เพิ่มห้องพัก</button>
                         <a href="{{ route('Admin.rooms.type') }}" class="btn btn-secondary">ยกเลิก</a>
                     </div>
+                </form>
                 @endif
-            </form>
         </div>
     </div>
 </div>

@@ -2,52 +2,50 @@
 @section('content')
 
 <div class="container-fluid py-4">
-    @if($users->isEmpty())
+    @if($bookings->isEmpty())
         <div class="alert alert-warning" role="alert">
-            ยังไม่พบผู้ใช้
+            ไม่พบข้อมูลการจองของผู้ใช้
         </div>
     @else
-        @foreach($users as $user)
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h5 class="mb-0">รายละเอียดผู้ใช้: {{ $user->name }}</h5>
-                </div>
-                <div class="card-body">
-                    <h6 class="font-weight-bold">ข้อมูลสัตว์เลี้ยง</h6>
-                    <ul class="list-group mb-3">
-                        @if($user->pets->isNotEmpty())
-                            @foreach($user->pets as $pet)
-                                <li class="list-group-item">
-                                    <strong>ชื่อ:</strong> {{ $pet->Pet_name }} 
-                                    <strong>ประเภท:</strong> {{ $pet->petType->Pet_nametype }} 
-                                    <strong>สายพันธุ์:</strong> {{ $pet->Pet_breed }}
-                                </li>
-                            @endforeach
-                        @else
-                            <li class="list-group-item">ไม่มีข้อมูลสัตว์เลี้ยง</li>
-                        @endif
-                    </ul>
-
-                    <h6 class="font-weight-bold">ประวัติการจอง</h6>
-                    <ul class="list-group">
-                        @forelse($user->bookings as $booking)
-                            <li class="list-group-item">
-                                <strong>หมายเลขการจอง:</strong> #{{ $booking->BookingOrderID }}, 
-                                <strong>วันที่จอง:</strong> {{ $booking->PaymentDate }}, 
-                                <strong>สถานะ:</strong> 
-                                @if($booking->trashed())
-                                    <span class="badge badge-danger">ยกเลิก</span>
-                                @else
-                                    <span class="badge badge-success">ยืนยันแล้ว</span>
-                                @endif
-                            </li>
-                        @empty
-                            <li class="list-group-item">ไม่มีประวัติการจอง</li>
-                        @endforelse
-                    </ul>
-                </div>
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">รายละเอียดผู้ใช้: {{ $bookings->first()->user->name }}</h5> <!-- ใช้ข้อมูลผู้ใช้จาก booking -->
             </div>
-        @endforeach
+            <div class="card-body">
+                <h6 class="font-weight-bold">ข้อมูลสัตว์เลี้ยง ทั้งหมด </h6>
+                
+                <ul class="list-group mb-3">
+                    @foreach($bookings as $booking)
+                        <li class="list-group-item">
+                            <strong>ชื่อ:</strong> {{ $booking->pet->Pet_name }} 
+                            <strong>ประเภท:</strong> {{ $booking->pet->petType->Pet_nametype }} 
+                            <strong>สายพันธุ์:</strong> {{ $booking->pet->Pet_breed }}
+                        </li>
+                    @endforeach
+                </ul>
+
+                <h6 class="font-weight-bold">ประวัติการจอง (ทั้งหมด {{ $bookings->count() }} รายการ)</h6>
+                <ul class="list-group">
+                    @foreach($bookings as $booking)
+                        <li class="list-group-item">
+                            <strong>หมายเลขการจอง:</strong> #{{ $booking->BookingOrderID }}<br>
+                            <strong>วันที่จอง:</strong> {{ $booking->PaymentDate }}<br>
+                            <strong>สถานะ:</strong> 
+                            @if($booking->trashed())
+                                <span class="text-danger">เช็คเอาท์</span>
+                            @elseif($booking->Booking_status == 3)
+                                <span class="text-warning">ยกเลิกแล้ว</span>
+                            @else
+                                <span class="text-success">ยืนยันแล้ว</span>
+                            @endif
+                            <br>
+                            <strong>รายละเอียด:</strong> 
+                            <p>สัตว์ที่เข้าพัก: {{ $booking->pet->Pet_name }}</p>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
     @endif
 </div>
 

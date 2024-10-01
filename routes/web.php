@@ -43,8 +43,6 @@ Route::get('/review/{id}',[ReviewController::class, 'index'])->name('review');
 Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 
 
-
-
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');

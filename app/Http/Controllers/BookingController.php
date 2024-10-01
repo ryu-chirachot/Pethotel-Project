@@ -153,14 +153,16 @@ class BookingController extends Controller
     }
 
 
-    // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการ
+    // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการนั้น
     public function show($id)
     {
         // ดึงข้อมูลการจองที่เลือก
         $usID = Auth::user()->id;
         $booking = bookings::withTrashed()->where('BookingOrderID', $id)
                         ->where('User_id', $usID)
+                        ->with('pet')
                         ->firstOrFail();
+        
         return view('User.showDetail', compact('booking'));
     }
 
@@ -169,10 +171,10 @@ class BookingController extends Controller
     {
         // ดึงข้อมูลสัตว์เลี้ยงที่เกี่ยวข้องกับการจอง
         $usID = Auth::user()->id;
-        $booking = bookings::withTrashed()->find($id);// Use get() for multiple bookings
+        $booking = bookings::withTrashed()->find($id);
         $status = PetStatus::withTrashed()->where('BookingOrderID', $id)->get();
 
-        // dd($booking);
+        
         return view('User.Petstatus', compact('booking', 'status'));
     }
 
@@ -191,7 +193,7 @@ class BookingController extends Controller
 
         return view('main.mypet',compact('pets'));
     }
-    // BookingController.php
+    // แก้ไข
     public function petUpdate(Request $request)
     {
         
@@ -213,7 +215,6 @@ class BookingController extends Controller
 
     public function deletePet($id){
 
-        
         Pets::destroy($id);
         return redirect()->back()->with('success','ลบสัตว์เลี้ยงเรียบร้อย');
     }

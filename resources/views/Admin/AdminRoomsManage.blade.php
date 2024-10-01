@@ -80,80 +80,64 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($Rooms as $rm)
-                                <tr>
-                                    <td>{{ $rm->Rooms_id }}</td>
-                                    <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                @foreach ($Rooms as $rm)
+                                    <tr>
+                                        <td>{{ $rm->Rooms_id }}</td>
+                                        <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                        <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
 
-                                    <!-- แสดงประเภทสัตว์เลี้ยง -->
-                                    <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
+                                        @php
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 2)->where('Booking_status', '!=', 3)->first();                                        @endphp
 
-                                    <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
-                                    <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
-                                    @if($rm->bookings->isNotEmpty())
-                                        @foreach($rm->bookings as $bk)
-                                            @if ($bk->Booking_status != 2)
-                                                <td>{{ $bk->user->name }}</td>
-                                                <td>
-                                                    @foreach($bk->user->pets as $pet)
-                                                        {{$pet->Pet_name }}
-                                                    @endforeach
-                                                </td>  
-                                            @else
-                                                <td>
-                                                    <span>ไม่มีผู้จอง</span>
-                                                </td>
-                                                <td>
-                                                    <span>ไม่มีสัตว์เลี้ยง</span>
-                                                </td>                      
-                                            @endif
-                                        @endforeach
-                                    @else
+                                        @if($activeBooking)
+                                            <td>{{ $activeBooking->user->name }}</td>
+                                            <td>
+                                                @if($activeBooking->pet->count() > 0)
+                                                    {{ $activeBooking->pet->Pet_name}}
+                                                @else
+                                                    <span>ไม่มีข้อมูลสัตว์เลี้ยง</span>
+                                                @endif
+                                            </td>
+                                        @else
+                                            <td><span>ไม่มีผู้จอง</span></td>
+                                            <td><span>ไม่มีสัตว์เลี้ยง</span></td>
+                                        @endif
+
                                         <td>
-                                            <span>ไม่มีผู้จอง</span>
+                                            @if ($rm->Rooms_status == 1)
+                                                <span class="badge bg-success">ว่าง</span>
+                                            @else
+                                                <span class="badge bg-danger">ไม่ว่าง</span>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
                                         </td>
                                         <td>
-                                            <span>ไม่มีสัตว์เลี้ยง</span>
-                                        </td> 
-                                    @endif   
-                                    
-                                    <!-- ตรวจสอบสถานะห้อง -->
-                                    @if ($rm->Rooms_status == 1)
-                                        <td><span class="badge bg-success">ว่าง</span></td>
-                                    @else
-                                        <td><span class="badge bg-danger">ไม่ว่าง</span></td>
-                                    @endif
-                                    <td>
-                                        <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                            <i class="fas fa-trash "></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>                      
-                                            <ul class="dropdown-menu">
-                                                @if($rm->bookings->isNotEmpty())
-                                                    @foreach ($rm->bookings as $bk)
-                                                        @if($bk->Booking_status != 2)
-                                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                
-                                                @endif
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
+                                            <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>                      
+                                                <ul class="dropdown-menu">
+                                                    @if($activeBooking)
+                                                        <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $activeBooking->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                    @else
+                                                        <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
                         </table>
                         {{$Rooms->links('pagination::bootstrap-5')}}
                     </div>

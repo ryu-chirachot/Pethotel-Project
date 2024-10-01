@@ -1,6 +1,16 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
+@if (session('report'))
+    <script>
+        Swal.fire({
+  title: "รายงานสัตว์เลี้ยงสำเร็จ",
+  text: "{{ session('report') }}",
+  icon: "success"
+});
+    </script>
+@endif
+
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
 
@@ -177,7 +187,6 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire("ยกเลิกการจองสำเร็จ", "การจองได้ถูกยกเลิกแล้ว", "success");
-                
                 window.location.href = `/Admin/Bookings/cancel/${id}`;
                 
             }

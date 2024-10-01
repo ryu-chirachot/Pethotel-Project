@@ -68,9 +68,14 @@
     </style>
 </head>
 <body>
+    
     <div class="container mt-5">
+        @if($reviews->count() == 0)
+            
+        @else
         <h2 class="text-center">รีวิวจากลูกค้า</h2>
         <div class="reviews-container">
+            
             <div class="reviews-content">
                 @foreach($reviews as $review)
                     <div class="review-box">
@@ -96,13 +101,13 @@
         window.onload = () => {
             document.getElementById("searchForm").reset();
 
-            const container = document.querySelector('.reviews-container');
             const content = document.querySelector('.reviews-content');
             const totalWidth = content.offsetWidth;
             
             content.style.animation = scroll ${totalWidth / 50}s linear infinite;
         };
     </script>
+@endif
 </body>
 </html>
 @endsection

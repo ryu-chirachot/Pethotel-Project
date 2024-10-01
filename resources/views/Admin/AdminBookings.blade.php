@@ -65,9 +65,9 @@
                                     <tr>
                                         <td>{{ $booking->BookingOrderID }}</td>
                                         <td>{{ $booking->user->name }}</td>
-                                        <td>@foreach($booking->user->pets as $pet)
-                                                        {{$pet->Pet_name }}
-                                                    @endforeach</td>
+                                        <td>
+                                            {{$booking->pet->Pet_name }}
+                                        </td>
                                         <td>{{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
                                         <td>{{ $booking->Booking_date }}</td>
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>

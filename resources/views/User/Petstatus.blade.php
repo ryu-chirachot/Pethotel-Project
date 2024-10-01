@@ -10,10 +10,10 @@
         </div>
         <div class="card-body">
             @if($booking)
-                @if($booking->user->pets)
-                    @foreach($booking->user->pets as $pet)
-                    <h5>ชื่อสัตว์เลี้ยง : {{ $pet->Pet_name }}</h5>
-                    @endforeach
+                @if($booking->pet)
+                    
+                    <h5>ชื่อสัตว์เลี้ยง : {{$booking->pet->Pet_name}}</h5>
+                    
                 @else
                     <div class="alert alert-warning" role="alert">
                         ไม่มีสัตว์เลี้ยงสำหรับการจองนี้
@@ -24,9 +24,7 @@
                     ไม่พบข้อมูลการจอง
                 </div>
             @endif
-
             <hr>
-
             
             @if(isset($status) && $status->isNotEmpty())
                 @foreach ($status as $st)

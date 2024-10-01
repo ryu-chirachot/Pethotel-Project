@@ -10,7 +10,10 @@
 
     <div class="container mt-4">
     @if($groupedRooms->isEmpty())
-            <p class="text-center text-danger">ไม่มีห้องว่างสำหรับประเภทสัตว์เลี้ยงนี้</p>
+        <div class="alert alert-warning" role="alert">
+        ไม่มีห้องว่างสำหรับประเภทสัตว์เลี้ยงนี้
+                </div>
+            
         @else
     @foreach ($groupedRooms as $roomTypeName => $roomGroup)
         

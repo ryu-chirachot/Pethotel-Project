@@ -167,9 +167,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('mypets*') ? 'active' : '' }}" href="{{ route('mypets') }}">สัตว์เลี้ยงของฉัน</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('contact*') ? 'active' : '' }}" href="Contack.html">ติดต่อเรา</a>
-                </li>
+                
             </ul>
 
             <!-- ถ้ายังไม่ login -->

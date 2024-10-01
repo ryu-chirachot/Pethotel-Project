@@ -152,9 +152,7 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('mypets') ? 'active' : '' }}" href="{{route('mypets')}}">สัตว์เลี้ยงของฉัน</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('Contack.html') ? 'active' : '' }}" href="Contack.html">ติดต่อเรา</a>
-                    </li>
+                    
                 </ul>
                 @guest
                 <ul class="navbar-nav ms-auto">

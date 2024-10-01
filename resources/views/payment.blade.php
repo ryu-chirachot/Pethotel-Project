@@ -46,7 +46,8 @@
                     
     
                 </div>
-                <form action="{{route('success')}}" method="post">
+                <br>
+                <form id="PaymentForm" action="{{route('success')}}" method="post">
                     @csrf
                     <input type="hidden" name="room_id" value="{{ $room_id }}">
                     <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
@@ -76,7 +77,7 @@
                         </p>
                     @endif
                     @endforeach
-                <button type="submit" ><b>ยืนยัน</b></button>
+                <button type="submit" id="paymentbutton"><b>ยืนยัน</b></button>
                 </form>
             </div>
 
@@ -87,4 +88,21 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous">
 </script>
+<script>
+    document.getElementById('PaymentForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        Swal.fire({
+            title: "จองห้องสำเร็จ", 
+            text: "อยู่ในขั้นตอนรอการยืนยันการชำระเงิน", 
+            icon: "success",
+            showCancelButton: false, 
+            confirmButtonText: 'ตกลง' 
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        });
+    });
+</script>
+
 @endsection

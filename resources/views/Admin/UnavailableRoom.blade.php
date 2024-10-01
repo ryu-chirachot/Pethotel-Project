@@ -4,19 +4,19 @@
 @if (session('success'))
     <script>
         Swal.fire({
-  title: "เปลี่ยนแปลงข้อมูล",
-  text: "{{ session('success') }}",
-  icon: "success"
-});
+            title: "เปลี่ยนแปลงข้อมูล",
+            text: "{{ session('success') }}",
+            icon: "success"
+        });
     </script>
 @endif
 @if (session('complete'))
     <script>
         Swal.fire({
-  title: "เพิ่มข้อมูลห้องพัก",
-  text: "{{ session('complete') }}",
-  icon: "success"
-});
+            title: "เพิ่มข้อมูลห้องพัก",
+            text: "{{ session('complete') }}",
+            icon: "success"
+        });
     </script>
 @endif
 
@@ -36,137 +36,129 @@
                     <a class="btn btn-outline-danger" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
                 </div>
             </div>
-                <!-- Room table -->
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>หมายเลขห้อง</th>
-                                    <th>ประเภทห้อง</th>
-                                    <th>ประเภทของสัตว์เลี้ยง</th>
-                                    <th>ชื่อผู้จอง</th>
-                                    <th>ชื่อสัตว์เลี้ยง</th>
-                                    <th>สถานะห้อง</th>
-                                    <th>แก้ไข</th>
-                                    <th>ลบ</th>
-                                    <th>อื่นๆ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($Rooms as $rm)
-                                <tr>
-                                    <td>{{ $rm->Rooms_id }}</td>
-                                    <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
-
-                                    <!-- แสดงประเภทสัตว์เลี้ยง -->
-                                    <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
-
-                                    <!-- แสดงชื่อผู้จอง (ถ้ามีการจอง) -->
-                                    <td>
-                                        @if($rm->bookings->isNotEmpty())
-                                            {{ $rm->bookings->first()->user->name }}
-                                        @else
-                                            <span>ไม่มีผู้จอง</span>
-                                        @endif
-                                    </td>
-                                        @foreach($rm->bookings as $bk)
-                                                @foreach($bk->user->pets as $pet)
-                                                    <td>{{$pet->Pet_name }}</td>
-                                                @endforeach
-                                        @endforeach
-                                    <!-- แสดงชื่อสัตว์เลี้ยง (ถ้ามีการจอง) -->
-                                    <td>
-                                        @if($rm->bookings->isNotEmpty())
-                                            
-                                        @else
-                                            <span>ไม่มีสัตว์เลี้ยง</span>
-                                        @endif
-                                    </td>
-
-                                    <!-- ตรวจสอบสถานะห้อง -->
-                                    @if ($rm->Rooms_status == 1)
-                                        <td><span class="badge bg-success">ว่าง</span></td>
-                                    @else
-                                        <td><span class="badge bg-danger">ไม่ว่าง</span></td>
-                                    @endif
-                                    <td>
-                                        <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                        <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>                      
-                                        <ul class="dropdown-menu">
-                                                @if($rm->bookings->isNotEmpty())
-                                                    @foreach ($rm->bookings as $bk)
-                                                        @if($bk->Booking_status != 2)
-                                                            <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $bk->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                
-                                                @endif
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        
-                    </div>
+            @if($Rooms->isEmpty())
+                <div class="alert alert-warning" role="alert">
+                    ยังไม่มีการจองในเข้ามาในขณะนี้
                 </div>
-                {{$Rooms->links('pagination::bootstrap-5')}}
+            @else
+            <!-- Room table -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>หมายเลขห้อง</th>
+                                <th>ประเภทห้อง</th>
+                                <th>ประเภทของสัตว์เลี้ยง</th>
+                                <th>ชื่อผู้จอง</th>
+                                <th>ชื่อสัตว์เลี้ยง</th>
+                                <th>สถานะห้อง</th>
+                                <th>แก้ไข</th>
+                                <th>ลบ</th>
+                                <th>อื่นๆ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @foreach ($Rooms as $rm)
+                                    <tr>
+                                        <td>{{ $rm->Rooms_id }}</td>
+                                        <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                        <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
+
+                                        @php
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 0)->where('Booking_status', '!=', 2)->where('Booking_status', '!=', 3)->first();                                        @endphp
+
+                                        @if($activeBooking)
+                                            <td>{{ $activeBooking->user->name }}</td>
+                                            <td>
+                                                @if($activeBooking->pet->count() > 0)
+                                                    {{ $activeBooking->pet->Pet_name}}                                                @else
+                                                    <span>ไม่มีข้อมูลสัตว์เลี้ยง</span>
+                                                @endif
+                                            </td>
+                                        @else
+                                            <td><span>ไม่มีผู้จอง</span></td>
+                                            <td><span>ไม่มีสัตว์เลี้ยง</span></td>
+                                        @endif
+
+                                        <td>
+                                            @if ($rm->Rooms_status == 1)
+                                                <span class="badge bg-success">ว่าง</span>
+                                            @else
+                                                <span class="badge bg-danger">ไม่ว่าง</span>
+                                            @endif
+                                        </td>
+
+                                        <td>
+                                            <a id="Edit" href="{{ route('Admin.editrooms', $rm->Rooms_id) }}" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>                      
+                                                <ul class="dropdown-menu">
+                                                    @if($activeBooking)
+                                                        <li><a class="dropdown-item" href="{{ route('Admin.bookings.detail', $activeBooking->BookingOrderID) }}">ดูรายละเอียดการจอง</a></li>
+                                                    @else
+                                                        <li><a class="dropdown-item disabled">ไม่มีข้อมูลการจอง</a></li>                                                
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                    </table>
+                </div>
+                @endif
             </div>
+            {{$Rooms->links('pagination::bootstrap-5')}}
         </div>
     </div>
-    
+</div>
+
 <script>
     function ConfirmDelete(id){
         const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-success me-3",
-                        cancelButton: "btn btn-danger"
-                    },
-                    buttonsStyling: true
-                    });
-                    swalWithBootstrapButtons.fire({
-                    title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
-                    text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "ยืนยัน",
-                    cancelButtonText: "ยกเลิก",
-                    reverseButtons: false
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        swalWithBootstrapButtons.fire({
-                            title: "ลบ เรียบร้อย",
-                            text: "ข้อมูลของคุณถูกลบสำเร็จ",
-                            icon: "success"
-                        });
-                        setTimeout(()=>{
-                            window.location.href = `/Admin/Rooms/delete/${id}`;
-                        },800)
-                    } else if (
-                        /* Read more about handling dismissals below */
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire({
-                        title: "ยกเลิก",
-                        text: "ข้อมูลของคุณยังคงอยู่ :)",
-                        icon: "error"
-                        });
-                    }
+            customClass: {
+                confirmButton: "btn btn-success me-3",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: true
+        });
+        swalWithBootstrapButtons.fire({
+            title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
+            text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "ยืนยัน",
+            cancelButtonText: "ยกเลิก",
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire({
+                    title: "ลบ เรียบร้อย",
+                    text: "ข้อมูลของคุณถูกลบสำเร็จ",
+                    icon: "success"
+                });
+                setTimeout(()=>{
+                    window.location.href = `/Admin/Rooms/delete/${id}`;
+                },800)
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "ยกเลิก",
+                    text: "ข้อมูลของคุณยังคงอยู่ :)",
+                    icon: "error"
+                });
+            }
         });
     }
 </script>

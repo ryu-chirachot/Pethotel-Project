@@ -35,15 +35,18 @@
                 <!-- Room Details -->
                 <div class="form-group mb-3">
                     <label>หมายเลขห้อง *</label>
-                    <input type="text" name="room_number" class="form-control" value="{{ $RoomID->Rooms_id }}" disabled>
+                    <input type="text" name="room_num" class="form-control" value="{{ $RoomID->Rooms_id }}" disabled>
+                    <input type="hidden" name="room_number" value="{{ $RoomID->Rooms_id }}">
+
                 </div>
 
                 <div class="form-group mb-3">
                     <label>สถานะห้อง *</label>
-                    <select name="room_status" class="form-control" >
-                        <option value="1" {{ $RoomID->Room_status == 1 ? 'selected' : '' }}>ว่าง</option>
-                        <option value="0" {{ $RoomID->Room_status == 0 ? 'selected' : '' }}>ไม่ว่าง</option>
-                    </select>
+                    <select name="room_status" class="form-control" required>
+                    <option value="" selected disabled>เลือกสถานะห้อง</option>
+                    <option value="1" >ว่าง</option>
+                    <option value="0" >ไม่ว่าง</option>
+                </select>
                 </div>
 
                 <div class="form-group mb-3">

@@ -11,9 +11,7 @@
         <div class="card-body">
             <h2>
                 <p class="underline"><strong>ชื่อสัตว์เลี้ยง:</strong> 
-                    @foreach($booking->user->pets as $pet)
-                    {{ $pet->Pet_name}} 
-                    @endforeach
+                    {{$booking->pet->Pet_name}}
                 </p>
                 <p class="underline"><strong>ประเภทห้อง:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
 
