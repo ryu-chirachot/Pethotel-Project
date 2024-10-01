@@ -196,9 +196,9 @@
             reverseButtons: true
         }).then((result) => {
             if (result.isConfirmed) {
-                this.submit();
-                window.location.href = `/Admin/booking/detail/checkout/${id}`
                 Swal.fire("เช็คเอาท์สำเร็จ", "การเช็คเอาท์ได้ถูกดำเนินการแล้ว", "success");
+                window.location.href = `/Admin/booking/detail/checkout/${id}`
+                
             }
             return false;
         });

@@ -83,6 +83,7 @@
                                     <th>หมายเลขการจอง</th>
                                     <th>ชื่อผู้จอง</th>
                                     <th>วันที่จอง</th>
+                                    <th>สถานะการชำระเงิน</th>
                                     <th>สถานะ</th>
                                 </tr>
                             </thead>
@@ -91,7 +92,9 @@
                                 <tr>
                                     <td><strong>#{{$booking->BookingOrderID}}</strong></td>
                                     <td>{{$booking->user->name}}</td>
-
+                                    <td>
+                                        {{ $booking->Booking_date }}
+                                    </td>
                                     <td>
                                         @if($booking->Booking_status == 3)
                                             <span class="badge bg-danger">คืนเงินแล้ว</span>

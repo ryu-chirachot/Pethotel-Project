@@ -383,6 +383,7 @@ class AdminController extends Controller
         {
             $booking = Bookings::findOrFail($id);
             $booking->Booking_status = 3;
+            $booking->room->Rooms_status = 1;
             $booking->save();
 
             return redirect()->route('Admin.bookings')
