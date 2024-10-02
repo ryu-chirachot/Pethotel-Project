@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->integer('Review_id',7)->autoIncrement();
+            $table->integer('Review_id')->autoIncrement();
             $table->Integer('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
             $table->text('comment')->nullable();

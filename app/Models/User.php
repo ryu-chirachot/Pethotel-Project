@@ -71,7 +71,7 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany(Bookings::class,'BookingOrderID');
+        return $this->hasMany(Bookings::class,'User_id');
     }
 
     public function pets()

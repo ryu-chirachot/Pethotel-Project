@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pet_type', function (Blueprint $table) {
-            $table->integer('Pet_type_id',2)->autoIncrement(); 
+            $table->integer('Pet_type_id')->autoIncrement(); 
             $table->string('Pet_nametype', 60); 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();

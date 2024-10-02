@@ -37,26 +37,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->pets->count() }}</td> <!-- แก้ไขให้ถูกต้องในการนับจำนวนสัตว์เลี้ยง -->
-                                    <td>{{ $user->bookings->count() }}</td>
-                                    <td>
-                                        @if($user->trashed())
-                                            <span class="text-danger">ถูกลบ</span>
-                                        @else
-                                            <span class="text-success">ใช้งาน</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-info btn-sm" href="{{ route('Admin.user.detail', $user->id) }}">
-                                            ดูรายละเอียด
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->pets->count() }}</td> <!-- จำนวนสัตว์เลี้ยง -->
+                            <td>{{ $user->bookings->count() }}</td> <!-- จำนวนการจอง -->
+                            <td>
+                                @if($user->trashed())
+                                    <span class="text-danger">ถูกลบ</span>
+                                @else
+                                    <span class="text-success">ใช้งาน</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a class="btn btn-info btn-sm" href="{{ route('Admin.user.detail', $user->id) }}">
+                                    ดูรายละเอียด
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>

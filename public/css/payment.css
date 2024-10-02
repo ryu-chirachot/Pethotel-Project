@@ -40,13 +40,14 @@ body {
         justify-content: center;
         flex-wrap: wrap;
         gap: 30px;
+        
     }
 
 
 
 #section {
     max-width: 1700px; /* ปรับขนาด container ให้แคบลง */
-    height: 100%;
+    height: 720px;
     background-color: white;
     margin-right: auto;
     margin-left: auto;

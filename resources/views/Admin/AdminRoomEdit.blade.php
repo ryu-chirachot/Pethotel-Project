@@ -12,7 +12,7 @@
             <h2 class="my-4">แก้ไขรายละเอียดห้องพัก #{{$RoomID->Rooms_id}}</h2>
             <form action="{{ route('rooms.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <!-- Room Images -->
+                <!-- รูป -->
                 <div class="form-group mb-3">
                     <label>รูปภาพ ห้องพัก</label>
                     <div class="form-group mb-3" id="form">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
 
-                <!-- Room Details -->
+                <!-- รายละเอียด -->
                 <div class="form-group mb-3">
                     <label>หมายเลขห้อง *</label>
                     <input type="text" name="room_num" class="form-control" value="{{ $RoomID->Rooms_id }}" disabled>
@@ -77,7 +77,7 @@
                     <textarea name="room_description" class="form-control" rows="3">{{ $RoomID->pet_Type_Room_Type->Rooms_type_description }}</textarea>
                 </div>
 
-                <!-- Submit Button -->
+                <!-- บันทึก -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">บันทึกการเปลี่ยนแปลง</button>
                     <a href="{{ route('Admin.rooms') }}" class="btn btn-secondary">ยกเลิก</a>

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pet_status', function (Blueprint $table) {
-            $table->integer('PetStatusID',5)->autoIncrement();
+            $table->integer('PetStatusID')->autoIncrement();
             $table->Integer('BookingOrderID');
             $table->foreign('BookingOrderID')->references('BookingOrderID')->on('bookings')->onDelete('cascade');
             $table->text('Report');

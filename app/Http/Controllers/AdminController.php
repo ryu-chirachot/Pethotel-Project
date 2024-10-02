@@ -50,7 +50,7 @@ class AdminController extends Controller
                 $updatedRooms = Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
                 
                 
-                Log::info("Updated {$updatedBookings} bookings and {$updatedRooms} rooms.");
+                Log::info("อัพเดต {$updatedBookings} การจอง และ {$updatedRooms} ห้อง.");
                 
                 return [
                     'success' => true,
@@ -316,7 +316,7 @@ class AdminController extends Controller
         //โชว์รายการจองและรายงานสัตว์เลี้ยง
         public function showBookings(){
             $allBook = Bookings::all();
-            $today = Bookings::with(['room','pet_status'])
+            $today = Bookings::withTrashed()->with(['room','pet_status'])
                     ->whereDate('created_at',Carbon::today());
             $expired = Bookings::with(['room','pet_status'])
                     ->where('End_date','<',Carbon::today());
@@ -335,8 +335,10 @@ class AdminController extends Controller
         //การจองวันนี้
         public function Todaybooking(){
             $allBook = Bookings::all();
-            $today = Bookings::with(['room','pet_status'])
-                    ->whereDate('created_at',Carbon::today())->get();
+            $today = Bookings::withTrashed()->with(['room','pet_status'])
+                    ->whereDate('created_at',Carbon::today())
+                    
+                    ->get();
 
             $expired = Bookings::with(['room','pet_status'])
                     ->where('End_date','<',Carbon::today())->get();
@@ -355,7 +357,7 @@ class AdminController extends Controller
         //การจองเลยกำหนด
         public function expiredbooking(){
             $allBook = Bookings::all();
-            $today = Bookings::with(['room','pet_status'])
+            $today = Bookings::withTrashed()->with(['room','pet_status'])
                     ->whereDate('created_at',Carbon::today())->get();
 
             $expired = Bookings::with(['room','pet_status'])
@@ -407,7 +409,7 @@ class AdminController extends Controller
 
             Bookings::destroy($id);
             return redirect()->route('Admin.bookings')
-                            ->with('cancel', 'Booking cancelled successfully');
+                            ->with('cancel', 'ยกเลิกการจองสำเร็จ');
         }
 
         // Extend booking
@@ -421,7 +423,7 @@ class AdminController extends Controller
                 $booking->End_date = $newEndDate;
                 $booking->save();
                 return redirect()->route('Admin.bookings')
-                                ->with('success', $booking->user->name);
+                                ->with('extend', $booking->user->name);
             }
 
             return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
@@ -432,12 +434,17 @@ class AdminController extends Controller
         public function users()
         {
             
-            
+
             $users = User::with(['pets', 'bookings' => function($query) {
-                $query->withTrashed(); // รวมการจองที่ถูกลบ
+                $query->withTrashed(); // รวมการจองที่ถูกลบด้วย
             }])
-            ->where('role','user') 
+            ->where('role', 'user') // เลือกเฉพาะผู้ใช้ที่มี role เป็น user
+            ->withTrashed() // รวมผู้ใช้ที่ถูกลบ
             ->get();
+        
+        
+        
+
             return view("Admin.AdminUsers", compact("users"));
         }
         //หน้ารายละเอียดผู้ใช้

@@ -26,6 +26,7 @@
             position: relative;
             width: 100%;
             height: 220px;
+            
         }
         .reviews-content {
             display: inline-block;
@@ -73,13 +74,13 @@
         @if($reviews->count() == 0)
             
         @else
-        <h2 class="text-center">รีวิวจากลูกค้า</h2>
+        <h2 class="text-center " style="margin-top: -60px;">รีวิวจากลูกค้า</h2>
         <div class="reviews-container">
             
             <div class="reviews-content">
                 @foreach($reviews as $review)
                     <div class="review-box">
-                        <h5>Anonymous</h5>
+                        <h5>ผู้ใช้</h5>
                         <div class="star-rating">
                             @for ($i = 1; $i <= 5; $i++)
                                 @if ($i <= $review->rating)
@@ -89,7 +90,7 @@
                                 @endif
                             @endfor
                         </div>
-                        <p>{{ $review->content }}</p>
+                        <p>{{ $review->comment }}</p>
                     </div>
                 @endforeach
             </div>
@@ -109,5 +110,8 @@
     </script>
 @endif
 </body>
+
+
+
 </html>
 @endsection

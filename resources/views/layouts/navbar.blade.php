@@ -171,7 +171,7 @@
                         <i class="bi bi-person-circle"></i>
                         <div class="dropdown-content">
                             @if(auth()->user()->role == 'admin')
-                            <a href="/Admin/Home">Admin Home</a>
+                            <a href="/Admin/Home">หน้าผู้ดูแลระบบ</a>
                             @endif
                             <a href="/edit">แก้ไขข้อมูล</a>
                             <button type="submit" class="log-out-butt text-danger">

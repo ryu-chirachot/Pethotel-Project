@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('payment_methods', function (Blueprint $table) {
-            $table->integer('PaymentMethodID',1)->autoIncrement();
+            $table->integer('PaymentMethodID')->autoIncrement();
             $table->string('MethodName', 150);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();

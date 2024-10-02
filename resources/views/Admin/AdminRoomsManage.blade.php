@@ -54,7 +54,7 @@
 
 
 
-            <!-- Room Filters -->
+            <!-- กรอง -->
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="{{route('Admin.rooms')}}">ห้องทั้งหมด ({{count($allRooms)}})</a>
@@ -195,9 +195,9 @@
         rows.forEach(function(row) {
             var rowData = row.innerText.toLowerCase();
             if (rowData.includes(input)) {
-                row.style.display = ""; // Show row
+                row.style.display = ""; 
             } else {
-                row.style.display = "none"; // Hide row
+                row.style.display = "none"; 
             }
         });
     }

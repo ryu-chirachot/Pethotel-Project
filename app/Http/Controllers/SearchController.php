@@ -15,7 +15,12 @@ class SearchController extends Controller
 {
     public function showpet($viewname)
     {
-        session()->flush();
+        
+        session()->forget('pet_type_id');
+        session()->forget('check_in');
+        session()->forget('check_out');
+    
+    
         $p_type = pet_type::all();  
         $reviews = Reviews::all();
         

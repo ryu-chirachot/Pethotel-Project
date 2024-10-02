@@ -25,7 +25,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="mb-0"><b>ห้องพัก</b></h3>
-                <input type="text" class="form-control w-25" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
+                <input type="text" class="form-control" style="width: 250px;" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
             </div>
 
             <!-- Room Filters -->
@@ -113,10 +113,10 @@
                                 @endforeach
                                 </tbody>
                         </table>
-                        
+                        {{$Rooms->links('pagination::bootstrap-5')}}
                     </div>
                 </div>
-            {{$Rooms->links('pagination::bootstrap-5')}}
+            
             </div>
         </div>
     </div>

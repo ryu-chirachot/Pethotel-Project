@@ -97,19 +97,21 @@
                                     </td>
                                     <td>
                                         @if($booking->Booking_status == 3)
-                                            <span class="badge bg-danger">คืนเงินแล้ว</span>
+                                            <span class="badge bg-warning">คืนเงินแล้ว</span>
                                         @else
+                                        <span class="{{$booking->PaymentDate == NULL ? 'badge bg-warning':'badge bg-success'}}">
                                             {{$booking->PaymentDate == NULL ? 'ยังไม่จ่ายเงิน':'จ่ายเงินแล้ว'}}
+                                        </span>
                                         @endif
                                     </td>
 
                                     <td>
                                         @if($booking->deleted_at != NULL)
-                                            <span class="badge bg-danger">เช็คเอาท์</span>
+                                            <span class="badge bg-success">เช็คเอาท์</span>
                                         @elseif($booking->Booking_status == 3)
                                             <span class="badge bg-danger">ยกเลิกการจอง</span>
                                         @else
-                                            <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                            <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary' : 'badge bg-secondary' }}">
                                                 {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
                                             </span>
                                         @endif

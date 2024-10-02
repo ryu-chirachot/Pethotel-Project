@@ -147,8 +147,8 @@
         </a>
         <div class="d-flex d-lg-none ms-auto align-items-center">
             <span class="d-flex me-3 iconphone">
-                <a class="nav-link me-2" href="shopping.html"><i class="bi bi-cart3"></i></a>
-                <a class="nav-link" href="#">เข้าสู่ระบบ</a>
+                
+                
             </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -188,7 +188,7 @@
                     <i class="bi bi-person-circle"></i>
                     <div class="dropdown-content">
                         @if(auth()->user()->role == 'admin')
-                        <a href="/Admin/Home">Admin Home</a>
+                        <a href="/Admin/Home">หน้าผู้ดูแลระบบ</a>
                         <a href="/edit">แก้ไขข้อมูล</a>
                         <button type="submit" class="log-out-butt text-danger" style="text-decoration: none;">
                             ออกจากระบบ
@@ -260,6 +260,7 @@
         </div>
 
         <button type="submit" class="btn btn-warning">ค้นหาห้องพัก</button>
+        
     </form>
 </div>
 

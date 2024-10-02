@@ -90,7 +90,7 @@ class BookingController extends Controller
     
 
 
-    // ส่งค่าทั้งหมดไป view 'payment'
+    // ส่งค่าทไป view
     return view('payment', compact(
         'room_id','roomTypeId', 'petTypeId','roomTypeName', 'checkIn', 'checkOut', 
         'pet_name', 'pet_breed', 'pet_age', 'pet_weight', 'pet_gender',
@@ -101,19 +101,13 @@ class BookingController extends Controller
         
         DB::transaction(function () use ($request) {
             $room_id = $request->room_id;
-            $roomTypeId = $request->room_type;
-            $roomTypeName = $request->roomTypename;
-            $petTypeId = $request->petTypeId;
+            
             $checkIn = $request->checkIn;
             $checkOut = $request->checkOut;
-            $pet_name = $request->pet_name;
-            $pet_breed = $request->pet_breed;
-            $pet_age = $request->pet_age;
-            $pet_weight = $request->pet_weight;
-            $pet_gender = $request->pet_gender;
+            
             $price = $request->price;
             $PaymentMethodID = $request->payment;
-            $additional_info = $request->additional_info;
+           
             $pet_id = $request->pet_id;
             // ทำให้ห้องเป็นไม่ว่าง
             $room = Rooms::findOrFail($room_id);

@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
-    <div class="container mt-4">
+    <div class="container" style="margin-top: -80px;">
     @if($groupedRooms->isEmpty())
         <div class="alert alert-warning" role="alert">
         ไม่มีห้องว่างสำหรับประเภทสัตว์เลี้ยงนี้

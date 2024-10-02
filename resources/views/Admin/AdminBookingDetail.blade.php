@@ -11,6 +11,16 @@
     </script>
 @endif
 
+@if (session('success'))
+    <script>
+        Swal.fire({
+  title: "ขยายระยะเวลาการเข้าพัก",
+  text: "{{ session('success') }}",
+  icon: "success"
+});
+    </script>
+@endif
+
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
 
@@ -30,8 +40,10 @@
                     <p><i class="fas fa-money-bill"></i> <strong>สถานะการชำระเงิน:</strong> 
                         @if($bookings->PaymentDate)
                             <span class="badge bg-success">ชำระเงินแล้ว</span>
+                        @elseif($bookings->Booking_status == 3)
+                            <span class="badge bg-warning">คืนเงินแล้ว</span>
                         @else
-                            <span class="badge bg-warning text-dark">รอยืนยันการชำระเงิน</span>
+                            <span class="badge bg-secondary text-dark">รอยืนยันการชำระเงิน</span>
                         @endif
                     </p>
                 </div>
@@ -39,7 +51,7 @@
         </div>
     </div>
 
-    @if ($bookings->deleted_at)
+    @if ($bookings->deleted_at || $bookings->Booking_status == 3)
     <div class="alert alert-warning" role="alert">
         <i class="fas fa-exclamation-triangle me-2"></i>การจองนี้สิ้นสุดแล้ว ไม่สามารถดำเนินการใดๆ ได้
     </div>

@@ -16,7 +16,7 @@ class ReviewController extends Controller
         Reviews::create([
             'BookingOrderID' => $request->booking_id,
             'rating' => $request->rating,
-            'comment' => $request->content,
+            'comment' => $request->comment,
         ]);
 
         // Redirect 
