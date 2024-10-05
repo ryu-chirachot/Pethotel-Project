@@ -4,9 +4,9 @@
 @if (session('report'))
     <script>
         Swal.fire({
-  title: "รายงานสัตว์เลี้ยงสำเร็จ",
-  text: "{{ session('report') }}",
-  icon: "success"
+    title: "รายงานสัตว์เลี้ยงสำเร็จ",
+    text: "{{ session('report') }}",
+    icon: "success"
 });
     </script>
 @endif
@@ -14,9 +14,9 @@
 @if (session('success'))
     <script>
         Swal.fire({
-  title: "ขยายระยะเวลาการเข้าพัก",
-  text: "{{ session('success') }}",
-  icon: "success"
+    title: "ทำรายการสำเร็จ",
+    text: "{{ session('success') }}",
+    icon: "success"
 });
     </script>
 @endif
@@ -35,8 +35,9 @@
                     <p><i class="fas fa-moon"></i> <strong>จำนวนคืน:</strong> {{ \Carbon\Carbon::parse($bookings->Start_date)->diffInDays($bookings->End_date) }} คืน</p>
                 </div>
                 <div class="col-md-6">
-                    <p><i class="fas fa-bed"></i> <strong>ห้องพัก:</strong> {{ $bookings->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
-                    <p><i class="fas fa-receipt"></i> <strong>หมายเลขการจอง:</strong> <span class="badge bg-info text-dark">{{ $bookings->BookingOrderID }}</span></p>
+                    <p><i class="fas fa-room"></i> <strong>หมายเลขห้องพัก:</strong> {{ $bookings->room->Rooms_id }}</p>
+                    <p><i class="fas fa-bed"></i> <strong>ประเภทห้องพัก:</strong> {{ $bookings->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
+                    <p><i class="fas fa-receipt"></i> <strong>หมายเลขการจอง:</strong> <span class="badge bg-warning text-dark">{{ $bookings->BookingOrderID }}</span></p>
                     <p><i class="fas fa-money-bill"></i> <strong>สถานะการชำระเงิน:</strong> 
                         @if($bookings->PaymentDate)
                             <span class="badge bg-success">ชำระเงินแล้ว</span>
@@ -55,117 +56,130 @@
     <div class="alert alert-warning" role="alert">
         <i class="fas fa-exclamation-triangle me-2"></i>การจองนี้สิ้นสุดแล้ว ไม่สามารถดำเนินการใดๆ ได้
     </div>
-@else
-    <div class="card shadow-sm mb-4">
-        <div class="card-body">
-            <h5 class="card-title fw-bold mb-4">การดำเนินการ</h5>
-            <div class="row g-3">
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="d-grid">
-                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal">
-                            <i class="fas fa-calendar-plus me-2"></i>ขยายเวลา
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <form action="{{ route('Admin.bookings.confirmPayment', $bookings->BookingOrderID) }}" method="POST">
-                        @csrf
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-check-circle me-2"></i>ยืนยันการชำระเงิน
-                            </button>
+    @else
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5 class="card-title fw-bold mb-4">การดำเนินการ</h5>
+                <div class="row g-3">
+                    @if($bookings->PaymentDate === null)
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <form action="{{ route('Admin.bookings.confirmPayment', $bookings->BookingOrderID) }}" method="POST">
+                                @csrf
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-check-circle me-2"></i>ยืนยันการชำระเงิน
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="d-grid">
-                        <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#petStatusModal">
-                            <i class="fas fa-paw me-2"></i>รายงานสถานะสัตว์เลี้ยง
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="d-grid">
-                        <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
-                        @csrf
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-times-circle me-2"></i>ยกเลิกการจอง
-                            </button>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
+                                @csrf
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-times-circle me-2"></i>ยกเลิกการจอง
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                    <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
-                        @csrf
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-warning" onclick="ConfirmCheckout('{{ $bookings->BookingOrderID }}')">
-                                <i class="fas fa-sign-out-alt me-2"></i>เช็คเอาท์
-                            </button>
+                    @else
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal">
+                                    <i class="fas fa-calendar-plus me-2"></i>ขยายเวลา
+                                </button>
+                            </div>
                         </div>
-                    </form>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#petStatusModal">
+                                    <i class="fas fa-paw me-2"></i>รายงานสถานะสัตว์เลี้ยง
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
+                                @csrf
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-times-circle me-2"></i>ยกเลิกการจอง
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
+                                @csrf
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-warning" onclick="ConfirmCheckout('{{ $bookings->BookingOrderID }}')">
+                                        <i class="fas fa-sign-out-alt me-2"></i>เช็คเอาท์
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- ขยายการจอง -->
-    <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="extendModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="extendModalLabel">ขยายเวลาการจอง</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('Admin.bookings.extend', $bookings->BookingOrderID) }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="new_end_date" class="form-label">วันที่สิ้นสุดใหม่</label>
-                            <input type="date" class="form-control" id="new_end_date" name="new_end_date" required>
+        <!-- ขยายการจอง -->
+        <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="extendModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="extendModalLabel">ขยายเวลาการจอง</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('Admin.bookings.extend', $bookings->BookingOrderID) }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="new_end_date" class="form-label">วันที่สิ้นสุดใหม่</label>
+                                <input type="date" class="form-control" id="new_end_date" name="new_end_date" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                        <button type="submit" class="btn btn-primary">ยืนยันการขยายเวลา</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                            <button type="submit" class="btn btn-primary">ยืนยันการขยายเวลา</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Pet Status รายงาน -->
-    <div class="modal fade" id="petStatusModal" tabindex="-1" aria-labelledby="petStatusModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="petStatusModalLabel">รายงานสถานะสัตว์เลี้ยง</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{route('Admin.report')}}" method="POST"> 
-                    @csrf
-                    <input type="hidden" name="booking_id" value="{{$bookings->BookingOrderID}}">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="pet_status" class="form-label">สถานะสัตว์เลี้ยง</label>
-                            <textarea class="form-control" id="pet_status" name="pet_status" rows="3" required></textarea>
+        <!-- Pet Status รายงาน -->
+        <div class="modal fade" id="petStatusModal" tabindex="-1" aria-labelledby="petStatusModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="petStatusModalLabel">รายงานสถานะสัตว์เลี้ยง</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{route('Admin.report')}}" method="POST"> 
+                        @csrf
+                        <input type="hidden" name="booking_id" value="{{$bookings->BookingOrderID}}">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="pet_status" class="form-label">สถานะสัตว์เลี้ยง</label>
+                                <textarea class="form-control" id="pet_status" name="pet_status" rows="3" required></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                        <button type="submit" class="btn btn-primary">บันทึกสถานะ</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                            <button type="submit" class="btn btn-primary">บันทึกสถานะ</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
 
 <style>
     .btn {

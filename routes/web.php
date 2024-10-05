@@ -91,8 +91,8 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::post('detail/cancel/{id}', [AdminController::class, 'cancelBooking'])->name('bookings.cancel');
     Route::get('detail/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
-    Route::post('/การจองวันนี้', [AdminController::class,''])->name('bookings.today');
-    Route::post('/การจองที่เลยกำหนด', [AdminController::class,''])->name('booking.deadline');
+    Route::post('/Todaybookings', [AdminController::class,''])->name('bookings.today');
+    Route::post('/Latebookings', [AdminController::class,''])->name('booking.deadline');
 });
 
 

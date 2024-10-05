@@ -164,8 +164,16 @@ class AdminController extends Controller
             }
 
         //ลบห้อง
-        public function delete($id){
+        public function delete($id) {
+            // ดึง BookingOrderID ของการจองที่เกี่ยวข้องกับห้องนั้น
+            $RoomID = Bookings::where('Rooms_id', $id)->pluck('BookingOrderID')->toArray();
+            
+            // ลบการจองที่เกี่ยวข้องกับห้องนั้น
+            Bookings::destroy($RoomID);
+            
+            // ลบห้อง
             Rooms::destroy($id);
+            
             return redirect()->back();
         }
 
@@ -321,7 +329,7 @@ class AdminController extends Controller
             $expired = Bookings::with(['room','pet_status'])
                     ->where('End_date','<',Carbon::today());
             $countDates = [];
-            $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(5);
+            $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(10);
             foreach($bookings as $bk) {
                 $checkinDate = Carbon::parse($bk->Start_date);
                 $checkoutDate = Carbon::parse($bk->End_date);
@@ -390,8 +398,6 @@ class AdminController extends Controller
             $booking->Booking_status = 1;
             $booking->PaymentDate = now(); 
             $booking->save();
-
-            
 
             return redirect()->route('Admin.bookings.detail', $id)
                             ->with('success', 'ยืนยันการชำระเงินหมายเลขการจอง'.$id."สำเร็จ");
