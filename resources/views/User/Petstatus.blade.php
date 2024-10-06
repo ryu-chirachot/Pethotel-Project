@@ -31,7 +31,7 @@
                     <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at }} น.</h5>
                     <div class="status-item mb-3">
                         <h6><b>รายงาน :</b>{{ $st->Report }}</h6>
-                        
+                        <img src="{{ asset('/images/' . trim($status->image)) }}" alt="Status image">
                     </div>
                 @endforeach
             @else
