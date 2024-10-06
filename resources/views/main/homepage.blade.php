@@ -16,38 +16,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .reviews-container {
-            overflow: hidden;
-           
-            position: relative;
-            width: 100%;
-            height: 220px;
-        }
-        .reviews-content {
-            display: block;
-            animation: scroll 15s linear infinite;
-        }
-        .review-box {
-            display: inline-block;
-            width: 200px;
-            margin: 10px;
-            padding: 15px;
-            background-color:  #ffe894 ;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-            white-space: normal;
-            vertical-align: top;
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        .reviews-container:hover .reviews-content {
-            animation-play-state: paused;
-        }
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 220px;
+}
+
+.reviews-content {
+    display: block;
+    white-space: nowrap;
+    animation: scroll 10s linear infinite;
+}
+
+.review-box {
+    display: inline-block;
+    width: 200px;
+    margin: 10px;
+    padding: 15px;
+    background-color: #ffe894;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    white-space: normal;
+    vertical-align: top;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.reviews-content:hover {
+    animation-play-state: paused;
+}
         .star-rating {
             color: #e0e0e0;
             font-size: 1.2em;
