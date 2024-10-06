@@ -11,33 +11,27 @@
     </script>
 @endif
 
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .reviews-container {
             overflow: hidden;
-            white-space: nowrap;
+           
             position: relative;
             width: 100%;
             height: 220px;
-            
         }
         .reviews-content {
-            display: inline-block;
-            animation: scroll 20s linear infinite;
+            display: block;
+            animation: scroll 15s linear infinite;
         }
         .review-box {
             display: inline-block;
-            width: 300px;
+            width: 200px;
             margin: 10px;
             padding: 15px;
-            background-color: #f7f7f7;
+            background-color:  #ffe894 ;
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
             white-space: normal;
@@ -45,10 +39,10 @@
         }
         @keyframes scroll {
             0% {
-                transform: translateX(100%);
+                transform: translateX(-100%);
             }
             100% {
-                transform: translateX(-100%);
+                transform: translateX(100%);
             }
         }
         .reviews-container:hover .reviews-content {
@@ -67,8 +61,7 @@
             text-overflow: ellipsis;
         }
     </style>
-</head>
-<body>
+
     
     <div class="container mt-5">
         @if($reviews->count() == 0)
@@ -80,8 +73,13 @@
             <div class="reviews-content">
                 @foreach($reviews as $review)
                     <div class="review-box">
-                        <h5>ผู้ใช้</h5>
-                        <div class="star-rating">
+                    <div class="d-flex justify-content-between">
+    <label class="text-dark">{{ substr($user->name, 0, 2) . str_repeat('*', 3) }}</label>
+    <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>
+</div>
+          
+                    <div class="star-rating">
+                        <label>
                             @for ($i = 1; $i <= 5; $i++)
                                 @if ($i <= $review->rating)
                                     <i class="fas fa-star"></i>
@@ -89,6 +87,7 @@
                                     <i class="far fa-star"></i>
                                 @endif
                             @endfor
+                            </label>
                         </div>
                         <p>{{ $review->comment }}</p>
                     </div>
@@ -109,9 +108,5 @@
         };
     </script>
 @endif
-</body>
 
-
-
-</html>
 @endsection

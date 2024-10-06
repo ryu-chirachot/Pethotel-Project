@@ -121,7 +121,7 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">เพศ:</span>
-            <span class="detail-value">{{$p_gender == 'M' ? 'ชาย':'หญิง'}}</span>
+            <span class="detail-value">{{$p_gender == 'M' ? 'ผู้':'เมีย'}}</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">คำแนะนำเพิ่มเติม:</span>

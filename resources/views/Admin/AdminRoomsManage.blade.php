@@ -116,11 +116,15 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
+                                        @if($activeBooking)
+                                            <td><span class="badge bg-danger">ลบไม่ได้เพราะมีการจอง</span></td>
+                                        @else
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        @endif
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">

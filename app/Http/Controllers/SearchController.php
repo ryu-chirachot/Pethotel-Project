@@ -33,9 +33,9 @@ class SearchController extends Controller
         
         $p_type = pet_type::all();  
         $reviews = Reviews::all();
+        $user=auth()->user(); 
         
-        
-        return view(('main/homepage'),compact('p_type','reviews'));
+        return view(('main/homepage'),compact('p_type','reviews','user'));
     }
 
 

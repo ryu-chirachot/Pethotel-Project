@@ -29,18 +29,20 @@
                     @foreach($bookings as $booking)
                         <li class="list-group-item">
                             <strong>หมายเลขการจอง:</strong> #{{ $booking->BookingOrderID }}<br>
-                            <strong>วันที่จอง:</strong> {{ $booking->PaymentDate ? $booking->PaymentDate : 'ยกเลิกการจองแล้ว'}}<br>
+                            <strong>วันที่จอง:</strong> {{$booking->created_at}}
+                            <br>
                             <strong>สถานะ:</strong> 
                             @if($booking->trashed())
                                 <span class="text-success">เช็คเอาท์</span>
                             @elseif($booking->Booking_status == 3)
                                 <span class="text-danger">ยกเลิกแล้ว</span>
+                            @elseif($booking->Booking_status == 0)
+                                <span class="text-warning">รอการยืนยัน</span>
                             @else
                                 <span class="text-primary">ยืนยันแล้ว</span>
-                            @endif
+                            @endif 
                             <br>
-                            <strong>สัตว์ที่เข้าพัก: </strong> 
-                            <p>{{ $booking->pet->Pet_name }}</p>
+                            <strong>สัตว์ที่เข้าพัก: </strong>{{ $booking->pet->Pet_name }} 
                         </li>
                     @endforeach
                 </ul>

@@ -10,6 +10,7 @@
         <div class="alert alert-warning" role="alert">
             คุณยังไม่มีการจองในขณะนี้
         </div>
+        
     @else
         @foreach ($bookings as $booking)
         <div class="card">
@@ -22,8 +23,8 @@
                     {{ $booking->pet ? $booking->pet->Pet_name : 'ไม่มีข้อมูลสัตว์เลี้ยง' }}
                 </p><hr>
                 <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
-                <p><strong>ห้องพัก:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p><hr>
-                <p><strong>วันที่จอง:</strong> {{ $booking->Booking_date }}</p><hr>
+                <p><strong>ห้องพัก:</strong> {{ $booking->room->roomType->Rooms_type_name }}</p><hr>
+                <p><strong>วันที่จอง:</strong> {{ $booking->created_at }}</p><hr>
                 <p><strong>สถานะการจอง:</strong> 
                 @if($booking->deleted_at)
                     <span class="status-checkout">
@@ -57,6 +58,18 @@
                         คืนเงินแล้ว
                     </span>
                 </p>
+            @elseif($booking->Booking_status == 0)  
+                <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
+                        {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
+                    </span>
+                    </p><hr>
+                    
+                    <p><strong>สถานะการชำระเงิน:</strong>
+                        <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
+                            {{ $booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน' }}
+                        </span>
+                    </p>
+                </div>
             @else
                 <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
                     {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
@@ -69,9 +82,10 @@
                     </span>
                 </p>
             </div>
-            <div class="card-footer text-center">
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+            <div class="card-footer text-center {{$booking->Booking_status == 0 ? 'display:none' : ''}}">
+                    <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
             </div>
+                
             @endif
         </div>
         @endforeach

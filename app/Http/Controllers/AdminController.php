@@ -301,7 +301,7 @@ class AdminController extends Controller
             $petStatus->BookingOrderID = $request->booking_id; // ใช้ค่า integer ที่ได้จาก parameter
             $petStatus->Report = $request->input('pet_status');
             $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
-
+            $petStatus->imgreport = 
             $petStatus->save();
             return redirect()->back()->with('report', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
@@ -322,7 +322,7 @@ class AdminController extends Controller
 
         //โชว์รายการจองและรายงานสัตว์เลี้ยง
         public function showBookings(){
-            $allBook = Bookings::all();
+            $allBook = Bookings::withTrashed()->get();
             $today = Bookings::withTrashed()->with(['room','pet_status'])
                     ->whereDate('created_at',Carbon::today());
             $expired = Bookings::with(['room','pet_status'])
@@ -341,7 +341,7 @@ class AdminController extends Controller
         
         //การจองวันนี้
         public function Todaybooking(){
-            $allBook = Bookings::all();
+            $allBook = Bookings::withTrashed()->get();
             $today = Bookings::withTrashed()->with(['room','pet_status'])
                     ->whereDate('created_at',Carbon::today())
                     
@@ -363,7 +363,7 @@ class AdminController extends Controller
 
         //การจองเลยกำหนด
         public function expiredbooking(){
-            $allBook = Bookings::all();
+            $allBook = Bookings::withTrashed()->get();
             $today = Bookings::withTrashed()->with(['room','pet_status'])
                     ->whereDate('created_at',Carbon::today())->get();
 

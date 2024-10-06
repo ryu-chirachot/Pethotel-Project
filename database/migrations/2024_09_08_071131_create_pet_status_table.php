@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('Report');
             $table->Integer('Admin_id');
             $table->foreign('Admin_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('imgreport',2000)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes();

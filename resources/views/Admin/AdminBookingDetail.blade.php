@@ -32,19 +32,21 @@
                 <div class="col-md-6">
                     <p><i class="fas fa-user"></i> <strong>ชื่อผู้จอง:</strong> {{ $bookings->user->name }}</p>
                     <p><i class="fas fa-calendar-alt"></i> <strong>วันที่เข้าพัก:</strong> {{ $bookings->Start_date }} ถึง {{ $bookings->End_date }}</p>
+                    <p><i class="fas fa-calendar-check"></i> <strong>วันที่จอง:</strong> {{ $bookings->created_at }}</p>
                     <p><i class="fas fa-moon"></i> <strong>จำนวนคืน:</strong> {{ \Carbon\Carbon::parse($bookings->Start_date)->diffInDays($bookings->End_date) }} คืน</p>
+                    
                 </div>
                 <div class="col-md-6">
-                    <p><i class="fas fa-room"></i> <strong>หมายเลขห้องพัก:</strong> {{ $bookings->room->Rooms_id }}</p>
+                    <p><i class="fas fa-door-open"></i> <strong>หมายเลขห้องพัก:</strong> {{ $bookings->room->Rooms_id }}</p>
                     <p><i class="fas fa-bed"></i> <strong>ประเภทห้องพัก:</strong> {{ $bookings->room->roomType->Rooms_type_name }}</p>
                     <p><i class="fas fa-receipt"></i> <strong>หมายเลขการจอง:</strong> <span class="badge bg-warning text-dark">{{ $bookings->BookingOrderID }}</span></p>
                     <p><i class="fas fa-money-bill"></i> <strong>สถานะการชำระเงิน:</strong> 
                         @if($bookings->PaymentDate)
-                            <span class="badge bg-success">ชำระเงินแล้ว</span>
+                            <span class="badge bg-success ">ชำระเงินแล้ว</span>
                         @elseif($bookings->Booking_status == 3)
-                            <span class="badge bg-warning">คืนเงินแล้ว</span>
+                            <span class="badge bg-danger">คืนเงินแล้ว</span>
                         @else
-                            <span class="badge bg-secondary text-dark">รอยืนยันการชำระเงิน</span>
+                            <span class="badge bg-warning text-dark">รอยืนยันการชำระเงิน</span>
                         @endif
                     </p>
                 </div>
@@ -97,13 +99,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="d-grid">
-                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
-                                </a>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
                                 @csrf
@@ -113,6 +109,13 @@
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
+                                </a>
+                            </div>
                         </div>
                         <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
@@ -156,19 +159,31 @@
 
         <!-- Pet Status รายงาน -->
         <div class="modal fade" id="petStatusModal" tabindex="-1" aria-labelledby="petStatusModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="petStatusModalLabel">รายงานสถานะสัตว์เลี้ยง</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{route('Admin.report')}}" method="POST"> 
+                    <form action="{{route('Admin.report')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="booking_id" value="{{$bookings->BookingOrderID}}">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="pet_status" class="form-label">สถานะสัตว์เลี้ยง</label>
                                 <textarea class="form-control" id="pet_status" name="pet_status" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image_count" class="form-label">จำนวนรูปภาพที่ต้องการเพิ่ม</label>
+                                <input type="number" class="form-control" id="image_count" min="1" value="1">
+                                <button type="button" class="btn btn-secondary mt-2" onclick="generateImageInputs()">สร้างช่องอัปโหลดรูปภาพ</button>
+                            </div>
+                            <div class="mb-3">
+                                <label for="pet_images" class="form-label">รูปภาพสัตว์เลี้ยง</label>
+                                <small class="form-text text-muted">คุณสามารถเลือกหลายรูปภาพได้</small>
+                                <div class="form-group mb-3" id="imageInputsContainer">
+                                    <!-- รูปแสดง -->
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -197,8 +212,53 @@
     .modal-footer {
         border-top: none;
     }
+
+    #imageInputsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.room-image-upload {
+    flex-basis: calc(33.333% - 10px);
+    max-width: calc(33.333% - 10px);
+}
+
+@media (max-width: 768px) {
+    .room-image-upload {
+        flex-basis: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .room-image-upload {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
 </style>
 
+<script src="{{ asset('js/Addimg.js') }}"></script>
+
+<script>
+    function generateImageInputs() {
+    const container = document.getElementById('imageInputsContainer');
+    const count = document.getElementById('image_count').value;
+    container.innerHTML = ''; 
+
+    for (let i = 1; i <= count; i++) {
+        const div = document.createElement('div');
+        div.className = 'room-image-upload empty mb-2';
+        div.innerHTML = 
+        `
+            <img id="previewImage${i}" class="img-fluid rounded" style="display: none; max-width: 200px; max-height: 200px;">
+            <input type="file" name="pet_images[]" id="pet_images${i}" accept="image/*" onchange="previewImage(this, '${i}')" class="form-control">
+        `;
+        container.appendChild(div);
+    }
+}
+</script>
 
 <script>
     function Confirmcancel(id) {

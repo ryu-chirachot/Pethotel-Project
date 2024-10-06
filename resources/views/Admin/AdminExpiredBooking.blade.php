@@ -56,8 +56,12 @@
                                     <tr>
                                         <td>{{ $booking->BookingOrderID }}</td>
                                         <td>{{ $booking->user->name }}</td>
-                                        <td>{{$booking->pet->Pet_name }}</td>
-                                        <td>{{ $booking->room->roomType->Rooms_type_name }}</td>
+                                        <td>
+                                            {{$booking->pet ? $booking->pet->Pet_name : 'ไม่มีข้อมูลสัตว์เลี้ยง' }}
+                                        </td>
+                                        <td>
+                                            {{ $booking->room ? $booking->room->roomType->Rooms_type_name : 'ไม่มีข้อมูลห้อง' }}
+                                        </td>
                                         <td>{{ $booking->Booking_date }}</td>
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>
                                         <td>
@@ -66,7 +70,7 @@
                                             @elseif($booking->Booking_status == 3)
                                                 <span class="badge bg-danger">ยกเลิกการจอง</span>
                                             @else
-                                                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary' : 'badge bg-warning text-dark' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
                                                 </span>
                                             @endif
@@ -75,7 +79,7 @@
                                             @if($booking->Booking_status == 3)
                                                 <span class="badge bg-danger">คืนเงินแล้ว</span>
                                             @else
-                                                <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-secondary' }}">
+                                                <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-warning text-dark' }}">
                                                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
                                                 </span>
                                             @endif
