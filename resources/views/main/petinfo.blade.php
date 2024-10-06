@@ -140,8 +140,8 @@
                                                 <div class="mb-3">
                                                     <label for="pet_gender" class="form-label">เพศ</label>
                                                     <select name="pet_gender" class="form-select" required>
-                                                        <option value="M" {{ $pet->Pet_gender == 'M' ? 'selected' : '' }}>ชาย</option>
-                                                        <option value="F" {{ $pet->Pet_gender == 'F' ? 'selected' : '' }}>หญิง</option>
+                                                        <option value="M" {{ $pet->Pet_gender == 'M' ? 'selected' : '' }}>ผู้</option>
+                                                        <option value="F" {{ $pet->Pet_gender == 'F' ? 'selected' : '' }}>เมีย</option>
                                                     </select>
                                                 </div>
 
