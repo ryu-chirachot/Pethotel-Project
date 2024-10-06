@@ -80,8 +80,13 @@
             <div class="reviews-content">
                 @foreach($reviews as $review)
                     <div class="review-box">
-                        <h5>ผู้ใช้</h5>
-                        <div class="star-rating">
+                    <div class="d-flex justify-content-between">
+    <label class="text-dark">{{ substr($user->name, 0, 2) . str_repeat('*', 3) }}</label>
+    <label class="text-end">{{ $review->updated_at->format('d/m/Y') }}</label>
+</div>
+          
+                    <div class="star-rating">
+                        <label>
                             @for ($i = 1; $i <= 5; $i++)
                                 @if ($i <= $review->rating)
                                     <i class="fas fa-star"></i>
@@ -89,6 +94,7 @@
                                     <i class="far fa-star"></i>
                                 @endif
                             @endfor
+                            </label>
                         </div>
                         <p>{{ $review->comment }}</p>
                     </div>
