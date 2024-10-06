@@ -8,8 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('pet_type_room_type', function (Blueprint $table) {
-            $table->integer('Pet_Room_typeID')->autoIncrement(); 
+        Schema::create('rooms', function (Blueprint $table) {
+            $table->integer('Rooms_id')->autoIncrement(); 
             $table->Integer('Rooms_type_id');
             $table->foreign('Rooms_type_id')->references('Rooms_type_id')->on('rooms_type')->onDelete('cascade');
             
@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('Room_price'); 
             $table->Integer('ImagesID'); 
             $table->foreign('ImagesID')->references('ImagesID')->on('images')->onDelete('cascade');
-            
+            $table->tinyInteger('Rooms_status')->default(1);
+
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
             $table->softDeletes(); 
@@ -28,6 +29,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('pet_type_room_type');
+        Schema::dropIfExists('rooms');
     }
 };

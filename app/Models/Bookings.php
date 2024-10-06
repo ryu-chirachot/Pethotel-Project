@@ -44,8 +44,8 @@ class Bookings extends Model
 
 
     public function pet_status()
-{
-    return $this->hasMany(PetStatus::class, 'BookingOrderID', 'BookingOrderID');
-}
+    {
+        return $this->hasMany(PetStatus::class, 'BookingOrderID', 'BookingOrderID');
+    }
 
 }

@@ -60,7 +60,7 @@
                                         <td>
                                             {{$booking->pet->Pet_name }}
                                         </td>
-                                        <td>{{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
+                                        <td>{{ $booking->room->roomType->Rooms_type_name }}</td>
                                         <td>{{ $booking->Booking_date }}</td>
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>
                                         <td>

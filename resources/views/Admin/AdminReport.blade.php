@@ -24,12 +24,12 @@
 
         <div class="form-group">
             <label for="room_type">ประเภทห้อง:</label>
-            <input type="text" class="form-control" id="room_type" value="{{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}" disabled>
+            <input type="text" class="form-control" id="room_type" value="{{ $booking->room->roomType->Rooms_type_name }}" disabled>
         </div>
 
         <div class="form-group">
             <label for="pet_type">ประเภทสัตว์เลี้ยง:</label>
-            <input type="text" class="form-control" id="pet_type" value="{{ $booking->room->pet_Type_Room_Type->petType->Pet_nametype }}" disabled>
+            <input type="text" class="form-control" id="pet_type" value="{{ $booking->room->petType->Pet_nametype }}" disabled>
         </div>
 
         <div class="form-group">

@@ -57,8 +57,8 @@
                                 @foreach ($Rooms as $rm)
                                     <tr>
                                         <td>{{ $rm->Rooms_id }}</td>
-                                        <td>{{ $rm->pet_Type_Room_Type->roomType->Rooms_type_name }}</td>
-                                        <td>{{ $rm->pet_Type_Room_Type->petType->Pet_nametype }}</td>
+                                        <td>{{ $rm->roomType->Rooms_type_name }}</td>
+                                        <td>{{ $rm->petType->Pet_nametype }}</td>
 
                                         @php
                                         $activeBooking = $rm->bookings->where('Booking_status', '!=', 2)->where('Booking_status', '!=', 3)->first();                                        @endphp

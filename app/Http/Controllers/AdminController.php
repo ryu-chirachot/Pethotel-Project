@@ -9,7 +9,6 @@ use App\Models\Rooms_type;
 use App\Models\Images;
 use App\Models\Bookings;
 use App\Models\Pet_type;
-use App\Models\pet_type_room_type;
 use App\Models\Pets;
 use App\Models\PetStatus;
 use Illuminate\Http\Request;
@@ -101,9 +100,8 @@ class AdminController extends Controller
                 $petType = Pet_type::select('Pet_nametype')->distinct()->get();
                 $roomType = Rooms_type::select('Rooms_type_name')->distinct()->get();
                 
-                $imgpaths = $RoomID->pet_Type_Room_Type->image->ImagesPath;
-                // ใช้ explode แยก path เป็น array
-                $images = explode(',', $imgpaths);
+                $imgpaths = $RoomID->image->ImagesPath ?? '';
+                $images = $imgpaths ? explode(',', $imgpaths) : [];
                 
                 return view("Admin.AdminRoomEdit", compact("RoomID",'petType','roomType','images'));
             } catch (\Exception $e) {
@@ -112,8 +110,8 @@ class AdminController extends Controller
         }
 
         //ส่งค่าที่จะแก้ไขห้องไป DB
-        public function updateRoom(Request $request){
-
+        public function updateRoom(Request $request)
+        {
             try {
                 if (empty($request->room_number)) {
                     return redirect()->back()->with('error', 'ไม่พบข้อมูลห้องที่ต้องการแก้ไข');
@@ -121,86 +119,74 @@ class AdminController extends Controller
 
                 $room = Rooms::findOrFail($request->room_number);
                 
-                // อัปเดตสถานะห้อง
-                $room->Rooms_status = $request->room_status;
-                $room->save();
-
-                if ($room->pet_Type_Room_Type) {
-                    $pet_Type_Room_Type = $room->pet_Type_Room_Type;
-
-                    if ($pet_Type_Room_Type->Pet_type) {
-                        $pet_Type_Room_Type->Pet_type->Pet_nameType = $request->pet_type;
-                        $pet_Type_Room_Type->Pet_type->save();
+                if ($room) {
+                    // อัปเดตข้อมูลห้อง
+                    $room->Rooms_status = $request->room_status;
+                    $room->Room_price = $request->room_price;
+                    $room->Rooms_type_description = $request->room_description;
+                    
+                    // อัปเดตข้อมูล Pet_type และ Rooms_type (ถ้าจำเป็น)
+                    if ($request->has('pet_type') && $room->Pet_type) {
+                        $room->Pet_type->Pet_nameType = $request->pet_type;
+                        $room->Pet_type->save();
+                    }
+                    if ($request->has('room_type') && $room->roomType) {
+                        $room->roomType->Rooms_type_name = $request->room_type;
+                        $room->roomType->save();
                     }
 
-                    if ($pet_Type_Room_Type->roomType) {
-                        $pet_Type_Room_Type->roomType->Rooms_type_name = $request->room_type;
-                        $pet_Type_Room_Type->roomType->save();
+                    // จัดการกับรูปภาพ
+                    if (!$room->image) {
+                        $room->image = new Images();
                     }
                     
-                    $pet_Type_Room_Type->Room_price = $request->room_price;
-                    $pet_Type_Room_Type->Rooms_type_description = $request->room_description;
-                    $pet_Type_Room_Type->save();
-                    
-                    if($request->hasFile('room_image')) {
-                        foreach($request->file('room_image') as $file) {
+                    $currentImages = explode(',', $room->image->ImagesPath);
+                    $newImages = [];
+
+                    for ($i = 0; $i < 6; $i++) {
+                        if ($request->hasFile('room_image.'.$i)) {
+                            $file = $request->file('room_image.'.$i);
                             $fileName = time() . '_' . $file->getClientOriginalName();
                             $file->move(public_path('images'), $fileName);
-                            $imageNames[] = $fileName;
+                            $newImages[] = $fileName;
+                        } elseif (isset($currentImages[$i])) {
+                            $newImages[] = $currentImages[$i];
                         }
-                        $pet_Type_Room_Type->image->ImagesPath = implode(',', $imageNames);
-                        $pet_Type_Room_Type->image->save();
                     }
-                } else {
-                        return redirect()->back()->with('error', 'ไม่พบข้อมูลประเภทห้องและสัตว์เลี้ยงที่เกี่ยวข้อง');
-                    }
-                    return redirect()->to(route('Admin.rooms'))->with('success', 'ห้องหมายเลข #' . $request->room_number . ' เรียบร้อย!');
-            
+
+                    $room->image->ImagesPath = implode(',', $newImages);
+                    $room->image->save();
+
+                    $room->save();
+
+                    return redirect()->route('Admin.rooms')->with('success', 'ห้องหมายเลข #' . $request->room_number . ' อัปเดตเรียบร้อย!');
+                }
             } catch (ModelNotFoundException $e) {
                 return redirect()->back()->with('error', 'ไม่พบข้อมูลห้องที่ต้องการแก้ไข');
             } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'เกิดข้อผิดพลาดอะไรบางอย่าง : ' . $e->getMessage());
-                }
+                return redirect()->back()->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
             }
+        }
 
         //ลบห้อง
         public function delete($id) {
             // ดึง BookingOrderID ของการจองที่เกี่ยวข้องกับห้องนั้น
             $RoomID = Bookings::where('Rooms_id', $id)->pluck('BookingOrderID')->toArray();
-            
-            // ลบการจองที่เกี่ยวข้องกับห้องนั้น
-            Bookings::destroy($RoomID);
-            
+            if($RoomID){
+                // ลบการจองที่เกี่ยวข้องกับห้องนั้น
+                Bookings::destroy($RoomID);
+                // ลบห้อง
+                Rooms::destroy($id);
+
+                return redirect()->back();
+            }
             // ลบห้อง
             Rooms::destroy($id);
             
             return redirect()->back();
         }
 
-        //หน้าสร้างห้องที่ต้องกรอกข้อมูล
-        public function createRooms(Request $request){
-            $Pet_types = Pet_type::all();
-            $Room_types = Rooms_type::all();
-            $latestRoom = Rooms::latest('Rooms_id')->first();
-            $selectedPetType = $request->pet_type;
-            $selectedRoomType = $request->room_type;
-            $pettypename = Pet_type::find($selectedPetType)->Pet_nametype;
-            $roomtypename = Rooms_type::find($selectedRoomType)->Rooms_type_name;
-            
-            $petRoomType = Pet_Type_Room_Type::where('Pet_type_id', $selectedPetType)
-                    ->where('Rooms_type_id', $selectedRoomType)
-                    ->with('image')
-                    ->first();
-            if ($petRoomType && $petRoomType->image) {
-                $imgpaths = $petRoomType->image->ImagesPath;
-                $images = explode(',', $imgpaths);
-            } else {
-                $petRoomType = null;
-                $images = null; 
-            }
-
-            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType', 'images','petRoomType','pettypename','roomtypename'));
-        }
+        
         
         //เลือกประเภทห้องที่จะสร้าง
         public function selectRoomType()
@@ -234,6 +220,19 @@ class AdminController extends Controller
             return redirect()->back()->with('success', 'เพิ่มประเภทห้องใหม่สำเร็จ');
         }
 
+        //หน้าสร้างห้องที่ต้องกรอกข้อมูล
+        public function createRooms(Request $request){
+            $Pet_types = Pet_type::all();
+            $Room_types = Rooms_type::all();
+            $latestRoom = Rooms::latest('Rooms_id')->first();
+            $selectedPetType = $request->pet_type;
+            $selectedRoomType = $request->room_type;
+            $pettypename = Pet_type::find($selectedPetType)->Pet_nametype;
+            $roomtypename = Rooms_type::find($selectedRoomType)->Rooms_type_name;
+            
+            return view('Admin.AdminCreateRooms', compact('Pet_types', 'Room_types', 'latestRoom', 'selectedPetType', 'selectedRoomType','pettypename','roomtypename'));
+        }
+
         //ส่งค่าจากหน้าสร้างห้องไป DB
         public function store(Request $request){
             $request->validate([
@@ -245,11 +244,13 @@ class AdminController extends Controller
                 'room_price' => 'required|numeric',
                 'room_description' => 'required',
             ]);
-        
+            
+            $namepettype = $request->pet_type;
+            $nameroomtype = $request->room_type;
             $roomType = $request->room_type_hidden;
             $petType = $request->pet_type_hidden;
             $imageNames = [];
-        
+            
             if($request->hasFile('room_image')) {
                 foreach($request->file('room_image') as $file) {
                     $fileName = time() . '_' . $file->getClientOriginalName();
@@ -257,37 +258,35 @@ class AdminController extends Controller
                     $imageNames[] = $fileName;
                 }
             }
-        
-            $newImg = Images::create([
-                'ImagesPath' => implode(',', $imageNames),
-                'ImagesName' => 'รูป'.$petType.$roomType
-            ]);
-        
+            
             $idroomType = Rooms_type::where('Rooms_type_id', $roomType)->firstOrFail();
             $idpetType = Pet_type::where('Pet_type_id', $petType)->firstOrFail();
-        
-            $petRoomType = Pet_Type_Room_Type::firstOrCreate(
-                [
+            
+            $roomsData = [];
+            $latestRoom = Rooms::latest('Rooms_id')->first();
+            $lastRoomId = $latestRoom ? $latestRoom->Rooms_id : 0;
+            for ($i = 0; $i < $request->room_count; $i++) {
+                // สร้างรายการรูปภาพสำหรับแต่ละห้อง
+                $newImg = Images::create([
+                    'ImagesPath' => implode(',', $imageNames),
+                    'ImagesName' => 'รูป'.$namepettype.$nameroomtype.'_ห้อง'.($lastRoomId+$i+1)
+                ]);
+            
+                $roomsData[] = [
                     'Rooms_type_id' => $idroomType->Rooms_type_id,
                     'Pet_type_id' => $idpetType->Pet_type_id,
-                ],
-                [
                     'Rooms_type_description' => $request->room_description,
                     'Room_price' => $request->room_price,
-                    'ImagesID' => $newImg->ImagesID
-                ]
-            );
-        
-            $createdRooms = [];
-            for ($i = 0; $i < $request->room_count; $i++) {
-                $newRoom = Rooms::create([
-                    'Pet_Room_typeID' => $petRoomType->Pet_Room_typeID,
+                    'ImagesID' => $newImg->ImagesID,
                     'Rooms_status' => $request->room_status
-                ]);
-                $createdRooms[] = $newRoom->Rooms_id;
+                ];
             }
-        
-            return redirect()->route('Admin.rooms')->with('complete', 'ทั้งหมด (' .count($createdRooms). ') ห้องเรียบร้อย!');
+            
+            Rooms::insert($roomsData);
+                
+            $createdRoomsCount = count($roomsData);
+            
+            return redirect()->route('Admin.rooms')->with('complete', 'ทั้งหมด (' .$createdRoomsCount. ') ห้องเรียบร้อย!');
         }
         
         
@@ -295,7 +294,7 @@ class AdminController extends Controller
          // ส่งค่าไปรายงาน
         public function submitReport(Request $request)
         {
-             // ตรวจสอบว่า booking นี้มีอยู่จริง
+            // ตรวจสอบว่า booking นี้มีอยู่จริง
             $booking = Bookings::findOrFail($request->booking_id);
 
             $petStatus = new PetStatus();

@@ -18,7 +18,7 @@ class Rooms_type extends Model
 
     public function petTypes(): BelongsToMany
     {
-        return $this->belongsToMany(Pet_type::class, 'pet_type_room_type')
+        return $this->belongsToMany(Pet_type::class, 'Rooms')
                 ->withTimestamps();
     }
 }

@@ -35,7 +35,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item mb-3">
                     <a class="nav-link {{ Request::is('Admin/Home') ? 'active' : '' }}" href="{{route('Admin.index')}}">
-                        <i class="fas fa-home me-2"></i>หน้าแรก
+                        <i class="fas fa-home me-2"></i>หน้าแดชบอร์ด
                     </a>
                 </li>
                 <li class="nav-item mb-3">
@@ -63,7 +63,13 @@
                     <i class="fas fa-users fa text-gray me-2"></i>ผู้ใช้ทั้งหมด
                     </a>
                 </li>
-                
+
+                <li class="nav-item mb-3">
+                    <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="{{ route('home') }}" data-toggle="tooltip" data-placement="right" title="กลับไปหน้าหลัก">
+                        <i class="fas fa-arrow-left fa-fw text-gray me-1"></i>กลับหน้าหลัก
+                    </a>
+                </li>
+
                 @auth
                 <li class="nav-item mb-3">
                     <form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">

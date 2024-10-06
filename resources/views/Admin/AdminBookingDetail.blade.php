@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-6">
                     <p><i class="fas fa-room"></i> <strong>หมายเลขห้องพัก:</strong> {{ $bookings->room->Rooms_id }}</p>
-                    <p><i class="fas fa-bed"></i> <strong>ประเภทห้องพัก:</strong> {{ $bookings->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
+                    <p><i class="fas fa-bed"></i> <strong>ประเภทห้องพัก:</strong> {{ $bookings->room->roomType->Rooms_type_name }}</p>
                     <p><i class="fas fa-receipt"></i> <strong>หมายเลขการจอง:</strong> <span class="badge bg-warning text-dark">{{ $bookings->BookingOrderID }}</span></p>
                     <p><i class="fas fa-money-bill"></i> <strong>สถานะการชำระเงิน:</strong> 
                         @if($bookings->PaymentDate)

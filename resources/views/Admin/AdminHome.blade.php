@@ -93,7 +93,7 @@
                                     <td><strong>#{{$booking->BookingOrderID}}</strong></td>
                                     <td>{{$booking->user->name}}</td>
                                     <td>
-                                        {{ $booking->Booking_date }}
+                                        {{ $booking->created_at }}
                                     </td>
                                     <td>
                                         @if($booking->Booking_status == 3)

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Pets;
 use App\Models\pet_type;
 use App\Models\Rooms;
-use App\Models\pet_type_room_type;
 use App\Models\bookings;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
@@ -67,9 +66,7 @@ class BookingController extends Controller
     $pet_weight = $request->pet_weight;
     $pet_gender = $request->pet_gender;
     $additional_info = $request->additional_info;
-    $price = pet_type_room_type::where('Rooms_type_id', $roomTypeId)
-    ->where('Pet_type_id', $petTypeId)
-    ->value('Room_price');
+    $price = Rooms::where('Rooms_id',$room_id)->value('Room_price');
     
     if($request->pet_id){
         $pet_id += $request->pet_id;
@@ -121,7 +118,6 @@ class BookingController extends Controller
             $book->Rooms_id = $room_id;
             $book->Start_date = $checkIn;
             $book->End_date = $checkOut;
-            $book->Booking_date = now();
             $book->Booking_status = 0;
             $book->price = $price;
             $book->PaymentMethodID = $PaymentMethodID;
@@ -138,7 +134,7 @@ class BookingController extends Controller
     {
         // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
         $bookings = bookings::withTrashed()
-        ->with(['pet', 'room.pet_Type_Room_Type.roomType']) // ใช้ Eager Loading
+        ->with(['pet', 'room.roomType']) // ใช้ Eager Loading
         ->where('User_id', Auth::user()->id)
         ->orderBy('BookingOrderID', 'desc')
         ->get();
@@ -176,7 +172,7 @@ class BookingController extends Controller
     //รูป
     public function showRoomsPets()
     {
-        $Pets_rooms = pet_type_room_type::with(['roomType', 'image'])->get();
+        $Pets_rooms = Rooms::with(['roomType', 'image'])->get();
         
         return view('bookings', compact('Pets_rooms'));
     }

@@ -59,16 +59,16 @@ class SearchController extends Controller
             $query->where('Start_date', '<=', $checkOut)
                 ->where('End_date', '>=', $checkIn);
         })
-        ->whereHas('pet_Type_Room_Type', function ($query) use ($petTypeId) {
-            $query->where('pet_type_id', $petTypeId);
-        })
-        ->with(['pet_Type_Room_Type.roomType'])
+        ->where('pet_type_id', $petTypeId)
+        ->with(['roomType'])
         ->get();
     
-    $img = Pet_Type_Room_Type::with(['roomType', 'image'])->where('pet_type_id', $petTypeId)->get();
+    $img = Rooms::with(['roomType', 'image'])->where('pet_type_id', $petTypeId)
+                    ->get()
+                    ->unique('roomType.Rooms_type_id');
 
     // จัดกลุ่มห้องตาม Rooms_type_id
-    $groupedRooms = $rooms->groupBy('pet_Type_Room_Type.roomType.Rooms_type_id');
+    $groupedRooms = $rooms->groupBy('roomType.Rooms_type_id');
 
     // นับจำนวนห้องในแต่ละประเภท
     $roomCounts = $groupedRooms->map(function ($group) {
