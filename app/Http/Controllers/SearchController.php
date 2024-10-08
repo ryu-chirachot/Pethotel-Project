@@ -30,10 +30,9 @@ class SearchController extends Controller
 
     public function show($viewname)
     {
-        
+        $p_type = pet_type::all();  
         $reviews = Reviews::with('booking.user')->get();
-        $detail = Bookings::withTrashed()->with('pet.petType','room.roomType')->get();
-        dd($detail);
+        
         return view(('main/homepage'),compact('p_type','reviews'));
     }
 
