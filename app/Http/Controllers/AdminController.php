@@ -505,7 +505,7 @@ class AdminController extends Controller
         public function checkout($id){
             $booking = Bookings::findOrFail($id);
             $room = $booking->room;
-            $room->Rooms_status = 1;
+            $room->Rooms_status = 3;
             $room->save();
             Bookings::destroy($id);
             return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");       
