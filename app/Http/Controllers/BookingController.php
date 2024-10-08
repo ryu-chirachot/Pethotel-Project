@@ -142,6 +142,7 @@ class BookingController extends Controller
         ->where('User_id', Auth::user()->id)
         ->orderBy('BookingOrderID', 'desc')
         ->get();
+        
 
         return view('User.DetailBookings', compact('bookings'));
     }

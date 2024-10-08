@@ -32,8 +32,9 @@ class SearchController extends Controller
     {
         
         $p_type = pet_type::all();  
-        $reviews = Reviews::all();
-       
+        $reviews = Reviews::with('booking.user')->get();
+        
+        
         return view(('main/homepage'),compact('p_type','reviews'));
     }
 

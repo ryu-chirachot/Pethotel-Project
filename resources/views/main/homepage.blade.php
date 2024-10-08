@@ -44,7 +44,7 @@
     0% {
         transform: translateX(-100%);
     }
-    100% {
+    70% {
         transform: translateX(100%);
     }
 }
@@ -78,7 +78,7 @@
                 @foreach($reviews as $review)
                     <div class="review-box">
                     <div class="d-flex justify-content-between">
-                    <label class="text-dark">{{ substr($review->booking, 0, 3)}} *****</label>
+                    <label class="text-dark">{{ substr($review->booking->user->name, 0, 2)}} *****</label>
                 <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>
             </div>
           

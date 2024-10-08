@@ -53,6 +53,7 @@
             <form id="reviewForm" method="POST" action="{{ route('submit.review') }}">
                 @csrf
                 <input type="hidden" name="booking_id" value="{{$id}}">
+                
                 <div class="form-group">
                     <label for="rating">ระดับความพึงพอใจ</label>
                     <div class="rating">
