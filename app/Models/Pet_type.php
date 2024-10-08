@@ -21,9 +21,9 @@ class Pet_type extends Model
         return $this->hasMany(Pets::class, 'Pet_type_id');
     }
 
-    public function petRoomTypes()
+    public function rooms()
     {
-        return $this->hasMany(pet_type_room_type::class, 'Pet_type_id');
+        return $this->hasMany(Rooms::class, 'Pet_type_id');
     }
 
 }

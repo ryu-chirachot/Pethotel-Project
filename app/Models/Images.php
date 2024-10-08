@@ -17,9 +17,9 @@ class Images extends Model
         'ImagesName', 'ImagesPath','updated_at','deleted_at'
     ];
 
-    public function petRoomType()
+    public function room()
     {
-        return $this->hasOne(pet_type_room_type::class, 'ImageID');
+        return $this->hasOne(Rooms::class, 'ImageID');
     }
 
 }

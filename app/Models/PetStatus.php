@@ -14,7 +14,7 @@ class PetStatus extends Model
     protected $table = 'pet_status';
     protected $primaryKey = 'PetStatusID';
     protected $fillable = [
-        'BookingOrderID', 'Report','status','updated_at','deleted_at'
+        'BookingOrderID', 'Report','status','imgreport','updated_at','deleted_at'
     ];
 
     public function booking()
