@@ -72,7 +72,8 @@
                                     <th>ประเภทห้อง</th>
                                     <th>ประเภทของสัตว์เลี้ยง</th>
                                     <th>ชื่อผู้จอง</th>
-                                    <th>ชื่อสัตว์เลี้ยง</th>
+                                    <th>วันที่เข้าพัก</th>
+                                    <th>สถานะการจอง</th>
                                     <th>สถานะห้อง</th>
                                     <th>แก้ไข</th>
                                     <th>ลบ</th>
@@ -87,27 +88,34 @@
                                         <td>{{ $rm->petType->Pet_nametype }}</td>
 
                                         @php
-                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 2)->where('Booking_status', '!=', 3)->first();                                        @endphp
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();                                        @endphp
 
                                         @if($activeBooking)
                                             <td>{{ $activeBooking->user->name }}</td>
                                             <td>
-                                                @if($activeBooking->pet->count() > 0)
-                                                    {{ $activeBooking->pet->Pet_name}}
+                                                @if($activeBooking->Start_date)
+                                                    {{ $activeBooking->Start_date}}
                                                 @else
                                                     <span>ไม่มีข้อมูลสัตว์เลี้ยง</span>
                                                 @endif
                                             </td>
+                                            
                                         @else
                                             <td><span>ไม่มีผู้จอง</span></td>
-                                            <td><span>ไม่มีสัตว์เลี้ยง</span></td>
+                                            <td><span>ไม่มีผู้จอง</span></td>
+                                            
                                         @endif
-
+                                        
+                                        @if($activeBooking->Booking)
                                         <td>
                                             @if ($rm->Rooms_status == 1)
                                                 <span class="badge bg-success">ว่าง</span>
-                                            @else
-                                                <span class="badge bg-danger">ไม่ว่าง</span>
+                                            @elseif ($rm->Rooms_status == 2)
+                                                <span class="badge bg-warning">ซ่อมบำรุง</span>
+                                            @elseif ($rm->Rooms_status == 3)
+                                                <span class="badge bg-primary">ทำความสะอาด</span>
+                                            @else 
+                                                <span class="badge bg-danger">ไมว่าง</span>
                                             @endif
                                         </td>
 
@@ -117,7 +125,7 @@
                                             </a>
                                         </td>
                                         @if($activeBooking)
-                                            <td><span class="badge bg-danger">ลบไม่ได้เพราะมีการจอง</span></td>
+                                            <td><span class="badge bg-danger">มีการจอง</span></td>
                                         @else
                                             <td>
                                                 <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">

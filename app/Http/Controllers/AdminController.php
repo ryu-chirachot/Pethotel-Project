@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\DB;
 
 
 class AdminController extends Controller
@@ -291,18 +291,16 @@ class AdminController extends Controller
         
         
 
-         // ส่งค่าไปรายงาน
-        public function submitReport(Request $request)
-        {
-            // ตรวจสอบว่า booking นี้มีอยู่จริง
-            $booking = Bookings::findOrFail($request->booking_id);
-
+        // ส่งค่าไปรายงาน
+        public function submitReport(Request $request){
+            DB::transaction(function () use ($request) {
             $petStatus = new PetStatus();
-            $petStatus->BookingOrderID = $request->booking_id; // ใช้ค่า integer ที่ได้จาก parameter
+            $petStatus->BookingOrderID = $request->booking_id; 
             $petStatus->Report = $request->input('pet_status');
-            $petStatus->Admin_id = Auth::id(); // ใช้เพื่อรับ ID ของ Admin ที่กำลัง login อยู่
+            $petStatus->Admin_id = Auth::id(); 
             $petStatus->imgreport = 
             $petStatus->save();
+        });
             return redirect()->back()->with('report', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
             
