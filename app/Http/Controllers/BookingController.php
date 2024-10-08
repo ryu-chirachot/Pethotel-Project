@@ -104,7 +104,7 @@ class BookingController extends Controller
             
             $price = $request->price;
             $PaymentMethodID = $request->payment;
-           
+            
             $pet_id = $request->pet_id;
             // ทำให้ห้องเป็นไม่ว่าง
             $room = Rooms::findOrFail($room_id);
@@ -118,6 +118,7 @@ class BookingController extends Controller
             $book->Rooms_id = $room_id;
             $book->Start_date = $checkIn;
             $book->End_date = $checkOut;
+            $book->Original_end_date = $checkOut;
             $book->Booking_status = 0;
             $book->price = $price;
             $book->PaymentMethodID = $PaymentMethodID;

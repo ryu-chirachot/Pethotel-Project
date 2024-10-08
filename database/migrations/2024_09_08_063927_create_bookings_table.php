@@ -24,6 +24,7 @@ return new class extends Migration
 
             $table->date('Start_date');
             $table->date('End_date');
+            $table->date('Original_end_date')->nullable();
             $table->tinyInteger('Booking_status');
             $table->integer('Price');
 

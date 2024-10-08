@@ -23,7 +23,8 @@
                     {{ $booking->pet ? $booking->pet->Pet_name : 'ไม่มีข้อมูลสัตว์เลี้ยง' }}
                 </p><hr>
                 <p><strong>วันที่เข้าพัก:</strong> {{ $booking->Start_date }} <strong>ถึง</strong> {{ $booking->End_date }}</p><hr>
-                <p><strong>ห้องพัก:</strong> {{ $booking->room->roomType->Rooms_type_name }}</p><hr>
+                <p><strong>ห้องพัก:</strong> {{ $booking->room->roomType->Rooms_type_name }} </p><hr>
+                <p><strong>หมายเลขห้อง:</strong> {{ $booking->room->Rooms_id }}</p><hr>
                 <p><strong>วันที่จอง:</strong> {{ $booking->created_at }}</p><hr>
                 <p><strong>สถานะการจอง:</strong> 
                 @if($booking->deleted_at)
@@ -41,10 +42,10 @@
             <div class="card-footer text-right">
             @if($booking->review)
                 <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-secondary" style="pointer-events: none; ">รีวิว</a>
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
             @else
                 <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-success">รีวิว</a>
-                <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
             @endif
 
             </div>
@@ -82,8 +83,8 @@
                     </span>
                 </p>
             </div>
-            <div class="card-footer text-center {{$booking->Booking_status == 0 ? 'display:none' : ''}}">
-                    <a href="{{ route('bookings.show', $booking->BookingOrderID) }}" class="btn btn-primary">ดูรายละเอียด</a>
+            <div class="card-footer text-center">
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
             </div>
                 
             @endif

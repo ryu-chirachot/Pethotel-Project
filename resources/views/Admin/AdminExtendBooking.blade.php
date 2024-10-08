@@ -139,6 +139,7 @@
     }
 </style>
 
+
 <script>
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();
@@ -153,4 +154,5 @@
         });
     }
 </script>
+
 @endsection
