@@ -13,9 +13,8 @@ class ReviewController extends Controller
 
     public function submitReview(Request $request)
     {
-        dd($booking->BookingOrderID);
         Reviews::create([
-            'BookingOrderID' =>  $request->Booking,
+            'BookingOrderID' => $request->booking_id,
             'rating' => $request->rating,
             'comment' => $request->comment,
         ]);
