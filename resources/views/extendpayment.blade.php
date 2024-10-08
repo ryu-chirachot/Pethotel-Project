@@ -54,22 +54,8 @@
     
                 </div>
                 <br>
-                <form id="PaymentForm" action="{{route('success')}}" method="post">
+                <form id="PaymentForm" action="{{route('extendsuccess',$booking->BookingOrderID)}}" method="post">
                     @csrf
-                    <input type="hidden" name="room_id" value="{{ $room_id }}">
-                    <input type="hidden" name="petTypeId" value="{{ $petTypeId }}">
-                    <input type="hidden" name="roomTypeName" value="{{ $roomTypeName }}">
-                    <input type="hidden" name="checkIn" value="{{ $checkIn }}">
-                    <input type="hidden" name="checkOut" value="{{ $checkOut }}">
-                    <input type="hidden" name="price" value="{{ $price }}">
-                    <input type="hidden" name="pet_name" value="{{ $pet_name }}">
-                    <input type="hidden" name="pet_breed" value="{{ $pet_breed }}">
-                    <input type="hidden" name="pet_age" value="{{ $pet_age }}">
-                    <input type="hidden" name="pet_weight" value="{{ $pet_weight }}">
-                    <input type="hidden" name="pet_gender" value="{{ $pet_gender }}">
-                    <input type="hidden" name="additional_info" value="{{ $additional_info }}">
-                    <input type="hidden" name="price" value="{{$price * \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}}">
-                    <input type="hidden" name="pet_id" value="{{$pet_id}}">
                     <h2>ช่องทางการชำระเงิน</h2>
                     @foreach($payment as $pay)
                     @if($pay->PaymentMethodID == 1)

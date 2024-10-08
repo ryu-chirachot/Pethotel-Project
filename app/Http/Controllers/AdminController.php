@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-
         //หน้าหลักของแอดมิน
         public function index(){
                 $Rooms = Rooms::all();
@@ -334,17 +333,16 @@ class AdminController extends Controller
             $petStatus->BookingOrderID = $request->booking_id; 
             $petStatus->Report = $request->input('pet_status');
             $petStatus->Admin_id = Auth::id(); 
-            $newImages = $request->pet_images;
-            for ($i = 0; $i <= count($newImages); $i++) {
-                if ($request->hasFile('room_image.'.$i)) {
-                    $file = $request->file('room_image.'.$i);
+            $newImages = [];
+
+            if($request->hasFile('pet_images')) {
+                foreach($request->file('pet_images') as $file) {
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $file->move(public_path('images'), $fileName);
                     $newImages[] = $fileName;
-                } elseif (isset($currentImages[$i])) {
-                    $newImages[] = $currentImages[$i];
                 }
             }
+            
             $petStatus->imgreport = implode(',', $newImages);
             $petStatus->save();
         });

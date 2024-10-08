@@ -34,6 +34,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/info', [BookingController::class, 'send'])->name('info');
     Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
     Route::post('/payment',[BookingController::class,'book'])->name('payment');
+    Route::post('/success',[BookingController::class,'booked'])->name('success');
+    Route::post('/extendsuccess',[BookingController::class,'extendsuccess'])->name('extendsuccess');
 });
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
@@ -41,7 +43,6 @@ Route::get('/home/{viewname}',[SearchController::class,'show'])->name('mains');
 Route::get('/room/search',[SearchController::class,'search'])->name('search.result');
 
 //รีวิว
-Route::post('/success',[BookingController::class,'booked'])->name('success');
 Route::get('/review/{id}',[ReviewController::class, 'index'])->name('review');
 Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
 Route::get('/review/history/{id}',[ReviewController::class, 'history'])->name('historyreview');

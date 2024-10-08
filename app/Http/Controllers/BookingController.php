@@ -149,16 +149,21 @@ class BookingController extends Controller
     {
         $booking = Bookings::findOrFail($id);
         $newEndDate = $request->input('new_end_date');
-
-        
+        $detail = Bookings::with('room.roomType');
         if ($newEndDate > $booking->End_date) {
             $booking->End_date = $newEndDate;
             $booking->save();
-            return redirect()->route('Admin.bookings')
+            $checkIn = $booking->End_date;
+            $checkOut = $booking->Original_end_date;
+            return view('extendpayment',compact('booking','detail'))
                             ->with('extend', $booking->user->name);
         }
 
         return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
+    }
+
+    public function extendsuccess(Request $request){
+
     }
 
     // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการนั้น

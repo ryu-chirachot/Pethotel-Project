@@ -93,8 +93,9 @@
                                     <input type="hidden" name="breed" value="{{ $pet->Pet_breed }}">
                                     <input type="hidden" name="age" value="{{ $pet->Pet_age }}">
                                     <input type="hidden" name="weight" value="{{ $pet->Pet_weight }}">
-                                    <input type="hidden" name="comment" value="{{ $pet->Pet_info }}">
+                                    <input type="hidden" name="comment" value="{{ $pet->additional_info }}">
                                     <input type="hidden" name="gender" value="{{ $pet->Pet_Gender }}">
+                                    
                                     
                                     <td>{{ $pet->petType->Pet_nametype }}</td>
                                     <td>{{ $pet->Pet_name }}</td>

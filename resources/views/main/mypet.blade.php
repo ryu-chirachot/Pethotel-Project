@@ -51,7 +51,7 @@ body {
                     <td>{{ $pet->Pet_gender == 'M' ? 'ชาย' : 'หญิง' }}</td>
                     <td>{{ $pet->Pet_breed }}</td>
                     <td>{{ $pet->Pet_age }} ปี</td>
-                    <td>{{ $pet->Pet_weight }} kg</td>
+                    <td>{{ $pet->Pet_weight }} กก.</td>
                     <td>{{ $pet->additional_info ?? 'ไม่มี' }}</td>
                     <td>
                         <!-- ปุ่มสำหรับเปิด modal -->

@@ -40,10 +40,10 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
-            <h3 class="text-center">รีวิวห้องพัก</h3>
+            <h3 class="text-center">ประวัติการรีวิวห้องพักของคุณ</h3>
         </div>
             <div class="form-group">
-                    <h4> for="rating">ระดับความพึงพอใจ</h4>
+                    <h4 for="rating" class="text-center mt-4">ระดับความพึงพอใจ</h4>
                     <div class="rating">
                         <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
                         <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
@@ -53,8 +53,8 @@
                     </div>
                 </div>
             <div class="form-group">
-                <label for="comment">ความคิดเห็น</label>
-                <textarea name="comment" id="comment" class="form-control" rows="4"></textarea>
+                <h4 for="comment" class="mt-4">ความคิดเห็น</h4>
+                <textarea name="comment" id="comment" class="form-control" rows="4">{{}}</textarea>
             </div>
     </div>
 </div>
