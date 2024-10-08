@@ -35,7 +35,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/overview',[BookingController::class,'petInfo'])->name('overview');
     Route::post('/payment',[BookingController::class,'book'])->name('payment');
     Route::post('/success',[BookingController::class,'booked'])->name('success');
-    Route::post('/extendsuccess',[BookingController::class,'extendsuccess'])->name('extendsuccess');
 });
 
 Route::get('/home/{viewname}',[SearchController::class,'showpet'])->name('main'); 
@@ -51,8 +50,9 @@ Route::get('/review/history/{id}',[ReviewController::class, 'history'])->name('h
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-    Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
-    Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
+    // Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::post('/bookings/extend/{id}', [BookingController::class, 'extendBooking'])->name('bookings.extend');
+    Route::post('/extendsuccess', [BookingController::class, 'extendsuccess'])->name('extendsuccess');
     Route::get('/pets/status/{id}', [BookingController::class, 'petStatus'])->name('pets.status');
 });
 
@@ -81,6 +81,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/Admin/user',[AdminController::class,'users'])->name('Admin.user');
     Route::get('/Admin/user/{id}',[AdminController::class,'userdetail'])->name('Admin.user.detail');
     Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->name('Admin.report');
+    Route::get('/pet_status/{bookingId}', [AdminController::class, 'petstatus_report'])->name('pet.status.reports');
 });
 
 //การจอง

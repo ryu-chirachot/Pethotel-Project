@@ -349,14 +349,11 @@ class AdminController extends Controller
             return redirect()->back()->with('report', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
             
-
-        public function checkout($id){
-            $booking = Bookings::findOrFail($id);
-            $room = $booking->room;
-            $room->Rooms_status = 1;
-            $room->save();
-            Bookings::destroy($id);
-            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");       
+        /*ประวัติการรายงาน*/
+        public function petstatus_report($bookingId)
+        {
+            $booking = Bookings::with('pet_status')->findOrFail($bookingId);
+            return view('Admin.history', compact('booking'));
         }
 
         //จัดการ การจองห้อง
@@ -370,7 +367,10 @@ class AdminController extends Controller
                     ->where('End_date','<',Carbon::today());
 
             $extend = Bookings::with(['room','pet_status'])
-                    ->where('End_date','<','Original_end_date')->get();
+                    ->where('End_date','>','Original_end_date')
+                    ->where('PaymentDate',NULL)
+                    ->where('Booking_status','!=',3)
+                    ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(10);
             foreach($bookings as $bk) {
@@ -395,7 +395,10 @@ class AdminController extends Controller
                     ->where('End_date','<',Carbon::today())->get();
 
             $extend = Bookings::with(['room','pet_status'])
-                    ->where('End_date','<','Original_end_date')->get();
+                    ->where('End_date','>','Original_end_date')
+                    ->where('PaymentDate',NULL)
+                    ->where('Booking_status','!=',3)
+                    ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])
                         ->whereDate('created_at',Carbon::today())->orderBy('BookingOrderID', 'desc')
@@ -418,7 +421,10 @@ class AdminController extends Controller
                     ->where('End_date','<',Carbon::today())->get();
 
             $extend = Bookings::with(['room','pet_status'])
-                    ->where('End_date','<','Original_end_date')->get();
+                    ->where('End_date','>','Original_end_date')
+                    ->where('PaymentDate',NULL)
+                    ->where('Booking_status','!=',3)
+                    ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])
                         ->whereDate('End_date','<',Carbon::today())->orderBy('BookingOrderID', 'desc')
@@ -440,11 +446,17 @@ class AdminController extends Controller
                     ->where('End_date','<',Carbon::today())->get();
 
             $extend = Bookings::with(['room','pet_status'])
-                    ->where('End_date','<','Original_end_date')->get();
+                    ->where('End_date','>','Original_end_date')
+                    ->where('PaymentDate',NULL)
+                    ->where('Booking_status','!=',3)
+                    ->get();
 
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])
-                        ->where('End_date','<','Original_end_date')->orderBy('BookingOrderID', 'desc')
+                        ->where('End_date','>','Original_end_date')
+                        ->where('PaymentDate',NULL)
+                        ->where('Booking_status','!=',3)
+                        ->orderBy('BookingOrderID', 'desc')
                         ->paginate(5);
             foreach($bookings as $bk) {
                 $checkinDate = Carbon::parse($bk->Start_date);
@@ -486,11 +498,18 @@ class AdminController extends Controller
             $room->Rooms_status = 1;
             $room->save();
 
-            Bookings::destroy($id);
-            return redirect()->route('Admin.bookings')
-                            ->with('cancel', 'ยกเลิกการจองสำเร็จ');
+            return redirect()->route('Admin.bookings')->with('cancel', 'ยกเลิกการจองสำเร็จ');
         }
 
+        //เช็คเอาท์
+        public function checkout($id){
+            $booking = Bookings::findOrFail($id);
+            $room = $booking->room;
+            $room->Rooms_status = 1;
+            $room->save();
+            Bookings::destroy($id);
+            return redirect()->route('Admin.bookings')->with('checkout', "หมายเลขการจอง #".$id." เรียบร้อย!");       
+        }
 
         //หน้าผู้ใช้
         public function users()

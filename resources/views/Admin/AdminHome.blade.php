@@ -110,6 +110,8 @@
                                             <span class="badge bg-success">เช็คเอาท์</span>
                                         @elseif($booking->Booking_status == 3)
                                             <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                        @elseif($booking->PaymentDate == NULL && $booking->End_date > $booking->Original_end_date)
+                                            <span class="badge bg-warning">รอการยืนยันขยายเวลาการพัก</span>
                                         @else
                                             <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary' : 'badge bg-secondary' }}">
                                                 {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}

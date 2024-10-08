@@ -95,6 +95,14 @@
                         </div>
                         
                         <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a class="btn btn-primary" href="{{ route('pet.status.reports', $bookings->BookingOrderID) }}">
+                                    <i class="fas fa-paw me-2"></i>ประวัติรายงานสถานะสัตว์เลี้ยง
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
                                 @csrf
                                 <div class="d-grid">

@@ -29,7 +29,7 @@
             @if(isset($status) && $status->isNotEmpty())
 
                 @foreach ($status as $st)
-                    <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at }} น.</h5>
+                    <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at->format('d M Y H:i') }}</h5>
                     
                         @php
                             // แยกชื่อไฟล์รูปภาพที่คั่นด้วย comma

@@ -10,7 +10,10 @@
         <div class="room-sections-wrapper">
             <div class="room-section">
                 <div class="card">ห้อง
-                    <h2>{{$roomTypeName}}</h2>
+
+                    <h2>
+                        {{$booking->room->roomType->Rooms_type_name}}
+                    </h2>
                     <br>
                     เครื่องปรับอากาศ <br>
                     น้ำดื่ม <br>
@@ -22,12 +25,12 @@
                     <div class="date-range">
                         <div class="date">
                             <div class="date-label">เช็คอิน</div>
-                            <div class="date-value">{{$checkIn}}</div>
+                            <div class="date-value">{{$start}}</div>
                             <div class="time">ตั้งแต่ 14:00</div>
                         </div>
                         <div class="date">
                             <div class="date-label">เช็คเอาท์</div>
-                            <div class="date-value">{{$checkOut}}</div>
+                            <div class="date-value">{{$checkIn}}</div>
                             <div class="time">ก่อน 12:00</div>
                         </div>
                     </div>
@@ -38,24 +41,25 @@
                     <h2>สรุปราคา</h2>
                 <p style="display: flex; justify-content: space-between;">
                     <span>ราคา/ห้อง</span>
-                    <span>{{$price}} บาท</span>
+                    <span>{{$booking->room->Room_price}} บาท</span>
                 </p>
                 <p style="display: flex; justify-content: space-between;">
-                    <span>จำนวนวันที่เช้าพัก</span>
-                    <span>{{\Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}} วัน</span>
+                    <span>จำนวนวันที่ขยาย</span>
+                    <span>{{\Carbon\Carbon::parse($checkOut)->diffInDays(\Carbon\Carbon::parse($checkIn))}} วัน</span>
                 </p>
                     <div class="total-wrapper">
                         <div class="total">
                             <span>ยอดรวม</span>
-                            <span>{{$price * \Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}} บาท</span>
+                            <span>{{$booking->room->Room_price * \Carbon\Carbon::parse($checkOut)->diffInDays(\Carbon\Carbon::parse($checkIn))}} บาท</span>
                         </div>
                     </div>
                     
     
                 </div>
                 <br>
-                <form id="PaymentForm" action="{{route('extendsuccess',$booking->BookingOrderID)}}" method="post">
+                <form id="PaymentForm" action="{{route('extendsuccess')}}" method="POST">
                     @csrf
+                    <input type="hidden" name="id" value="{{$booking->BookingOrderID}}">
                     <h2>ช่องทางการชำระเงิน</h2>
                     @foreach($payment as $pay)
                     @if($pay->PaymentMethodID == 1)

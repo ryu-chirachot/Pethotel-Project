@@ -12,16 +12,6 @@
 @endif
 
 
-@if (session('extend'))
-    <script>
-        Swal.fire({
-    title: "ขยายระยะเวลาการเข้าพักสำเร็จ",
-    text: "{{ session('extend') }}",
-    icon: "success"
-});
-    </script>
-@endif
-
 @if(session('checkout'))
     <script>
         Swal.fire({
@@ -89,7 +79,7 @@
                                             @if($booking->deleted_at != NULL)
                                                 <span class="badge bg-success">เช็คเอาท์</span>
                                             @elseif($booking->Booking_status == 3)
-                                                <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                                <span class="badge bg-danger">ยกเลิกการจอง</span>  
                                             @else
                                                 <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary text-white' : 'badge bg-warning text-dark' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
