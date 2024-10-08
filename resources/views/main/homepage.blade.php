@@ -78,9 +78,9 @@
                 @foreach($reviews as $review)
                     <div class="review-box">
                     <div class="d-flex justify-content-between">
-    <label class="text-dark">{{ substr($user->name, 0, 2) . str_repeat('*', 3) }}</label>
-    <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>
-</div>
+                    <label class="text-dark">{{ substr($review->booking, 0, 3)}} *****</label>
+                <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>
+            </div>
           
                     <div class="star-rating">
                         <label>

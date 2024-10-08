@@ -27,11 +27,23 @@
             <hr>
             
             @if(isset($status) && $status->isNotEmpty())
+
                 @foreach ($status as $st)
                     <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at }} น.</h5>
+                    
+                        @php
+                            // แยกชื่อไฟล์รูปภาพที่คั่นด้วย comma
+                            $images = explode(',', $st->imgreport);
+                        @endphp
+
+                        @foreach ($images as $image)
+                            <div class="col-md-4">
+                                <img src="{{ asset('/images/' . trim($image)) }}" class="img-fluid" alt="รูปภาพการรายงาน">
+                            </div>
+                        @endforeach
+                   
                     <div class="status-item mb-3">
                         <h6><b>รายงาน :</b>{{ $st->Report }}</h6>
-                        <img src="{{ asset('/images/' . trim($status->image)) }}" alt="Status image">
                     </div>
                 @endforeach
             @else

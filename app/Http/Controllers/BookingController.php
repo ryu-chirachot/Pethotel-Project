@@ -168,7 +168,6 @@ class BookingController extends Controller
         $booking = bookings::withTrashed()->find($id);
         $status = PetStatus::withTrashed()->where('BookingOrderID', $id)->get();
 
-        
         return view('User.Petstatus', compact('booking', 'status'));
     }
 

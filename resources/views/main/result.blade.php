@@ -28,7 +28,7 @@
                     @foreach ($img->where('Rooms_type_id', $roomGroup->first()->pet_Type_Room_Type->Rooms_type_id) as $item)
                         @php
                             // แยกชื่อไฟล์รูปภาพที่คั่นด้วย comma
-                            $images = explode(',', $item->image->ImagesPath);
+                            $images = explode(',', $item->image->ImagesPath)
                         @endphp
 
                         @foreach ($images as $image)
