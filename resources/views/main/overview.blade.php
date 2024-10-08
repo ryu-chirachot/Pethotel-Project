@@ -85,7 +85,7 @@
         <input type="hidden" name="pet_age" value="{{ $p_age }}">
         <input type="hidden" name="pet_weight" value="{{ $p_weight }}">
         <input type="hidden" name="pet_gender" value="{{ $p_gender }}">
-        <input type="hidden" name="additional_info" value="{{ $p_description }}">
+        <input type="hidden" name="comment" value="{{ $p_description }}">
         <input type="hidden" name="pet_id" value="{{$pet_id}}">
         <div class="detail-row">
             <span class="detail-label">ประเภทห้อง:</span>
@@ -113,11 +113,11 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">อายุ:</span>
-            <span class="detail-value">{{$p_age}}</span>
+            <span class="detail-value">{{$p_age}} ปี</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">น้ำหนัก:</span>
-            <span class="detail-value">{{$p_weight}}</span>
+            <span class="detail-value">{{$p_weight}} กก.</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">เพศ:</span>
@@ -125,8 +125,8 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">คำแนะนำเพิ่มเติม:</span>
-            <span class="detail-value">{{$p_description}}</span>
-        </div>
+            <span class="detail-value">{{ $comment}}</span>
+            </div>
         <div class="buttons">
             <a class="btn btn-back" onclick="history.back()">แก้ไขข้อมูล</a>
             <button class="btn btn-confirm" type="submit">ยืนยันและชำระเงิน</button>

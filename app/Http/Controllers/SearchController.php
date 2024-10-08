@@ -31,10 +31,9 @@ class SearchController extends Controller
     public function show($viewname)
     {
         
-        $p_type = pet_type::all();  
         $reviews = Reviews::with('booking.user')->get();
-        
-        
+        $detail = Bookings::withTrashed()->with('pet.petType','room.roomType')->get();
+        dd($detail);
         return view(('main/homepage'),compact('p_type','reviews'));
     }
 
@@ -78,14 +77,4 @@ class SearchController extends Controller
     // ส่งข้อมูลไปยัง view
     return view('main.result', compact('rooms', 'p_type', 'groupedRooms', 'roomCounts','img'));
 }
-
-    // public function refresh()
-    // {
-    // // ลบค่าทั้งหมดใน Session
-    // session()->flush();
-    // $p_type = pet_type::all();  
-    // $reviews = Reviews::all();
-    // // แสดงหน้า Homepage
-    // return view('main.homepage',compact('p_type','reviews'));
-    // }
 }

@@ -46,7 +46,7 @@ class BookingController extends Controller
         $p_weight=$request->weight;
         $p_gender=$request->gender;
         $p_description=$request->comment;
-        
+        dd($p_description);
         
         return view(('main.overview'),compact('room_id','roomTypename','roomTypeId','checkIn','checkOut','p_name','p_breed','p_age','p_weight','p_gender','p_description','petTypeId','petTypeName','pet_id'));
 }

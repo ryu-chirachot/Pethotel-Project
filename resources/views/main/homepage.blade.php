@@ -77,6 +77,9 @@
             <div class="reviews-content">
                 @foreach($reviews as $review)
                     <div class="review-box">
+                        @foreach($detail as $d)
+                            
+                        @endforeach
                     <div class="d-flex justify-content-between">
                     <label class="text-dark">{{ substr($review->booking->user->name, 0, 2)}} *****</label>
                 <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>

@@ -15,7 +15,7 @@
     }
     .pet-table-container {
         width: 100%;
-        max-width: 720px;
+        max-width: 800px;
         margin: 20px auto;
         background-color: #ffffff;
         border-radius: 15px;
@@ -23,7 +23,7 @@
         padding: 20px;
     }
     table th, table td {
-        padding: 20px;
+        padding: 10px;
         text-align: center;
         font-size: 16px;
     }
@@ -102,7 +102,7 @@
                                     <td>{{ $pet->Pet_breed }}</td>
                                     <td>{{ $pet->Pet_age }} ปี</td>
                                     <td>{{ $pet->Pet_weight }} kg</td>
-                                    <td>{{ $pet->additional_info ?? 'ไม่มี' }}</td>
+                                    <td>{{ $pet->comment ?? 'ไม่มี' }}</td>
                                     <td>
                                         <button class="btn btn-primary" type="submit" name="select">เลือก</button>
                                     </td>
