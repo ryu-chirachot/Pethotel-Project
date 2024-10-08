@@ -14,7 +14,7 @@ class Bookings extends Model
     protected $table = 'bookings';
     protected $primaryKey = 'BookingOrderID';
     protected $fillable = [
-        'BookingOrderID','Pet_id', 'User_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updated_at','deleted_at'
+        'BookingOrderID','Pet_id','', 'User_id', 'Rooms_id', 'Start_date', 'End_date', 'Booking_date', 'Booking_status', 'Price', 'PaymentMethodID', 'PaymentDate','updated_at','deleted_at'
     ];
 
     public function user()

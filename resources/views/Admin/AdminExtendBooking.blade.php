@@ -129,6 +129,10 @@
 </div>
 
 <style>
+    *{
+        font-family: "kanit";
+    
+    }
     .table th, .table td {
         vertical-align: middle;
     }

@@ -28,9 +28,9 @@
             
             @if(isset($status) && $status->isNotEmpty())
                 @foreach ($status as $st)
-                    <h5>รายงานโดย {{$st->user->name}} สถานะ ณ เวลา {{ $st->updated_at }} น.</h5>
+                    <div>รายงานโดย: {{$st->user->name}} <br> วันที่: {{ $st->updated_at }} น.</div>
                     <div class="status-item mb-3">
-                        <h6><b>รายงาน :</b>{{ $st->Report }}</h6>
+                        <div>การรายงาน :{{ $st->Report }}</div>
                         
                     </div>
                 @endforeach

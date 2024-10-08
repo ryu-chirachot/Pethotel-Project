@@ -19,8 +19,9 @@
 
     <style>
         *{
-            font-family: "Mitr", sans-serif;
-        }
+        font-family: "kanit";
+    
+    }
     </style>
 </head>
 <body>

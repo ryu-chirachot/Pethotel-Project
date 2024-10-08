@@ -131,6 +131,10 @@
 </div>
 
 <style>
+    *{
+        font-family: "kanit";
+    
+    }
     .border-left-primary { border-left: .25rem solid #4e73df; }
     .border-left-success { border-left: .25rem solid #1cc88a; }
     .border-left-warning { border-left: .25rem solid #f6c23e; }

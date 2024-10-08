@@ -21,6 +21,53 @@
     </script>
 @endif
 
+<style>
+    *{
+        font-family: "kanit";
+    
+    }
+    .btn {
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .modal-content {
+        border-radius: 15px;
+    }
+    .modal-header {
+        background-color: #f8f9fa;
+        border-bottom: none;
+    }
+    .modal-footer {
+        border-top: none;
+    }
+
+    #imageInputsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.room-image-upload {
+    flex-basis: calc(33.333% - 10px);
+    max-width: calc(33.333% - 10px);
+}
+
+@media (max-width: 768px) {
+    .room-image-upload {
+        flex-basis: calc(50% - 10px);
+        max-width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .room-image-upload {
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+</style>
+
 <div class="container my-5">
     <h1 class="mb-4 text-center">รายละเอียดการจอง</h1>
 
@@ -91,6 +138,13 @@
                                 <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#petStatusModal">
                                     <i class="fas fa-paw me-2"></i>รายงานสถานะสัตว์เลี้ยง
                                 </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a class="btn btn-primary" href="{{ route('pet.status.reports', $bookings->BookingOrderID) }}">
+                                    <i class="fas fa-paw me-2"></i>ประวัติรายงานสถานะสัตว์เลี้ยง
+                                </a>
                             </div>
                         </div>
                         
@@ -169,48 +223,6 @@
         </div>
     @endif
 
-<style>
-    .btn {
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .modal-content {
-        border-radius: 15px;
-    }
-    .modal-header {
-        background-color: #f8f9fa;
-        border-bottom: none;
-    }
-    .modal-footer {
-        border-top: none;
-    }
-
-    #imageInputsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.room-image-upload {
-    flex-basis: calc(33.333% - 10px);
-    max-width: calc(33.333% - 10px);
-}
-
-@media (max-width: 768px) {
-    .room-image-upload {
-        flex-basis: calc(50% - 10px);
-        max-width: calc(50% - 10px);
-    }
-}
-
-@media (max-width: 480px) {
-    .room-image-upload {
-        flex-basis: 100%;
-        max-width: 100%;
-    }
-}
-</style>
 
 
 
