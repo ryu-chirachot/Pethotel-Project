@@ -85,13 +85,7 @@
                             </form>
                         </div>
                     @else
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="d-grid">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal">
-                                    <i class="fas fa-calendar-plus me-2"></i>ขยายเวลา
-                                </button>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="d-grid">
                                 <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#petStatusModal">
@@ -110,13 +104,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="d-grid">
-                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
-                                </a>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
                                 @csrf
@@ -127,35 +115,20 @@
                                 </div>
                             </form>
                         </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
+                                </a>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>
         </div>
 
-        <!-- ขยายการจอง -->
-        <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="extendModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="extendModalLabel">ขยายเวลาการจอง</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ route('Admin.bookings.extend', $bookings->BookingOrderID) }}" method="POST">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="new_end_date" class="form-label">วันที่สิ้นสุดใหม่</label>
-                                <input type="date" class="form-control" id="new_end_date" name="new_end_date" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                            <button type="submit" class="btn btn-primary">ยืนยันการขยายเวลา</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Pet Status รายงาน -->
         <div class="modal fade" id="petStatusModal" tabindex="-1" aria-labelledby="petStatusModalLabel" aria-hidden="true">
@@ -239,7 +212,7 @@
 }
 </style>
 
-<script src="{{ asset('js/Addimg.js') }}"></script>
+
 
 <script>
     function generateImageInputs() {
@@ -259,6 +232,8 @@
     }
 }
 </script>
+
+<script src="{{ asset('js/Addimg.js') }}"></script>
 
 <script>
     function Confirmcancel(id) {

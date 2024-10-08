@@ -22,5 +22,10 @@ class ReviewController extends Controller
         // Redirect 
         return redirect()->route('bookings.index')->with('เสร็จสิ้น', 'ขอบคุณสำหรับการรีวิวของคุณ');
     }
+
+    public function history($id){
+        $review = Reviews::where('BookingOrderID',$id)->get();
+        return view('User.Historyreview',compact('review'));
+    }
 }
 

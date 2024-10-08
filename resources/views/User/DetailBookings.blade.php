@@ -41,11 +41,11 @@
 
             <div class="card-footer text-right">
             @if($booking->review)
-                <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-secondary" style="pointer-events: none; ">รีวิว</a>
-                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
+                <a href="{{ route('historyreview', $booking->BookingOrderID) }}" class="btn btn-secondary">ประวัติการรีวิว</a>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
             @else
                 <a href="{{ route('review', $booking->BookingOrderID) }}" class="btn btn-success">รีวิว</a>
-                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
             @endif
 
             </div>
@@ -84,7 +84,10 @@
                 </p>
             </div>
             <div class="card-footer text-center">
-                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info mt-3">ติดตามสถานะสัตว์เลี้ยง</a>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal">
+                    <i class="fas fa-calendar-plus me-2"></i>ขยายเวลาการพัก
+                </button>
+                <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
             </div>
                 
             @endif
@@ -94,5 +97,33 @@
 
     
 </div>
+
+        <!-- ขยายการจอง -->
+        <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="extendModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="extendModalLabel">ขยายเวลาการจอง</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('Admin.bookings.extend', $booking->BookingOrderID) }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="new_end_date" class="form-label">วันที่สิ้นสุดใหม่</label>
+                                @php
+                                    $minDate = \Carbon\Carbon::parse($booking->End_date)->addDay()->format('Y-m-d');
+                                @endphp
+                                <input type="date" class="form-control" id="new_end_date" name="new_end_date" min="{{ $minDate }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                            <button type="submit" class="btn btn-primary">ยืนยันการขยายเวลา</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 @endsection

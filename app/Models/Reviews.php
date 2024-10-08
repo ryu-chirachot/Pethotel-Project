@@ -21,6 +21,5 @@ class Reviews extends Model
     {
         return $this->belongsTo(Bookings::class, 'BookingOrderID', 'BookingOrderID');
     }
-
     
 }

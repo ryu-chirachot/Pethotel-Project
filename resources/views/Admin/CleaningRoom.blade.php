@@ -1,59 +1,34 @@
 @extends('layouts.AdminSidebar')
 
 @section('content')
-
 @if (session('success'))
     <script>
         Swal.fire({
-    title: "เปลี่ยนแปลงข้อมูล",
-    text: "{{ session('success') }}",
-    icon: "success"
-});
+            title: "เปลี่ยนแปลงข้อมูล",
+            text: "{{ session('success') }}",
+            icon: "success"
+        });
     </script>
 @endif
-
 @if (session('complete'))
     <script>
         Swal.fire({
-  title: "เพิ่มข้อมูลห้องพัก",
-  text: "{{ session('complete') }}",
-  icon: "success"
-});
+            title: "เพิ่มข้อมูลห้องพัก",
+            text: "{{ session('complete') }}",
+            icon: "success"
+        });
     </script>
 @endif
 
-@if (session('error'))
-    <script>
-        Swal.fire({
-  title: "ยังไม่มีข้อมูลการจองห้องนี้",
-  text: "{{ session('error') }}",
-  icon: "info"
-});
-    </script>
-@endif
-
-@if (session('update'))
-    <script>
-        Swal.fire({
-  title: "อัปเดตการจองที่หมดอายุแล้ว ",
-  text: "{{ session('update') }}",
-  icon: "success"
-});
-    </script>
-@endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="mb-0"><b>ห้องพัก</b></h3>
-            <div class="d-flex align-items-center">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="mb-0"><b>ห้องพัก</b></h3>
                 <input type="text" class="form-control" style="width: 250px;" right="0px" id="search" placeholder="พิมพ์เพื่อค้นหา..." onkeyup="searchTable()">
-                
             </div>
-        </div>
 
-    
-            <!-- กรอง -->
+            <!-- Room Filters -->
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="{{route('Admin.rooms')}}">ห้องทั้งหมด ({{count($allRooms)}})</a>
@@ -62,17 +37,17 @@
                     <a class="btn btn-outline-primary" href="{{route('Admin.clean')}}">ห้องที่รอทำความสะอาด ({{count($cleaning)}})</a>
                 </div>
             </div>
-        @if($Rooms->isEmpty())
-            <div class="alert alert-warning" role="alert">
-                ไม่มีห้องในตอนนี้กรุณาเพิ่มห้องก่อน
-            </div>    
-        @else
-                <!-- Room table -->
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
-                            <thead class="table-dark">
-                                <tr>
+            @if($Rooms->isEmpty())
+                <div class="alert alert-warning" role="alert">
+                    ยังไม่มีห้องที่รอทำความสะอาดในตอนนี้
+                </div>
+            @else
+            <!-- Room table -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
                                     <th>หมายเลขห้อง</th>
                                     <th>ประเภทห้อง</th>
                                     <th>ประเภทของสัตว์เลี้ยง</th>
@@ -168,52 +143,49 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{$Rooms->links('pagination::bootstrap-5')}}
-                    </div>
-                @endif
+                    {{$Rooms->links('pagination::bootstrap-5')}}
                 </div>
-            
+                @endif
             </div>
+            
         </div>
     </div>
-    
+</div>
+
 <script>
     function ConfirmDelete(id){
         const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-success me-3",
-                        cancelButton: "btn btn-danger"
-                    },
-                    buttonsStyling: true
-                    });
-                    swalWithBootstrapButtons.fire({
-                    title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
-                    text: "แน่ใจแล้วใช่ไหม หายไปเลยนะ!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "ยืนยัน",
-                    cancelButtonText: "ยกเลิก",
-                    reverseButtons: false
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        swalWithBootstrapButtons.fire({
-                            title: "ลบ เรียบร้อย",
-                            text: "ข้อมูลของคุณถูกลบสำเร็จ",
-                            icon: "success"
-                        });
-                        setTimeout(()=>{
-                            window.location.href = `/Admin/Rooms/delete/${id}`;
-                        },800)
-                    } else if (
-                        /* Read more about handling dismissals below */
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire({
-                        title: "ยกเลิก",
-                        text: "ข้อมูลของคุณยังคงอยู่ :)",
-                        icon: "error"
-                        });
-                    }
+            customClass: {
+                confirmButton: "btn btn-success me-3",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: true
+        });
+        swalWithBootstrapButtons.fire({
+            title: `คุณแน่ใจใช่ไหมว่าจะลบข้อมูลห้องหมายเลข ${id} ?`,
+            text: "แน่ใจแล้วใช่อ้ะป่าว หายไปเลยนะ!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "ยืนยัน",
+            cancelButtonText: "ยกเลิก",
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire({
+                    title: "ลบ เรียบร้อย",
+                    text: "ข้อมูลของคุณถูกลบสำเร็จ",
+                    icon: "success"
+                });
+                setTimeout(()=>{
+                    window.location.href = `/Admin/Rooms/delete/${id}`;
+                },800)
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "ยกเลิก",
+                    text: "ข้อมูลของคุณยังคงอยู่ :)",
+                    icon: "error"
+                });
+            }
         });
     }
 </script>
@@ -225,11 +197,12 @@
         rows.forEach(function(row) {
             var rowData = row.innerText.toLowerCase();
             if (rowData.includes(input)) {
-                row.style.display = ""; 
+                row.style.display = ""; // Show row
             } else {
-                row.style.display = "none"; 
+                row.style.display = "none"; // Hide row
             }
         });
     }
 </script>
+
 @endsection

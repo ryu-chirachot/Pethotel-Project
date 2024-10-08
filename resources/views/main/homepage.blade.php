@@ -64,24 +64,24 @@
 
     
     <div class="container mt-5">
-        @if($reviews->count() == 0)
+        @if($user->count() == 0)
             
         @else
         <h2 class="text-center " style="margin-top: -60px;">รีวิวจากลูกค้า</h2>
         <div class="reviews-container">
             
             <div class="reviews-content">
-                @foreach($reviews as $review)
+                @foreach($user as $us)
                     <div class="review-box">
                     <div class="d-flex justify-content-between">
-    <label class="text-dark">{{ substr($user->name, 0, 2) . str_repeat('*', 3) }}</label>
-    <label class="text-muted">{{ $review->updated_at->format('d/m/Y') }}</label>
+    <label class="text-dark">{{ $us->user->name}}</label>
+    <label class="text-muted">{{ $us->review->updated_at->format('d/m/Y') }}</label>
 </div>
-          
+        
                     <div class="star-rating">
                         <label>
                             @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $review->rating)
+                                @if ($i <= $us->review->rating)
                                     <i class="fas fa-star"></i>
                                 @else
                                     <i class="far fa-star"></i>
@@ -89,7 +89,7 @@
                             @endfor
                             </label>
                         </div>
-                        <p>{{ $review->comment }}</p>
+                        <p>{{ $us->review->comment }}</p>
                     </div>
                 @endforeach
             </div>

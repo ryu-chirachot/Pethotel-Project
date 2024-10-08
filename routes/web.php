@@ -44,12 +44,14 @@ Route::get('/room/search',[SearchController::class,'search'])->name('search.resu
 Route::post('/success',[BookingController::class,'booked'])->name('success');
 Route::get('/review/{id}',[ReviewController::class, 'index'])->name('review');
 Route::post('/submit/review', [ReviewController::class, 'submitReview'])->name('submit.review');
+Route::get('/review/history/{id}',[ReviewController::class, 'history'])->name('historyreview');
 
 
 //รายละเอียดการจอง user 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
     Route::get('/bookings/{id}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::get('/pets/status/{id}', [BookingController::class, 'petStatus'])->name('pets.status');
 });
 
@@ -63,7 +65,8 @@ Route::middleware(['admin'])->group(function () {
     //ห้อง
     Route::get('/Admin/Rooms',[AdminController::class,'rooms'])->name('Admin.rooms'); //route สำหรับเรียกดูห้องทั้งหมด
     Route::get('/Admin/Rooms/Available',[AdminController::class,'Available'])->name('Admin.available');
-    Route::get('/Admin/Rooms/Unavailable',[AdminController::class,'Unavailable'])->name('Admin.unavailable'); //route สำหรับเรียกดูห้องทั้งหมด
+    Route::get('/Admin/Rooms/Unavailable',[AdminController::class,'Unavailable'])->name('Admin.unavailable');
+    Route::get('/Admin/Rooms/Cleaning',[AdminController::class,'Cleaning'])->name('Admin.clean');
     Route::post('Admin/Rooms/Edit/Update',[AdminController::class,'updateRoom'])->name('rooms.update'); //route สำหรับ ไปหน้าแก้ไขห้อง
     Route::get('/Admin/Rooms/Edit/{id}',[AdminController::class,'editrooms'])->name('Admin.editrooms'); //route สำหรับส่งค่าไปแก้ไขห้องใน DB
     Route::get('/Admin/Rooms/selecttype',[AdminController::class,'selectRoomType'])->name('Admin.rooms.type'); //route สำหรับไปที่หน้าสร้างห้อง
@@ -85,10 +88,9 @@ Route::prefix('/Admin/Bookings')->name('Admin.')->middleware('admin')->group(fun
     Route::get('/', [AdminController::class, 'showBookings'])->name('bookings');
     Route::get('/TodayBook', [AdminController::class, 'Todaybooking'])->name('bookings.today');
     Route::get('/Expiredbooking', [AdminController::class, 'expiredbooking'])->name('bookings.expired');
-    Route::get('/Extendbooking', [AdminController::class, 'extend'])->name('bookings.expired');
+    Route::get('/Extendbooking', [AdminController::class, 'extend'])->name('bookings.extend');
     Route::get('/detail/{id}', [AdminController::class, 'detail'])->name('bookings.detail');
     Route::post('detail/confirm-payment/{id}', [AdminController::class, 'confirmPayment'])->name('bookings.confirmPayment');
-    Route::post('detail/extend/{id}', [AdminController::class, 'extendBooking'])->name('bookings.extend');
     Route::post('detail/cancel/{id}', [AdminController::class, 'cancelBooking'])->name('bookings.cancel');
     Route::get('detail/checkout/{id}', [AdminController::class,'checkout'])->name('bookings.checkout');
     Route::post('/Todaybookings', [AdminController::class,''])->name('bookings.today');

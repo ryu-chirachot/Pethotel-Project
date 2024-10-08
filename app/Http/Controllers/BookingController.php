@@ -9,7 +9,8 @@ use App\Models\Rooms;
 use App\Models\bookings;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
-use App\Models\PetStatus; 
+use App\Models\PetStatus;
+use App\Models\Reviews;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -143,6 +144,22 @@ class BookingController extends Controller
         return view('User.DetailBookings', compact('bookings'));
     }
 
+    // ขยายการจอง
+    public function extendBooking(Request $request, $id)
+    {
+        $booking = Bookings::findOrFail($id);
+        $newEndDate = $request->input('new_end_date');
+
+        
+        if ($newEndDate > $booking->End_date) {
+            $booking->End_date = $newEndDate;
+            $booking->save();
+            return redirect()->route('Admin.bookings')
+                            ->with('extend', $booking->user->name);
+        }
+
+        return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
+    }
 
     // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการนั้น
     public function show($id)
@@ -213,4 +230,7 @@ class BookingController extends Controller
         
         return redirect()->back()->with('success','ลบสัตว์เลี้ยงเรียบร้อย');
     }
+
+    
+    
 }
