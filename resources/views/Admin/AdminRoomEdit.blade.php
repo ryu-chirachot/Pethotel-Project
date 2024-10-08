@@ -44,10 +44,11 @@
                 <div class="form-group mb-3">
                     <label>สถานะห้อง *</label>
                     <select name="room_status" class="form-control" required>
-                    <option value="" selected disabled>เลือกสถานะห้อง</option>
-                    <option value="1" >ว่าง</option>
-                    <option value="0" >ไม่ว่าง</option>
-                </select>
+                        <option value="1" {{ $RoomID->Rooms_status == 1 ? 'selected' : '' }}>ว่าง</option>
+                        <option value="0" {{ $RoomID->Rooms_status == 0 ? 'selected' : '' }}>ไม่ว่าง</option>
+                        <option value="2" {{ $RoomID->Rooms_status == 2 ? 'selected' : '' }}>ซ่อมบำรุง</option>
+                        <option value="3" {{ $RoomID->Rooms_status == 3 ? 'selected' : '' }}>ทำความสะอาด</option>
+                    </select>
                 </div>
 
                 <div class="form-group mb-3">

@@ -66,7 +66,7 @@
                                         <td>{{ $rm->petType->Pet_nametype }}</td>
 
                                         @php
-                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 0)->where('Booking_status', '!=', 2)->where('Booking_status', '!=', 3)->first();                                        @endphp
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();                                        @endphp
 
                                         @if($activeBooking)
                                             <td>{{ $activeBooking->user->name }}</td>
@@ -94,11 +94,15 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         </td>
+                                        @if($activeBooking)
+                                        <td><span class="badge bg-danger">มีการจอง</span></td>
+                                        @else
                                         <td>
                                             <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
+                                        @endif
                                         <td>
                                             <div class="btn-group">
                                                 <button class="btn btn-secondary btn-sm dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">

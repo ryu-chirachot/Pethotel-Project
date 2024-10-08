@@ -113,11 +113,11 @@
         </div>
         <div class="detail-row">
             <span class="detail-label">อายุ:</span>
-            <span class="detail-value">{{$p_age}}</span>
+            <span class="detail-value">{{$p_age}} ปี</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">น้ำหนัก:</span>
-            <span class="detail-value">{{$p_weight}}</span>
+            <span class="detail-value">{{$p_weight}} กิโลกรัม</span>
         </div>
         <div class="detail-row">
             <span class="detail-label">เพศ:</span>

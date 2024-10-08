@@ -176,8 +176,9 @@ class BookingController extends Controller
         
         return view('bookings', compact('Pets_rooms'));
     }
+
     public function mypets(){
-      
+    
         $pets = Pets::where('user_id', auth()->id())->get();
         
 
@@ -204,8 +205,11 @@ class BookingController extends Controller
     }
 
     public function deletePet($id){
-
+        //ลบการจองที่เกี่ยวข้อง
+        Bookings::where('Pet_id', $id)->delete();
+        //ลบสัตว์เลี้ยง
         Pets::destroy($id);
+        
         return redirect()->back()->with('success','ลบสัตว์เลี้ยงเรียบร้อย');
     }
 }

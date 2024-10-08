@@ -205,8 +205,8 @@
                                     <label for="gender" class="form-label">เพศ</label>
                                     <select name="gender" class="form-select" required>
                                         <option value="" disabled selected>เลือกเพศ</option>
-                                        <option value="M">ชาย</option>
-                                        <option value="F">หญิง</option>
+                                        <option value="M">ผู้</option>
+                                        <option value="F">เมีย</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -214,12 +214,12 @@
                                     <input name="breed" type="text" class="form-control" placeholder="สายพันธุ์" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="age" class="form-label">อายุ</label>
-                                    <input name="age" type="number" class="form-control" placeholder="อายุ" required>
+                                    <label for="age" class="form-label">อายุ (ปี)</label>
+                                    <input name="age" type="number" class="form-control" placeholder="อายุ (ปี)" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="weight" class="form-label">น้ำหนัก (kg)</label>
-                                    <input type="number" name="weight" class="form-control" placeholder="น้ำหนัก (kg)" required>
+                                    <label for="weight" class="form-label">น้ำหนัก (กิโลกรัม)</label>
+                                    <input type="number" name="weight" class="form-control" placeholder="น้ำหนัก (กิโลกรัม)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="comment" class="form-label">คำแนะนำ / ข้อกำหนดเพิ่มเติม :</label>
