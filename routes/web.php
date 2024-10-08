@@ -78,6 +78,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/Admin/user',[AdminController::class,'users'])->name('Admin.user');
     Route::get('/Admin/user/{id}',[AdminController::class,'userdetail'])->name('Admin.user.detail');
     Route::post('/Admin/Pets/report/',[AdminController::class,'submitReport'])->name('Admin.report');
+    
 });
 
 //การจอง

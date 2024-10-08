@@ -61,6 +61,7 @@ i {
     gap: 10px;
 }
 .grid-item {
+    position: relative;
     background-color: #f0f0f0;
     padding: 20px;
     text-align: center;
@@ -122,18 +123,18 @@ i {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* สองคอลัมน์ */
-    grid-template-rows: auto auto; /* สองแถว */
-    grid-gap: 10px; /* ช่องว่างระหว่างกริด */
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto auto; 
+    grid-gap: 10px;
 }
 .grid-item:nth-child(3) {
-    grid-column: 1 ; /* ทำให้ item ที่ 3 ขยายกว้างไปทั้งสองคอลัมน์ */
+    grid-column: 1 ; 
 }
 .col-7{
     margin-left:200px;
     
 }
-#email, #password, #password_confirmation, #fname ,#lname {
+#email, #password, #password_confirmation,#name{
     border: none;
     background-color: rgba(246, 209, 15, 0.2);
     margin: 10px 0;
@@ -144,15 +145,4 @@ i {
 .name{
     display: flex;
 }
-#fname ,#lname{
-    
-    width: 180px;
-    margin-right: 20px;
-    
-}
-#lname{
-    margin: 10px 20px;
-}
-/* #dog{
-    width: 500px;
-} */
+

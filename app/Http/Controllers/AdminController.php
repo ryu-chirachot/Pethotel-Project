@@ -306,6 +306,14 @@ class AdminController extends Controller
             $petStatus->save();
             return redirect()->back()->with('report', 'บันทึกสถานะสัตว์เลี้ยงเรียบร้อยแล้ว');
         }
+        
+
+        /*เก็บประวัติการายงานสถานะสัตว์เลี้ยง*/
+        public function petstatus_report($bookingId)
+        {
+            $petstatus_report = Bookings::with('petStatus')->findOrFail($bookingId);
+            return view('user.booking', compact('booking'));
+        }
             
 
         public function checkout($id){
