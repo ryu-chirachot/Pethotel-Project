@@ -54,10 +54,11 @@
         </div>
     </div>
 
-    @if ($bookings->deleted_at || $bookings->Booking_status == 3)
+    @if (($bookings->deleted_at || $bookings->Booking_status == 3))
     <div class="alert alert-warning" role="alert">
         <i class="fas fa-exclamation-triangle me-2"></i>การจองนี้สิ้นสุดแล้ว ไม่สามารถดำเนินการใดๆ ได้
     </div>
+    
     @else
         <div class="card shadow-sm mb-4">
             <div class="card-body">

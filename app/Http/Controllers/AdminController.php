@@ -368,6 +368,7 @@ class AdminController extends Controller
                     ->where('End_date','>','Original_end_date')
                     ->where('PaymentDate',NULL)
                     ->where('Booking_status','!=',3)
+                    ->where('Booking_status','!=',0)
                     ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])->orderBy('BookingOrderID', 'desc')->paginate(10);
@@ -396,6 +397,7 @@ class AdminController extends Controller
                     ->where('End_date','>','Original_end_date')
                     ->where('PaymentDate',NULL)
                     ->where('Booking_status','!=',3)
+                    ->where('Booking_status','!=',0)
                     ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])
@@ -422,6 +424,7 @@ class AdminController extends Controller
                     ->where('End_date','>','Original_end_date')
                     ->where('PaymentDate',NULL)
                     ->where('Booking_status','!=',3)
+                    ->where('Booking_status','!=',0)
                     ->get();
             $countDates = [];
             $bookings = Bookings::withTrashed()->with(['room','pet_status'])
@@ -447,6 +450,7 @@ class AdminController extends Controller
                     ->where('End_date','>','Original_end_date')
                     ->where('PaymentDate',NULL)
                     ->where('Booking_status','!=',3)
+                    ->where('Booking_status','!=',0)
                     ->get();
 
             $countDates = [];
@@ -454,6 +458,7 @@ class AdminController extends Controller
                         ->where('End_date','>','Original_end_date')
                         ->where('PaymentDate',NULL)
                         ->where('Booking_status','!=',3)
+                        ->where('Booking_status','!=',0)
                         ->orderBy('BookingOrderID', 'desc')
                         ->paginate(5);
             foreach($bookings as $bk) {
