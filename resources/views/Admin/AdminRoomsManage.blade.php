@@ -5,9 +5,9 @@
 @if (session('success'))
     <script>
         Swal.fire({
-  title: "เปลี่ยนแปลงข้อมูล",
-  text: "{{ session('success') }}",
-  icon: "success"
+    title: "เปลี่ยนแปลงข้อมูล",
+    text: "{{ session('success') }}",
+    icon: "success"
 });
     </script>
 @endif
@@ -52,16 +52,21 @@
             </div>
         </div>
 
-
-
+    
             <!-- กรอง -->
             <div class="d-flex justify-content-between mb-3">
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="{{route('Admin.rooms')}}">ห้องทั้งหมด ({{count($allRooms)}})</a>
                     <a class="btn btn-outline-success me-2" href="{{route('Admin.available')}}">ห้องที่ว่างอยู่ ({{count($AvailableRooms)}})</a>
-                    <a class="btn btn-outline-danger" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
+                    <a class="btn btn-outline-danger me-2" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
+                    <a class="btn btn-outline-primary me-2" href="{{route('Admin.clean')}}">ห้องที่รอทำความสะอาด ({{count($cleaning)}})</a>
                 </div>
             </div>
+        @if($Rooms->isEmpty())
+            <div class="alert alert-warning" role="alert">
+                ไม่มีห้องในตอนนี้กรุณาเพิ่มห้องก่อน
+            </div>    
+        @else
                 <!-- Room table -->
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -81,14 +86,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($Rooms as $rm)
+                            @foreach ($Rooms as $rm)
                                     <tr>
                                         <td>{{ $rm->Rooms_id }}</td>
                                         <td>{{ $rm->roomType->Rooms_type_name }}</td>
                                         <td>{{ $rm->petType->Pet_nametype }}</td>
 
                                         @php
-                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();                                        @endphp
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();
+                                        @endphp
 
                                         @if($activeBooking)
                                             <td>{{ $activeBooking->user->name }}</td>
@@ -99,14 +105,25 @@
                                                     <span>ไม่มีข้อมูลสัตว์เลี้ยง</span>
                                                 @endif
                                             </td>
-                                            
                                         @else
                                             <td><span>ไม่มีผู้จอง</span></td>
                                             <td><span>ไม่มีผู้จอง</span></td>
-                                            
                                         @endif
-                                        
-                                        @if($activeBooking->Booking)
+
+                                        <td>
+                                        @if($activeBooking)
+                                            @if($activeBooking->Booking_status == 0)
+                                                    <span class="badge bg-warning">รอการยืนยัน</span>
+                                                @elseif($activeBooking->Booking_status == 1)
+                                                    <span class="badge bg-primary">เช็คอินแล้ว</span>
+                                                @elseif($activeBooking->Booking_status == 2)
+                                                    <span class="badge bg-danger">เลยกำหนด</span>
+                                                @endif  
+                                        @else
+                                            <span class="badge bg-danger">ไม่มีการจอง</span>  
+                                        @endif
+                                        </td>
+
                                         <td>
                                             @if ($rm->Rooms_status == 1)
                                                 <span class="badge bg-success">ว่าง</span>
@@ -115,7 +132,7 @@
                                             @elseif ($rm->Rooms_status == 3)
                                                 <span class="badge bg-primary">ทำความสะอาด</span>
                                             @else 
-                                                <span class="badge bg-danger">ไมว่าง</span>
+                                                <span class="badge bg-danger">ไม่ว่าง</span>
                                             @endif
                                         </td>
 
@@ -149,12 +166,13 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                </tbody>
+                            </tbody>
                         </table>
                         {{$Rooms->links('pagination::bootstrap-5')}}
                     </div>
+                @endif
                 </div>
-
+            
             </div>
         </div>
     </div>

@@ -36,7 +36,14 @@
             <div class="room-section">
                 <div class="card">
                     <h2>สรุปราคา</h2>
-                    <p>ราคา/ห้อง</p>
+                <p style="display: flex; justify-content: space-between;">
+                    <span>ราคา/ห้อง</span>
+                    <span>{{$price}} บาท</span>
+                </p>
+                <p style="display: flex; justify-content: space-between;">
+                    <span>จำนวนวันที่เช้าพัก</span>
+                    <span>{{\Carbon\Carbon::parse($checkIn)->diffInDays(\Carbon\Carbon::parse($checkOut))}} วัน</span>
+                </p>
                     <div class="total-wrapper">
                         <div class="total">
                             <span>ยอดรวม</span>

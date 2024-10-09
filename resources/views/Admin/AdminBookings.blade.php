@@ -12,16 +12,6 @@
 @endif
 
 
-@if (session('extend'))
-    <script>
-        Swal.fire({
-    title: "ขยายระยะเวลาการเข้าพักสำเร็จ",
-    text: "{{ session('extend') }}",
-    icon: "success"
-});
-    </script>
-@endif
-
 @if(session('checkout'))
     <script>
         Swal.fire({
@@ -46,7 +36,8 @@
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="/Admin/Bookings">การจองทั้งหมด ({{$allBook->count()}})</a>
                     <a class="btn btn-outline-success me-2" href="/Admin/Bookings/TodayBook">การจองของวันนี้ ({{$today->count()}})</a>
-                    <a class="btn btn-outline-danger" href="/Admin/Bookings/Expiredbooking">การจองที่พักเลยกำหนด ({{$expired->count()}})</a>
+                    <a class="btn btn-outline-danger me-2" href="/Admin/Bookings/Expiredbooking">การจองที่พักเลยกำหนด ({{$expired->count()}})</a>
+                    <a class="btn btn-outline-primary me-2" href="/Admin/Bookings/Extendbooking">การจองที่ขยายเวลา ({{$extend->count()}})</a>
                 </div>
             </div>
             @if($bookings->isEmpty())
@@ -89,6 +80,8 @@
                                                 <span class="badge bg-success">เช็คเอาท์</span>
                                             @elseif($booking->Booking_status == 3)
                                                 <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                            @elseif($booking->End_date > $booking->Original_end_date && $booking->PaymentDate == NULL)
+                                                <span class="badge bg-secondary">ขยายการจอง</span>
                                             @else
                                                 <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary text-white' : 'badge bg-warning text-dark' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
@@ -138,7 +131,6 @@
     }
 </style>
 
-
 <script>
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();
@@ -153,7 +145,4 @@
         });
     }
 </script>
-
-
-
 @endsection

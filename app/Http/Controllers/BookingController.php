@@ -9,7 +9,8 @@ use App\Models\Rooms;
 use App\Models\bookings;
 use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Auth;
-use App\Models\PetStatus; 
+use App\Models\PetStatus;
+use App\Models\Reviews;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -104,7 +105,7 @@ class BookingController extends Controller
             
             $price = $request->price;
             $PaymentMethodID = $request->payment;
-           
+            
             $pet_id = $request->pet_id;
             // ทำให้ห้องเป็นไม่ว่าง
             $room = Rooms::findOrFail($room_id);
@@ -118,6 +119,7 @@ class BookingController extends Controller
             $book->Rooms_id = $room_id;
             $book->Start_date = $checkIn;
             $book->End_date = $checkOut;
+            $book->Original_end_date = $checkOut;
             $book->Booking_status = 0;
             $book->price = $price;
             $book->PaymentMethodID = $PaymentMethodID;
@@ -134,7 +136,7 @@ class BookingController extends Controller
     {
         // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
         $bookings = bookings::withTrashed()
-        ->with(['pet', 'room.roomType']) // ใช้ Eager Loading
+        ->with(['pet', 'room.roomType']) 
         ->where('User_id', Auth::user()->id)
         ->orderBy('BookingOrderID', 'desc')
         ->get();
@@ -142,6 +144,37 @@ class BookingController extends Controller
         return view('User.DetailBookings', compact('bookings'));
     }
 
+    // ขยายการจอง
+    public function extendBooking(Request $request, $id)
+    {
+        
+        $booking = Bookings::with('room')->findOrFail($id);
+        $newEndDate = $request->input('new_end_date');
+        $payment = PaymentMethod::all();
+        if ($newEndDate > $booking->End_date) {
+            $booking->End_date = $newEndDate;
+            $booking->save();
+            $start = $booking->Start_date;
+            $checkIn = $booking->End_date; //วันเช็คเอาท์อันใหม่
+            $checkOut = $booking->Original_end_date; //วันเช็คเอาท์อันเก่า
+            return view('User.extendpayment',compact('booking','checkIn','checkOut','start','payment'));
+        }
+
+        return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);
+    }
+
+    public function extendsuccess(Request $request){
+        $booking = bookings::findOrFail($request->id);
+        if($booking){
+            $booking->Booking_status = 4;
+            $booking->PaymentDate = NULL;
+            $booking->save();
+            
+            return redirect()->route('bookings.index')->with('extend', $booking->user->name);
+        }
+        
+        
+    }
 
     // ฟังก์ชันแสดงรายละเอียดของการจองเฉพาะรายการนั้น
     public function show($id)
@@ -212,4 +245,7 @@ class BookingController extends Controller
         
         return redirect()->back()->with('success','ลบสัตว์เลี้ยงเรียบร้อย');
     }
+
+    
+    
 }

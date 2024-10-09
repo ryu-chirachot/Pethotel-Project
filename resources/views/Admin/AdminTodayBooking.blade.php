@@ -12,6 +12,26 @@
 @endif
 
 
+@if (session('extend'))
+    <script>
+        Swal.fire({
+    title: "ขยายระยะเวลาการเข้าพักสำเร็จ",
+    text: "{{ session('extend') }}",
+    icon: "success"
+});
+    </script>
+@endif
+
+@if(session('checkout'))
+    <script>
+        Swal.fire({
+            title: "เช็คเอาท์สำเร็จ",
+            text: "ของคุณ {{ session('checkout') }} สำเร็จ",
+            icon: "success"
+        });
+    </script>
+@endif
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -26,12 +46,13 @@
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="/Admin/Bookings">การจองทั้งหมด ({{$allBook->count()}})</a>
                     <a class="btn btn-outline-success me-2" href="/Admin/Bookings/TodayBook">การจองของวันนี้ ({{$today->count()}})</a>
-                    <a class="btn btn-outline-danger" href="/Admin/Bookings/Expiredbooking">การจองที่พักเลยกำหนด ({{$expired->count()}})</a>
+                    <a class="btn btn-outline-danger me-2" href="/Admin/Bookings/Expiredbooking">การจองที่พักเลยกำหนด ({{$expired->count()}})</a>
+                    <a class="btn btn-outline-primary me-2" href="/Admin/Bookings/Extendbooking">การจองที่ขยายเวลา ({{$extend->count()}})</a>
                 </div>
             </div>
             @if($bookings->isEmpty())
                 <div class="alert alert-warning" role="alert">
-                    ยังไม่มีการจองในวันนี้
+                    ยังไม่มีการจองในเข้ามาในขณะนี้
                 </div>
             @else
                 <div class="card shadow-sm">
@@ -53,7 +74,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($bookings as $booking)
-                                    
                                     <tr>
                                         <td>{{ $booking->BookingOrderID }}</td>
                                         <td>{{ $booking->user->name }}</td>
@@ -67,20 +87,22 @@
                                         <td>{{ $booking->Start_date }} ถึง {{ $booking->End_date }}</td>
                                         <td>
                                             @if($booking->deleted_at != NULL)
-                                                <span class="badge bg-danger">เช็คเอาท์</span>
+                                                <span class="badge bg-success">เช็คเอาท์</span>
                                             @elseif($booking->Booking_status == 3)
                                                 <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                            @elseif($booking->End_date > $booking->Original_end_date && $booking->PaymentDate == NULL)
+                                                <span class="badge bg-secondary">ขยายการจอง</span>
                                             @else
-                                                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary' : 'badge bg-warning text-dark' }}">
+                                                <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary text-white' : 'badge bg-warning text-dark' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}
                                                 </span>
                                             @endif
                                         </td>
                                         <td>
                                             @if($booking->Booking_status == 3)
-                                                <span class="badge bg-danger">คืนเงินแล้ว</span>
+                                                <span class="badge bg-warning">คืนเงินแล้ว</span>
                                             @else
-                                                <span class="{{ $booking->PaymentDate ? 'badge bg-success' : 'badge bg-warning text-dark' }}">
+                                                <span class="{{ $booking->PaymentDate ? 'badge bg-success text-white' : 'badge bg-warning text-dark' }}">
                                                     {{$booking->PaymentDate ? 'ชำระเงินแล้ว' : 'รอยืนยันการชำระเงิน'}}
                                                 </span>
                                             @endif
@@ -119,7 +141,6 @@
     }
 </style>
 
-
 <script>
     function searchTable() {
         var input = document.getElementById("search").value.toLowerCase();
@@ -134,25 +155,4 @@
         });
     }
 </script>
-
-@if(session('success'))
-    <script>
-        Swal.fire({
-            title: "ขยายระยะเวลาการจอง",
-            text: "ของคุณ {{ session('success') }} สำเร็จ",
-            icon: "success"
-        });
-    </script>
-@endif
-
-@if(session('checkout'))
-    <script>
-        Swal.fire({
-            title: "เช็คเอาท์สำเร็จ",
-            text: "ของคุณ {{ session('checkout') }} สำเร็จ",
-            icon: "success"
-        });
-    </script>
-@endif
-
 @endsection

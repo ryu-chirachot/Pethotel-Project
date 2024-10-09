@@ -9,7 +9,7 @@ use App\Models\Pet_Type_Room_Type;
 use App\Models\Bookings;
 use App\Models\Reviews;
 use App\Models\Rooms_type;
-
+use App\Models\User;
 
 class SearchController extends Controller
 {
@@ -30,12 +30,10 @@ class SearchController extends Controller
 
     public function show($viewname)
     {
-        
         $p_type = pet_type::all();  
-        $reviews = Reviews::all();
-        $user=auth()->user(); 
+        $reviews = Reviews::with('booking.user','booking.room.roomType')->get();
         
-        return view(('main/homepage'),compact('p_type','reviews','user'));
+        return view(('main/homepage'),compact('p_type','reviews'));
     }
 
 

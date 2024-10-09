@@ -19,8 +19,7 @@ class Reviews extends Model
 
     public function booking()
     {
-        return $this->belongsTo(Bookings::class, 'BookingOrderID', 'BookingOrderID');
+        return $this->belongsTo(Bookings::class, 'BookingOrderID', 'BookingOrderID')->withTrashed();
     }
-
     
 }

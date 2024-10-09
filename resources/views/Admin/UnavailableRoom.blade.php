@@ -33,7 +33,8 @@
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="{{route('Admin.rooms')}}">ห้องทั้งหมด ({{count($allRooms)}})</a>
                     <a class="btn btn-outline-success me-2" href="{{route('Admin.available')}}">ห้องที่ว่างอยู่ ({{count($AvailableRooms)}})</a>
-                    <a class="btn btn-outline-danger" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
+                    <a class="btn btn-outline-danger me-2" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
+                    <a class="btn btn-outline-primary me-2" href="{{route('Admin.clean')}}">ห้องที่รอทำความสะอาด ({{count($cleaning)}})</a>
                 </div>
             </div>
             @if($Rooms->isEmpty())
@@ -46,45 +47,66 @@
                 <div class="card-body">
                     <table id="table" class="table table-hover table-responsive-md table-striped table-bordered">
                         <thead class="table-dark">
-                            <tr>
-                                <th>หมายเลขห้อง</th>
-                                <th>ประเภทห้อง</th>
-                                <th>ประเภทของสัตว์เลี้ยง</th>
-                                <th>ชื่อผู้จอง</th>
-                                <th>ชื่อสัตว์เลี้ยง</th>
-                                <th>สถานะห้อง</th>
-                                <th>แก้ไข</th>
-                                <th>ลบ</th>
-                                <th>อื่นๆ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                @foreach ($Rooms as $rm)
+                        <tr>
+                                    <th>หมายเลขห้อง</th>
+                                    <th>ประเภทห้อง</th>
+                                    <th>ประเภทของสัตว์เลี้ยง</th>
+                                    <th>ชื่อผู้จอง</th>
+                                    <th>วันที่เข้าพัก</th>
+                                    <th>สถานะการจอง</th>
+                                    <th>สถานะห้อง</th>
+                                    <th>แก้ไข</th>
+                                    <th>ลบ</th>
+                                    <th>อื่นๆ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($Rooms as $rm)
                                     <tr>
                                         <td>{{ $rm->Rooms_id }}</td>
                                         <td>{{ $rm->roomType->Rooms_type_name }}</td>
                                         <td>{{ $rm->petType->Pet_nametype }}</td>
 
                                         @php
-                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();                                        @endphp
+                                        $activeBooking = $rm->bookings->where('Booking_status', '!=', 3)->first();
+                                        @endphp
 
                                         @if($activeBooking)
                                             <td>{{ $activeBooking->user->name }}</td>
                                             <td>
-                                                @if($activeBooking->pet->count() > 0)
-                                                    {{ $activeBooking->pet->Pet_name}}                                                @else
+                                                @if($activeBooking->Start_date)
+                                                    {{ $activeBooking->Start_date}}
+                                                @else
                                                     <span>ไม่มีข้อมูลสัตว์เลี้ยง</span>
                                                 @endif
                                             </td>
                                         @else
                                             <td><span>ไม่มีผู้จอง</span></td>
-                                            <td><span>ไม่มีสัตว์เลี้ยง</span></td>
+                                            <td><span>ไม่มีผู้จอง</span></td>
                                         @endif
+
+                                        <td>
+                                        @if($activeBooking)
+                                            @if($activeBooking->Booking_status == 0)
+                                                    <span class="badge bg-warning">รอการยืนยัน</span>
+                                                @elseif($activeBooking->Booking_status == 1)
+                                                    <span class="badge bg-primary">เช็คอินแล้ว</span>
+                                                @elseif($activeBooking->Booking_status == 2)
+                                                    <span class="badge bg-danger">เลยกำหนด</span>
+                                                @endif  
+                                        @else
+                                            <span class="badge bg-danger">ไม่มีการจอง</span>  
+                                        @endif
+                                        </td>
 
                                         <td>
                                             @if ($rm->Rooms_status == 1)
                                                 <span class="badge bg-success">ว่าง</span>
-                                            @else
+                                            @elseif ($rm->Rooms_status == 2)
+                                                <span class="badge bg-warning">ซ่อมบำรุง</span>
+                                            @elseif ($rm->Rooms_status == 3)
+                                                <span class="badge bg-primary">ทำความสะอาด</span>
+                                            @else 
                                                 <span class="badge bg-danger">ไม่ว่าง</span>
                                             @endif
                                         </td>
@@ -95,13 +117,13 @@
                                             </a>
                                         </td>
                                         @if($activeBooking)
-                                        <td><span class="badge bg-danger">มีการจอง</span></td>
+                                            <td><span class="badge bg-danger">มีการจอง</span></td>
                                         @else
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm" onclick="ConfirmDelete('{{ $rm->Rooms_id }}')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
                                         @endif
                                         <td>
                                             <div class="btn-group">
@@ -119,8 +141,8 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                </tbody>
-                    </table>
+                            </tbody>
+                        </table>
                     {{$Rooms->links('pagination::bootstrap-5')}}
                 </div>
                 @endif

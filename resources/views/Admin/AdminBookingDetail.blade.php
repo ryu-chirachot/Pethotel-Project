@@ -54,10 +54,11 @@
         </div>
     </div>
 
-    @if ($bookings->deleted_at || $bookings->Booking_status == 3)
+    @if (($bookings->deleted_at || $bookings->Booking_status == 3))
     <div class="alert alert-warning" role="alert">
         <i class="fas fa-exclamation-triangle me-2"></i>การจองนี้สิ้นสุดแล้ว ไม่สามารถดำเนินการใดๆ ได้
     </div>
+    
     @else
         <div class="card shadow-sm mb-4">
             <div class="card-body">
@@ -85,13 +86,7 @@
                             </form>
                         </div>
                     @else
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="d-grid">
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal">
-                                    <i class="fas fa-calendar-plus me-2"></i>ขยายเวลา
-                                </button>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="d-grid">
                                 <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#petStatusModal">
@@ -100,6 +95,14 @@
                             </div>
                         </div>
                         
+                        <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a class="btn btn-primary" href="{{ route('pet.status.reports', $bookings->BookingOrderID) }}">
+                                    <i class="fas fa-paw me-2"></i>ประวัติรายงานสถานะสัตว์เลี้ยง
+                                </a>
+                            </div>
+                        </div>
+
                         <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.cancel', $bookings->BookingOrderID) }}" method="POST" onsubmit="return Confirmcancel('{{ $bookings->BookingOrderID }}')">
                                 @csrf
@@ -110,6 +113,7 @@
                                 </div>
                             </form>
                         </div>
+                        
                         <div class="col-md-6 col-lg-4 mb-3">
                             <div class="d-grid">
                                 <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
@@ -117,6 +121,7 @@
                                 </a>
                             </div>
                         </div>
+
                         <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
                                 @csrf
@@ -127,35 +132,14 @@
                                 </div>
                             </form>
                         </div>
+
+                        
                     @endif
                 </div>
             </div>
         </div>
 
-        <!-- ขยายการจอง -->
-        <div class="modal fade" id="extendModal" tabindex="-1" aria-labelledby="extendModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="extendModalLabel">ขยายเวลาการจอง</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ route('Admin.bookings.extend', $bookings->BookingOrderID) }}" method="POST">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="new_end_date" class="form-label">วันที่สิ้นสุดใหม่</label>
-                                <input type="date" class="form-control" id="new_end_date" name="new_end_date" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                            <button type="submit" class="btn btn-primary">ยืนยันการขยายเวลา</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Pet Status รายงาน -->
         <div class="modal fade" id="petStatusModal" tabindex="-1" aria-labelledby="petStatusModalLabel" aria-hidden="true">
@@ -239,7 +223,7 @@
 }
 </style>
 
-<script src="{{ asset('js/Addimg.js') }}"></script>
+
 
 <script>
     function generateImageInputs() {
@@ -256,6 +240,25 @@
             <input type="file" name="pet_images[]" id="pet_images${i}" accept="image/*" onchange="previewImage(this, '${i}')" class="form-control">
         `;
         container.appendChild(div);
+    }
+}
+</script>
+
+<script>
+    function previewImage(input, imageNumber) {
+    const preview = document.getElementById(`previewImage${imageNumber}`);
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = '';
+        preview.style.display = 'none';
     }
 }
 </script>

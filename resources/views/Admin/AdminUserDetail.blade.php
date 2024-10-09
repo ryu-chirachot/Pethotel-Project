@@ -15,11 +15,11 @@
                 <h6 class="font-weight-bold">ข้อมูลสัตว์เลี้ยง ทั้งหมด </h6>
                 
                 <ul class="list-group mb-3">
-                    @foreach($bookings as $booking)
+                    @foreach($Own_pet as $booking)
                         <li class="list-group-item">
-                            <strong>ชื่อ:</strong> {{ $booking->pet->Pet_name }} 
-                            <strong>ประเภท:</strong> {{ $booking->pet->petType->Pet_nametype }} 
-                            <strong>สายพันธุ์:</strong> {{ $booking->pet->Pet_breed }}
+                            <strong>ชื่อ:</strong> {{ $booking->Pet_name }} 
+                            <strong>ประเภท:</strong> {{ $booking->petType->Pet_nametype }} 
+                            <strong>สายพันธุ์:</strong> {{ $booking->Pet_breed }}
                         </li>
                     @endforeach
                 </ul>

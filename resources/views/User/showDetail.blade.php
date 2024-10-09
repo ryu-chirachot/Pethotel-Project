@@ -13,7 +13,7 @@
                 <p class="underline"><strong>ชื่อสัตว์เลี้ยง:</strong> 
                     {{$booking->pet->Pet_name}}
                 </p>
-                <p class="underline"><strong>ประเภทห้อง:</strong> {{ $booking->room->pet_Type_Room_Type->roomType->Rooms_type_name }}</p>
+                <p class="underline"><strong>ประเภทห้อง:</strong> {{ $booking->room->roomType->Rooms_type_name }}</p>
 
 
                 <div class="check-in">

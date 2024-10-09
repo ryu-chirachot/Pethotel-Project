@@ -48,10 +48,10 @@ body {
                     
                     <td>{{ $pet->petType->Pet_nametype }}</td>
                     <td>{{ $pet->Pet_name }}</td>
-                    <td>{{ $pet->Pet_gender == 'M' ? 'ชาย' : 'หญิง' }}</td>
+                    <td>{{ $pet->Pet_gender == 'M' ? 'ผู้' : 'เมีย' }}</td>
                     <td>{{ $pet->Pet_breed }}</td>
                     <td>{{ $pet->Pet_age }} ปี</td>
-                    <td>{{ $pet->Pet_weight }} kg</td>
+                    <td>{{ $pet->Pet_weight }} กก.</td>
                     <td>{{ $pet->additional_info ?? 'ไม่มี' }}</td>
                     <td>
                         <!-- ปุ่มสำหรับเปิด modal -->
@@ -89,8 +89,8 @@ body {
                     <div class="mb-3">
                         <label for="pet_gender" class="form-label">เพศ</label>
                         <select name="pet_gender" class="form-select" required>
-                            <option value="M" {{ $pet->Pet_gender == 'M' ? 'selected' : '' }}>ชาย</option>
-                            <option value="F" {{ $pet->Pet_gender == 'F' ? 'selected' : '' }}>หญิง</option>
+                            <option value="M" {{ $pet->Pet_gender == 'M' ? 'selected' : '' }}>ผู้</option>
+                            <option value="F" {{ $pet->Pet_gender == 'F' ? 'selected' : '' }}>เมีย</option>
                         </select>
                     </div>
 
