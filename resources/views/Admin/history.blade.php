@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <p><strong>การรายงาน:</strong> {{ $status->Report }}</p>
                     @if($status->imgreport)
-                        <img src="{{ asset($status->imgreport) }}" alt="Report Image" class="img-fluid mb-2" />
+                        <img src="{{ asset('images/'.$status->imgreport) }}" alt="Report Image" class="img-fluid mb-2" />
                     @endif
                     <p><strong>วันที่:</strong> {{ $status->created_at->format('d M Y H:i') }}</p>
                 </div>

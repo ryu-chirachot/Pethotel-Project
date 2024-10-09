@@ -42,20 +42,21 @@
         <div class="col-md-6 offset-md-3">
             <h3 class="text-center">ประวัติการรีวิวห้องพักของคุณ</h3>
         </div>
+        @foreach($review as $rw)
             <div class="form-group">
                     <h4 for="rating" class="text-center mt-4">ระดับความพึงพอใจ</h4>
                     <div class="rating">
-                        <input type="radio" name="rating" id="star5" value="5"><label for="star5"></label>
-                        <input type="radio" name="rating" id="star4" value="4"><label for="star4"></label>
-                        <input type="radio" name="rating" id="star3" value="3"><label for="star3"></label>
-                        <input type="radio" name="rating" id="star2" value="2"><label for="star2"></label>
-                        <input type="radio" name="rating" id="star1" value="1"><label for="star1"></label>
+                        @for ($i = 5; $i >= 1; $i--)
+                            <input type="radio" name="rating_{{ $rw->Review_id }}" id="star{{ $i }}_{{ $rw->Review_id }}" value="{{ $i }}" {{ $rw->rating == $i ? 'checked' : '' }} disabled>
+                            <label for="star{{ $i }}_{{ $rw->Review_id }}"></label>
+                        @endfor
                     </div>
                 </div>
             <div class="form-group">
                 <h4 for="comment" class="mt-4">ความคิดเห็น</h4>
-                <textarea name="comment" id="comment" class="form-control" rows="4">{{}}</textarea>
+                <textarea name="comment" id="comment" class="form-control" rows="4" readonly>{{$rw->comment}}</textarea>
             </div>
+        @endforeach
     </div>
 </div>
 @endsection

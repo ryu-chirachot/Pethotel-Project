@@ -43,16 +43,14 @@ class AdminController extends Controller
                 $expiredBookingIds = $expiredBookings->pluck('BookingOrderID');
                 $updatedBookings = Bookings::whereIn('BookingOrderID', $expiredBookingIds)->update(['Booking_status' => 2]);
                 
+                // $roomIds = $expiredBookings->pluck('Rooms_id');
+                // $updatedRooms = Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
 
-                $roomIds = $expiredBookings->pluck('Rooms_id');
-                $updatedRooms = Rooms::whereIn('Rooms_id', $roomIds)->update(['Rooms_status' => 1]);
-                
-                
-                Log::info("อัพเดต {$updatedBookings} การจอง และ {$updatedRooms} ห้อง.");
+                Log::info("อัพเดต {$updatedBookings} การจอง ");
                 
                 return [
                     'success' => true,
-                    'message' => "{$updatedBookings} bookings and {$updatedRooms} rooms updated.",
+                    'message' => "{$updatedBookings} bookings",
                 ];
             } catch (\Exception $e) {
                 Log::error("Error updating expired bookings: " . $e->getMessage());

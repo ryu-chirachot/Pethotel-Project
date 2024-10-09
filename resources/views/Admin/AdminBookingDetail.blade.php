@@ -114,6 +114,14 @@
                         </div>
                         
                         <div class="col-md-6 col-lg-4 mb-3">
+                            <div class="d-grid">
+                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4 mb-3">
                             <form action="{{ route('Admin.bookings.checkout', $bookings->BookingOrderID) }}" method="GET" >
                                 @csrf
                                 <div class="d-grid">
@@ -124,13 +132,7 @@
                             </form>
                         </div>
 
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="d-grid">
-                                <a href="{{ route('Admin.bookings') }}" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left me-2"></i>กลับไปหน้าการจอง
-                                </a>
-                            </div>
-                        </div>
+                        
                     @endif
                 </div>
             </div>
@@ -241,7 +243,24 @@
 }
 </script>
 
-<script src="{{ asset('js/Addimg.js') }}"></script>
+<script>
+    function previewImage(input, imageNumber) {
+    const preview = document.getElementById(`previewImage${imageNumber}`);
+    const file = input.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = '';
+        preview.style.display = 'none';
+    }
+}
+</script>
 
 <script>
     function Confirmcancel(id) {

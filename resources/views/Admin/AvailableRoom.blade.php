@@ -33,8 +33,8 @@
                 <div>
                     <a class="btn btn-outline-secondary me-2" href="{{route('Admin.rooms')}}">ห้องทั้งหมด ({{count($allRooms)}})</a>
                     <a class="btn btn-outline-success me-2" href="{{route('Admin.available')}}">ห้องที่ว่างอยู่ ({{count($AvailableRooms)}})</a>
-                    <a class="btn btn-outline-danger" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
-                    <a class="btn btn-outline-primary" href="{{route('Admin.clean')}}">ห้องที่รอทำความสะอาด ({{count($cleaning)}})</a>
+                    <a class="btn btn-outline-danger me-2" href="{{route('Admin.unavailable')}}">ห้องที่ไม่ว่าง ({{count($UnAvailableRooms)}})</a>
+                    <a class="btn btn-outline-primary me-2" href="{{route('Admin.clean')}}">ห้องที่รอทำความสะอาด ({{count($cleaning)}})</a>
                 </div>
             </div>
             @if($Rooms->isEmpty())

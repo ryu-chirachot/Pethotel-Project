@@ -35,7 +35,7 @@
                     <p><strong>ห้องพัก:</strong> {{ $booking->room->roomType->Rooms_type_name }} </p><hr>
                     <p><strong>หมายเลขห้อง:</strong> {{ $booking->room->Rooms_id }}</p><hr>
                     <p><strong>วันที่จอง:</strong> {{ $booking->created_at }}</p><hr>
-                    <p><strong>สถานะการจอง:</strong> 
+                    
 
                     <!-- ขยายการจอง -->
                     <div class="modal fade" id="extendModal{{ $booking->BookingOrderID }}" tabindex="-1" aria-labelledby="extendModalLabel{{ $booking->BookingOrderID }}" aria-hidden="true">
@@ -66,6 +66,7 @@
                     </div>
 
                     @if($booking->deleted_at)
+                    <p><strong>สถานะการจอง:</strong> 
                         <span class="status-checkout">
                             เช็คเอาท์
                         </span>
@@ -88,20 +89,22 @@
 
                 </div>
                 @elseif($booking->Booking_status == 3)
-                    <span class="status-checkout">
+                    <p><strong>สถานะการจอง:</strong> 
+                        <span class="status-checkout">
                             ยกเลิกการจองแล้ว
                         </span>
-                        </p><hr>
+                    </p><hr>
                     <p><strong>สถานะการชำระเงิน:</strong>
                         <span class="payment-pending">
                             คืนเงินแล้ว
                         </span>
                     </p>
                 @elseif($booking->Booking_status == 0)  
-                    <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
+                    <p><strong>สถานะการจอง:</strong> 
+                        <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
                             {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
                         </span>
-                        </p><hr>
+                    </p><hr>
                         
                         <p><strong>สถานะการชำระเงิน:</strong>
                             <span class="{{ $booking->PaymentDate ? 'text-success' : 'payment-pending' }}">
@@ -110,9 +113,10 @@
                         </p>
                     </div>
                 @else
-                    <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
-                        {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
-                    </span>
+                    <p><strong>สถานะการจอง:</strong> 
+                        <span class="{{ $booking->Booking_status == 0 ? 'status-checkout' : 'status-check' }}">
+                            {{ $booking->Booking_status == 0 ? 'รอการยืนยัน' : 'เช็คอินแล้ว' }}
+                        </span>
                     </p><hr>
                     
                     <p><strong>สถานะการชำระเงิน:</strong>

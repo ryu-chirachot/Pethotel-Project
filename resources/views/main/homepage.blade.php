@@ -1,112 +1,145 @@
 @extends('layouts.searchbar')
 @section('content')
-
 @if (session('success'))
     <script>
         Swal.fire({
-  title: "จองห้องสำเร็จ",
-  text: "{{ session('success') }}",
-  icon: "success"
-});
+            title: "จองห้องสำเร็จ",
+            text: "{{ session('success') }}",
+            icon: "success"
+        });
     </script>
 @endif
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        font-family: 'Arial, sans-serif';
+        background-color: #f5f5f5;
+    }
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .reviews-container {
-            overflow: hidden;
-           
-            position: relative;
-            width: 100%;
-            height: 220px;
-        }
-        .reviews-content {
-            display: block;
-            animation: scroll 15s linear infinite;
-        }
-        .review-box {
-            display: inline-block;
-            width: 200px;
-            margin: 10px;
-            padding: 15px;
-            background-color:  #ffe894 ;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-            white-space: normal;
-            vertical-align: top;
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        .reviews-container:hover .reviews-content {
-            animation-play-state: paused;
-        }
-        .star-rating {
-            color: #e0e0e0;
-            font-size: 1.2em;
-        }
-        .star-rating .fas {
-            color: #ffc107;
-        }
-        .review-box p {
-            max-height: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    </style>
+    .reviews-container {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
 
-    
-    <div class="container mt-5">
-        @if($user->count() == 0)
-            
-        @else
-        <h2 class="text-center " style="margin-top: -60px;">รีวิวจากลูกค้า</h2>
-        <div class="reviews-container">
-            
-            <div class="reviews-content">
-                @foreach($user as $us)
-                    <div class="review-box">
-                    <div class="d-flex justify-content-between">
-    <label class="text-dark">{{ $us->user->name}}</label>
-    <label class="text-muted">{{ $us->review->updated_at->format('d/m/Y') }}</label>
-</div>
+    .reviews-content {
+        display: flex;
+        white-space: nowrap;
+        animation: scroll 20s linear infinite;
+    }
+
+    .review-box {
+        display: inline-block;
+        width: 220px;
+        margin-right: 15px;
+        padding: 15px;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        position: relative;
+    }
+
+    .review-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .star-rating {
+        color: #e0e0e0;
+        font-size: 1.2em;
+    }
+
+    .star-rating .fas {
+        color: #ffcc00;
+    }
+
+    .review-user, .review-date, .review-type, .review-room {
+        font-size: 0.85em;
+        color: #888;
+    }
+
+    .review-comment {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #444;
+    }
+
+    h2 {
+        color: #333;
+        font-weight: 600;
+    }
+</style>
+
+
+    @if($reviews->count() > 0)
+        <h2 class="text-center mb-10">รีวิวจากลูกค้า</h2>
         
-                    <div class="star-rating">
-                        <label>
+            <div class="reviews-content mb-5">
+                @foreach($reviews as $review)
+                    <div class="review-box">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="review-user">{{ substr($review->booking->user->name, 0, 2) }}*****</span>
+                            <span class="review-date">{{ $review->updated_at->format('d/m/Y') }}</span>
+                        </div>
+                        <span class="review-type">{{ $review->booking->pet->pettype->Pet_nametype }}</span> • 
+                        <span class="review-room">{{ $review->booking->room->roomtype->Rooms_type_name }}</span>
+                        
+                        <div class="star-rating mt-2">
                             @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $us->review->rating)
+                                @if ($i <= $review->rating)
                                     <i class="fas fa-star"></i>
                                 @else
                                     <i class="far fa-star"></i>
                                 @endif
                             @endfor
-                            </label>
                         </div>
-                        <p>{{ $us->review->comment }}</p>
+                        <p class="review-comment">{{ $review->comment }}</p>
                     </div>
                 @endforeach
             </div>
-        </div>
-    </div>
+        
+    @endif
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        window.onload = () => {
-            document.getElementById("searchForm").reset();
 
-            const content = document.querySelector('.reviews-content');
-            const totalWidth = content.offsetWidth;
-            
-            content.style.animation = scroll ${totalWidth / 50}s linear infinite;
-        };
-    </script>
-@endif
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    window.onload = () => {
+        document.getElementById("searchForm").reset();
+
+        const content = document.querySelector('.reviews-content');
+        const totalWidth = content.scrollWidth;
+
+        content.style.animation = `scroll ${totalWidth / 120}s linear infinite`;
+
+        // Add event listeners to pause animation only when hovering over .review-box
+        const reviewBoxes = document.querySelectorAll('.review-box');
+        reviewBoxes.forEach(box => {
+            box.addEventListener('mouseenter', () => {
+                content.style.animationPlayState = 'paused';
+            });
+            box.addEventListener('mouseleave', () => {
+                content.style.animationPlayState = 'running';
+            });
+        });
+    };
+</script>
 
 @endsection
