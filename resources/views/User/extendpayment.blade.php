@@ -89,7 +89,7 @@
     document.getElementById('PaymentForm').addEventListener('submit', function(e) {
         e.preventDefault(); 
         Swal.fire({
-            title: "จองห้องสำเร็จ", 
+            title: "ขยายระยะเวลาการเข้าพักสำเร็จ", 
             text: "อยู่ในขั้นตอนรอการยืนยันการชำระเงิน", 
             icon: "success",
             showCancelButton: false, 

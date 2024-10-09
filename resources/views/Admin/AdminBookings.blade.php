@@ -79,7 +79,9 @@
                                             @if($booking->deleted_at != NULL)
                                                 <span class="badge bg-success">เช็คเอาท์</span>
                                             @elseif($booking->Booking_status == 3)
-                                                <span class="badge bg-danger">ยกเลิกการจอง</span>  
+                                                <span class="badge bg-danger">ยกเลิกการจอง</span>
+                                            @elseif($booking->End_date > $booking->Original_end_date && $booking->PaymentDate == NULL)
+                                                <span class="badge bg-secondary">ขยายการจอง</span>
                                             @else
                                                 <span class="{{ $booking->Booking_status == 1 ? 'badge bg-primary text-white' : 'badge bg-warning text-dark' }}">
                                                     {{ $booking->Booking_status == 1 ? 'เช็คอินแล้ว' : 'รอการยืนยัน' }}

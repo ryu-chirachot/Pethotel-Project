@@ -29,7 +29,7 @@ class Bookings extends Model
 
     public function room()
     {
-        return $this->belongsTo(Rooms::class, 'Rooms_id');
+        return $this->belongsTo(Rooms::class, 'Rooms_id')->withTrashed();
     }
 
     public function paymentMethod()

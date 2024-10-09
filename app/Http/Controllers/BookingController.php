@@ -136,7 +136,7 @@ class BookingController extends Controller
     {
         // ดึงรายการจองทั้งหมดสำหรับผู้ใช้ปัจจุบัน
         $bookings = bookings::withTrashed()
-        ->with(['pet', 'room.roomType']) // ใช้ Eager Loading
+        ->with(['pet', 'room.roomType']) 
         ->where('User_id', Auth::user()->id)
         ->orderBy('BookingOrderID', 'desc')
         ->get();
@@ -155,10 +155,9 @@ class BookingController extends Controller
             $booking->End_date = $newEndDate;
             $booking->save();
             $start = $booking->Start_date;
-            $checkIn = $booking->End_date;
-            $checkOut = $booking->Original_end_date;
+            $checkIn = $booking->End_date; //วันเช็คเอาท์อันใหม่
+            $checkOut = $booking->Original_end_date; //วันเช็คเอาท์อันเก่า
             return view('User.extendpayment',compact('booking','checkIn','checkOut','start','payment'));
-            
         }
 
         return redirect()->back()->withErrors(['new_end_date' => 'Invalid date']);

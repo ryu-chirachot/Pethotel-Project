@@ -36,7 +36,7 @@
                     <p><strong>หมายเลขห้อง:</strong> {{ $booking->room->Rooms_id }}</p><hr>
                     <p><strong>วันที่จอง:</strong> {{ $booking->created_at }}</p><hr>
                     
-
+                    
                     <!-- ขยายการจอง -->
                     <div class="modal fade" id="extendModal{{ $booking->BookingOrderID }}" tabindex="-1" aria-labelledby="extendModalLabel{{ $booking->BookingOrderID }}" aria-hidden="true">
                         <div class="modal-dialog">
@@ -126,11 +126,14 @@
                     </p>
                 </div>
                 <div class="card-footer text-center">
-                    
-                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal{{ $booking->BookingOrderID }}">
-                        <i class="fas fa-calendar-plus me-2"></i>ขยายเวลาการพัก
-                    </button>
-                    <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
+                    @if($booking->End_date > $booking->Original_end_date)
+                        <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
+                    @else
+                        <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#extendModal{{ $booking->BookingOrderID }}">
+                            <i class="fas fa-calendar-plus me-2"></i>ขยายเวลาการพัก
+                        </button>
+                        <a href="{{ route('pets.status',$booking->BookingOrderID) }}" class="btn btn-info me-2">ติดตามสถานะสัตว์เลี้ยง</a>
+                    @endif
                 </div>
                     
                 @endif

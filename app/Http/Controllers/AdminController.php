@@ -27,7 +27,7 @@ class AdminController extends Controller
                 $AvailableRooms = Rooms::where('Rooms_status', "=", "1")->get();
                 $Bookings = Bookings::withTrashed()->orderBy('BookingOrderID', 'desc')->get();
                 $Users = User::where('role','user')->get();
-                $TodayBookings = Bookings::whereDate('created_at', Carbon::today())->get();
+                $TodayBookings = Bookings::withTrashed()->whereDate('created_at', Carbon::today())->get();
                 return view("Admin.AdminHome",compact("Rooms","AvailableRooms","Bookings","TodayBookings","Users"));
         }
 
